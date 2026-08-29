@@ -537,6 +537,51 @@ button.cal-cell{cursor:pointer}
 .cal-legend .lg{width:12px; height:12px; border-radius:4px; display:inline-block; vertical-align:-1px}
 .cal-legend .lg.done{background:color-mix(in srgb,var(--good) 40%,var(--surface)); border:1px solid var(--good)}
 .cal-legend .lg.today{border:2px solid var(--accent)}
+
+/* shared status chips */
+.lg{width:12px; height:12px; border-radius:4px; display:inline-block; vertical-align:-1px}
+.lg.done{background:var(--good)}
+.lg.missed{background:var(--danger)}
+.lg.rest{background:var(--surface-3); border:1px solid var(--line-2)}
+
+/* calendar cell statuses */
+.cal-cell.missed{background:color-mix(in srgb,var(--danger) 20%,var(--surface)); color:var(--danger); font-weight:800}
+.cal-cell.rest,.cal-cell.upcoming{color:var(--ink-3)}
+.cal-cell.today{outline:2px solid var(--accent); outline-offset:-2px; font-weight:800}
+
+/* calendar modal */
+.cal-scrim{position:fixed; inset:0; z-index:80; background:rgba(4,7,10,.6); backdrop-filter:blur(3px); opacity:0; pointer-events:none; transition:.18s}
+.cal-scrim.show{opacity:1; pointer-events:auto}
+.cal-modal{position:fixed; z-index:81; left:50%; top:50%; width:min(92vw,360px); transform:translate(-50%,-46%) scale(.96); opacity:0; pointer-events:none; transition:.2s; background:var(--surface); border:1px solid var(--line); border-radius:20px; padding:18px; box-shadow:var(--shadow-lg)}
+.cal-modal.show{opacity:1; pointer-events:auto; transform:translate(-50%,-50%) scale(1)}
+.cal-top{display:flex; align-items:center; justify-content:space-between; margin-bottom:4px}
+.cal-top b{font-family:"Oswald"; font-weight:600; font-size:18px; letter-spacing:.3px}
+.cal-close{width:32px; height:32px; border-radius:9px; background:var(--surface-2); border:1px solid var(--line); color:var(--ink-2); display:grid; place-items:center}
+.cal-close svg{width:16px; height:16px}
+.cal-modal .cal-head{display:flex; align-items:center; justify-content:center; gap:14px; margin:8px 0 12px}
+.cal-modal .cal-head span{font-family:"Oswald"; font-weight:600; font-size:16px; min-width:140px; text-align:center}
+.cal-modal .cal-legend{display:flex; gap:14px; justify-content:center; margin-top:14px; padding-top:12px; border-top:1px solid var(--line); font-size:11.5px; font-weight:600; color:var(--ink-2)}
+.cal-modal .cal-legend span{display:inline-flex; align-items:center; gap:5px}
+
+/* today week head + legend */
+.week-head{display:flex; align-items:center; justify-content:space-between; margin:16px 2px 8px}
+.week-head span{font-family:"Oswald"; font-weight:600; font-size:13px; letter-spacing:1px; text-transform:uppercase; color:var(--ink-3)}
+.cal-icon-btn{width:36px; height:36px; border-radius:11px; background:var(--surface); border:1px solid var(--line); color:var(--accent); display:grid; place-items:center; transition:.15s}
+.cal-icon-btn:hover{border-color:var(--accent)}
+.cal-icon-btn svg{width:18px; height:18px}
+.wk-legend{display:flex; gap:14px; justify-content:center; margin-top:9px; font-size:11px; font-weight:600; color:var(--ink-2)}
+.wk-legend span{display:inline-flex; align-items:center; gap:5px}
+.wk-day.missed{background:color-mix(in srgb,var(--danger) 14%,var(--surface)); border-color:color-mix(in srgb,var(--danger) 40%,transparent)}
+.wk-day.missed .wk-num{color:var(--danger)}
+.wk-day.rest,.wk-day.upcoming{opacity:.72}
+
+/* training-days editor */
+.td-hint{font-size:12px; color:var(--ink-2); margin:-4px 0 12px; font-weight:500; line-height:1.45}
+.td-hint b{color:var(--ink); font-weight:700}
+.td-row{display:grid; grid-template-columns:repeat(7,1fr); gap:6px}
+.td-day{aspect-ratio:1; border-radius:10px; background:var(--surface-2); border:1px solid var(--line); color:var(--ink-2); font-weight:800; font-size:13px; transition:.15s}
+.td-day.on{background:var(--accent); border-color:var(--accent); color:var(--accent-ink)}
+.td-day:hover{border-color:var(--accent)}
 .hist-row.open + .hist-detail{display:block}
 .hist-detail .hde{display:flex; justify-content:space-between; gap:10px; padding:5px 0; font-size:12.5px; border-bottom:1px dashed var(--line)}
 .hist-detail .hde:last-child{border-bottom:none}
@@ -627,6 +672,16 @@ button.cal-cell{cursor:pointer}
     <button class="finish" id="pastFoot" style="display:none"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>Back to today</button>
   </div>
 </section>
+
+<!-- calendar popover -->
+<div class="cal-scrim" id="calScrim"></div>
+<div class="cal-modal" id="calModal" role="dialog" aria-modal="true" aria-label="Workout calendar">
+  <div class="cal-top"><b id="calTitle">Calendar</b><button class="cal-close" id="calClose" aria-label="Close calendar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+  <div class="cal-head"><button class="cal-nav" id="calPrev" aria-label="Previous month"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg></button><span id="calMon"></span><button class="cal-nav" id="calNext" aria-label="Next month"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></button></div>
+  <div class="cal-dows"><span>S</span><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span></div>
+  <div class="cal-grid" id="calGrid"></div>
+  <div class="cal-legend"><span><i class="lg done"></i>Done</span><span><i class="lg missed"></i>Missed</span><span><i class="lg rest"></i>Not scheduled</span></div>
+</div>
 
 <!-- confirm dialog -->
 <div class="cf-scrim" id="cfScrim"></div>
@@ -761,6 +816,7 @@ function load(){
   try{ const r=localStorage.getItem(KEY); if(r) DB=Object.assign(DB,JSON.parse(r)); }catch(e){}
   if(!DB.goals) DB.goals = { weekly:4, bwCurrent:72, bwTarget:68 };
   if(!DB.drafts) DB.drafts = {};
+  if(!DB.goals.trainDays) DB.goals.trainDays = [1,2,4,5]; // Mon,Tue,Thu,Fri (0=Sun)
 }
 function save(){ try{ localStorage.setItem(KEY, JSON.stringify(DB)); }catch(e){} }
 load();
@@ -855,19 +911,24 @@ function renderToday(){
   g.innerHTML = `<div class="day">${DAYS[now.getDay()]}, ${now.getDate()} ${MO[now.getMonth()]}</div><h2>${hi}, Vikram.</h2>`;
   v.appendChild(g);
 
-  // this-week strip: completed = green, today = ringed
+  // this-week strip with status colours + calendar opener
   const doneSet=completedDates();
+  const wh=el('div','week-head'); wh.innerHTML=`<span>This week</span><button class="cal-icon-btn" id="todayCal" aria-label="Open calendar">${I.cal}</button>`;
+  v.appendChild(wh);
   const ws=el('div','week-strip');
   const start=new Date(todayISO()+'T00:00'); start.setDate(start.getDate()-start.getDay());
   for(let i=0;i<7;i++){
     const dd=new Date(start); dd.setDate(start.getDate()+i);
-    const iso=localISO(dd); const isToday=iso===todayISO(); const isDone=doneSet.has(iso); const isFuture=dd>now && !isToday;
-    const cell=el(isDone?'button':'div','wk-day'+(isDone?' done':'')+(isToday?' today':'')+(isFuture?' future':''));
+    const iso=localISO(dd); const isToday=iso===todayISO(); const st=dayStatus(iso,doneSet); const hasData=doneSet.has(iso);
+    const cell=el(hasData?'button':'div','wk-day '+st+(isToday?' today':''));
     cell.innerHTML=`<span class="wk-dow">${DOW[dd.getDay()][0]}</span><span class="wk-num">${dd.getDate()}</span>`;
-    if(isDone){ cell.setAttribute('aria-label',`View ${dd.getDate()} ${MO[dd.getMonth()]}`); cell.onclick=()=>gotoDate(iso); }
+    if(hasData){ cell.setAttribute('aria-label',`View ${dd.getDate()} ${MO[dd.getMonth()]}`); cell.onclick=()=>gotoDate(iso); }
     ws.appendChild(cell);
   }
   v.appendChild(ws);
+  const wl=el('div','wk-legend'); wl.innerHTML=`<span><i class="lg done"></i>Done</span><span><i class="lg missed"></i>Missed</span><span><i class="lg rest"></i>Rest</span>`;
+  v.appendChild(wl);
+  wh.querySelector('#todayCal').onclick=openCalendar;
 
   const sug=suggestedToday();
   const done=isDoneToday(sug.id);
@@ -937,6 +998,19 @@ let trainFilter='all';
 let histFilter=null;
 let histCalOpen=false, calYear=null, calMonth=null;
 function completedDates(){ return new Set(DB.history.map(h=>h.date)); }
+// day status: done (green) | missed (red) | rest/upcoming (grey = not included)
+function dayStatus(iso, doneSet){
+  if(doneSet.has(iso)) return 'done';
+  const d=new Date(iso+'T00:00'); const t=todayISO();
+  const isTrain=(DB.goals.trainDays||[1,2,4,5]).includes(d.getDay());
+  if(!isTrain) return 'rest';            // not a scheduled training day → not included
+  if(iso>=t) return 'upcoming';          // scheduled but not due yet (today or future)
+  // only "missed" from when tracking began — can't miss before you started
+  if(!DB.history.length) return 'rest';
+  const first=DB.history.reduce((m,h)=> h.date<m?h.date:m, DB.history[0].date);
+  if(iso<first) return 'rest';
+  return 'missed';                       // scheduled training day since start, not logged
+}
 function gotoDate(iso){
   histFilter=iso;
   document.querySelectorAll('.tab').forEach(x=>x.setAttribute('aria-selected','false'));
@@ -1025,38 +1099,13 @@ function renderProgress(){
   // history — category tags, day-wise, grouped by month, with a date filter
   v.appendChild(el('div','section-head','<span class="eyebrow">History</span><span style="color:var(--ink-3);font-weight:600;font-size:12px">tap a day to expand</span>'));
   const fb=el('div','date-filter');
-  fb.innerHTML=`<button class="cal-toggle${histCalOpen?' on':''}" id="calToggle">${I.cal}<span>Calendar</span></button>
+  fb.innerHTML=`<button class="cal-toggle" id="calToggle">${I.cal}<span>Calendar</span></button>
     <label class="df-field">${I.cal}<input type="date" id="histDate" value="${histFilter||''}" aria-label="Filter history by date"></label>
     <button class="df-clear" id="histClear"${histFilter?'':' hidden'}>Clear</button>`;
   v.appendChild(fb);
-  fb.querySelector('#calToggle').onclick=()=>{ histCalOpen=!histCalOpen; renderProgress(); };
+  fb.querySelector('#calToggle').onclick=()=>openCalendar();
   fb.querySelector('#histDate').onchange=e=>{ histFilter=e.target.value||null; renderProgress(); };
   fb.querySelector('#histClear').onclick=()=>{ histFilter=null; renderProgress(); };
-  if(histCalOpen){
-    if(calYear==null){ const t=new Date(todayISO()+'T00:00'); calYear=t.getFullYear(); calMonth=t.getMonth(); }
-    const done=completedDates();
-    const cal=el('div','cal-panel');
-    const cnt=[...done].filter(x=>{const d=new Date(x+'T00:00');return d.getFullYear()===calYear&&d.getMonth()===calMonth;}).length;
-    cal.innerHTML=`<div class="cal-head"><button class="cal-nav" id="calPrev" aria-label="Previous month">${I.chevL}</button><b>${MONTHS_FULL[calMonth]} ${calYear}</b><button class="cal-nav" id="calNext" aria-label="Next month">${I.chev}</button></div>
-      <div class="cal-dows">${['S','M','T','W','T','F','S'].map(x=>`<span>${x}</span>`).join('')}</div>`;
-    const grid=el('div','cal-grid');
-    const startDow=new Date(calYear,calMonth,1).getDay();
-    const daysIn=new Date(calYear,calMonth+1,0).getDate();
-    for(let i=0;i<startDow;i++) grid.appendChild(el('div','cal-cell empty'));
-    for(let day=1;day<=daysIn;day++){
-      const iso=calYear+'-'+String(calMonth+1).padStart(2,'0')+'-'+String(day).padStart(2,'0');
-      const isDone=done.has(iso), isToday=iso===todayISO(), isSel=histFilter===iso;
-      const cell=el(isDone?'button':'div','cal-cell'+(isDone?' done':'')+(isToday?' today':'')+(isSel?' sel':''));
-      cell.textContent=day;
-      if(isDone) cell.onclick=()=>{ histFilter=(histFilter===iso?null:iso); renderProgress(); };
-      grid.appendChild(cell);
-    }
-    cal.appendChild(grid);
-    cal.appendChild(el('div','cal-legend',`<span class="lg done"></span> Completed${cnt?` · ${cnt} this month`:''} &nbsp; <span class="lg today"></span> Today`));
-    v.appendChild(cal);
-    cal.querySelector('#calPrev').onclick=()=>{ calMonth--; if(calMonth<0){calMonth=11;calYear--;} renderProgress(); };
-    cal.querySelector('#calNext').onclick=()=>{ calMonth++; if(calMonth>11){calMonth=0;calYear++;} renderProgress(); };
-  }
 
   let sorted=[...DB.history].sort((a,b)=>b.ts-a.ts);
   if(histFilter) sorted=sorted.filter(r=>r.date===histFilter);
@@ -1159,6 +1208,21 @@ function renderGoals(){
     <div class="pbar"><i style="width:${Math.min(100,wk/DB.goals.weekly*100)}%"></i></div>
     <div class="pcap">${wk}/${DB.goals.weekly} done this week</div>`;
   v.appendChild(g1);
+
+  // training-days schedule (drives missed vs rest in the calendar)
+  const td=el('div','goalcard');
+  td.innerHTML=`<div class="gh"><div class="gi accent">${I.cal}</div><b>Training days</b></div>
+    <p class="td-hint">Pick your workout days. The calendar marks these <b>red if missed</b>, and other days grey (rest / not scheduled).</p>`;
+  const tdRow=el('div','td-row');
+  ['S','M','T','W','T','F','S'].forEach((lab,idx)=>{
+    const on=(DB.goals.trainDays||[]).includes(idx);
+    const b=el('button','td-day'+(on?' on':''),lab);
+    b.setAttribute('aria-pressed',on);
+    b.onclick=()=>{ const set=new Set(DB.goals.trainDays||[]); set.has(idx)?set.delete(idx):set.add(idx); DB.goals.trainDays=[...set].sort((a,b)=>a-b); save(); renderGoals(); renderToday(); };
+    tdRow.appendChild(b);
+  });
+  td.appendChild(tdRow);
+  v.appendChild(td);
 
   // bodyweight goal
   const bw=DB.goals; const lost=Math.max(0,bw.bwCurrent-bw.bwTarget);
@@ -1535,6 +1599,33 @@ function videoBlock(name, vid){
   };
   return wrap;
 }
+
+/* ---------- CALENDAR POPOVER ---------- */
+function openCalendar(){
+  if(calYear==null){ const t=new Date(todayISO()+'T00:00'); calYear=t.getFullYear(); calMonth=t.getMonth(); }
+  $('#calScrim').classList.add('show'); $('#calModal').classList.add('show'); renderCalendar();
+}
+function closeCalendar(){ $('#calScrim').classList.remove('show'); $('#calModal').classList.remove('show'); }
+function renderCalendar(){
+  $('#calMon').textContent=`${MONTHS_FULL[calMonth]} ${calYear}`;
+  const grid=$('#calGrid'); grid.innerHTML='';
+  const doneSet=completedDates();
+  const startDow=new Date(calYear,calMonth,1).getDay();
+  const daysIn=new Date(calYear,calMonth+1,0).getDate();
+  for(let i=0;i<startDow;i++) grid.appendChild(el('div','cal-cell empty'));
+  for(let day=1;day<=daysIn;day++){
+    const iso=calYear+'-'+String(calMonth+1).padStart(2,'0')+'-'+String(day).padStart(2,'0');
+    const st=dayStatus(iso,doneSet); const isToday=iso===todayISO(); const hasData=doneSet.has(iso);
+    const cell=el(hasData?'button':'div','cal-cell '+st+(isToday?' today':'')+(histFilter===iso?' sel':''));
+    cell.textContent=day;
+    if(hasData){ cell.setAttribute('aria-label',`View ${day} ${MO[calMonth]} ${calYear}`); cell.onclick=()=>{ closeCalendar(); gotoDate(iso); }; }
+    grid.appendChild(cell);
+  }
+}
+$('#calScrim').onclick=closeCalendar; $('#calClose').onclick=closeCalendar;
+$('#calPrev').onclick=()=>{ calMonth--; if(calMonth<0){calMonth=11;calYear--;} renderCalendar(); };
+$('#calNext').onclick=()=>{ calMonth++; if(calMonth>11){calMonth=0;calYear++;} renderCalendar(); };
+document.addEventListener('keydown',e=>{ if(e.key==='Escape'&&$('#calModal').classList.contains('show')) closeCalendar(); });
 
 /* ---------- CONFIRM DIALOG ---------- */
 let cfYes=null;

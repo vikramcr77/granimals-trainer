@@ -495,6 +495,48 @@ input{font-family:inherit}
 .df-clear:hover{border-color:var(--accent); color:var(--accent)}
 .df-clear[hidden]{display:none}
 .hist-row .tag{width:44px; height:44px; font-size:17px; border-radius:12px}
+
+/* week strip (Today) */
+.week-strip{display:grid; grid-template-columns:repeat(7,1fr); gap:6px; margin-top:14px}
+.wk-day{display:flex; flex-direction:column; align-items:center; gap:4px; padding:8px 0 7px; border-radius:12px; background:var(--surface); border:1px solid var(--line); transition:.15s}
+.wk-day .wk-dow{font-size:10px; font-weight:800; text-transform:uppercase; color:var(--ink-3); letter-spacing:.4px}
+.wk-day .wk-num{font-family:"Oswald"; font-weight:600; font-size:16px; color:var(--ink)}
+.wk-day.future{opacity:.42}
+.wk-day.done{background:color-mix(in srgb,var(--good) 16%,var(--surface)); border-color:color-mix(in srgb,var(--good) 45%,transparent)}
+.wk-day.done .wk-num{color:var(--good)}
+.wk-day.done:hover{transform:translateY(-2px)}
+button.wk-day{cursor:pointer}
+.wk-day.today{border-color:var(--accent); border-width:2px}
+.wk-day.today .wk-dow{color:var(--accent)}
+.wk-day.today.done .wk-num{color:var(--good)}
+
+/* history calendar */
+.cal-toggle{display:inline-flex; align-items:center; gap:7px; height:46px; padding:0 15px; border-radius:12px; background:var(--surface); border:1px solid var(--line); color:var(--ink); font-weight:700; font-size:13px; flex:none; transition:.15s}
+.cal-toggle svg{width:17px; height:17px; color:var(--accent)}
+.cal-toggle:hover{border-color:var(--accent)}
+.cal-toggle.on{background:var(--accent-soft); border-color:var(--accent); color:var(--accent)}
+.cal-toggle.on svg{color:var(--accent)}
+.date-filter .df-field{flex:1}
+.cal-panel{background:var(--surface); border:1px solid var(--line); border-radius:var(--r); padding:14px; margin:2px 0 8px; box-shadow:var(--shadow)}
+.cal-head{display:flex; align-items:center; justify-content:space-between; margin-bottom:12px}
+.cal-head b{font-family:"Oswald"; font-weight:600; font-size:16px; letter-spacing:.3px}
+.cal-nav{width:34px; height:34px; border-radius:10px; background:var(--surface-2); border:1px solid var(--line); color:var(--ink); display:grid; place-items:center}
+.cal-nav:hover{border-color:var(--accent); color:var(--accent)}
+.cal-nav svg{width:17px; height:17px}
+.cal-dows{display:grid; grid-template-columns:repeat(7,1fr); gap:4px; margin-bottom:6px}
+.cal-dows span{text-align:center; font-size:10px; font-weight:800; text-transform:uppercase; color:var(--ink-3); letter-spacing:.3px}
+.cal-grid{display:grid; grid-template-columns:repeat(7,1fr); gap:4px}
+.cal-cell{aspect-ratio:1; display:grid; place-items:center; border-radius:9px; font-size:13px; font-weight:600; color:var(--ink-2); background:transparent; border:1px solid transparent}
+.cal-cell.empty{background:none}
+button.cal-cell{cursor:pointer}
+.cal-cell.done{background:color-mix(in srgb,var(--good) 20%,var(--surface)); color:var(--good); font-weight:800; border-color:color-mix(in srgb,var(--good) 40%,transparent)}
+.cal-cell.done:hover{background:color-mix(in srgb,var(--good) 32%,var(--surface))}
+.cal-cell.today{border-color:var(--accent); border-width:2px; color:var(--accent)}
+.cal-cell.sel{outline:2px solid var(--accent); outline-offset:1px}
+.cal-legend{display:flex; align-items:center; gap:6px; margin-top:12px; padding-top:11px; border-top:1px solid var(--line); font-size:11.5px; color:var(--ink-2); font-weight:600}
+.cal-legend .lg{width:12px; height:12px; border-radius:4px; display:inline-block; vertical-align:-1px}
+.cal-legend .lg.done{background:color-mix(in srgb,var(--good) 40%,var(--surface)); border:1px solid var(--good)}
+.cal-legend .lg.today{border:2px solid var(--accent)}
 .hist-row.open + .hist-detail{display:block}
 .hist-detail .hde{display:flex; justify-content:space-between; gap:10px; padding:5px 0; font-size:12.5px; border-bottom:1px dashed var(--line)}
 .hist-detail .hde:last-child{border-bottom:none}
@@ -614,6 +656,7 @@ const I = {
   fire:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3s5 4 5 9a5 5 0 0 1-10 0c0-2 1-3 1-3s0 2 2 2c1.5 0 1.5-2 1-4-.5-2 1-5 1-5z"/></svg>',
   layers:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l9 5-9 5-9-5z"/><path d="M3 13l9 5 9-5"/></svg>',
   chev:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>',
+  chevL:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>',
   check:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>',
   rest:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9 9h6l-6 6h6"/></svg>',
   trophy:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4h12v4a6 6 0 0 1-12 0z"/><path d="M6 6H3v2a3 3 0 0 0 3 3M18 6h3v2a3 3 0 0 1-3 3M9 18h6M12 14v4M8 21h8"/></svg>',
@@ -812,6 +855,20 @@ function renderToday(){
   g.innerHTML = `<div class="day">${DAYS[now.getDay()]}, ${now.getDate()} ${MO[now.getMonth()]}</div><h2>${hi}, Vikram.</h2>`;
   v.appendChild(g);
 
+  // this-week strip: completed = green, today = ringed
+  const doneSet=completedDates();
+  const ws=el('div','week-strip');
+  const start=new Date(todayISO()+'T00:00'); start.setDate(start.getDate()-start.getDay());
+  for(let i=0;i<7;i++){
+    const dd=new Date(start); dd.setDate(start.getDate()+i);
+    const iso=localISO(dd); const isToday=iso===todayISO(); const isDone=doneSet.has(iso); const isFuture=dd>now && !isToday;
+    const cell=el(isDone?'button':'div','wk-day'+(isDone?' done':'')+(isToday?' today':'')+(isFuture?' future':''));
+    cell.innerHTML=`<span class="wk-dow">${DOW[dd.getDay()][0]}</span><span class="wk-num">${dd.getDate()}</span>`;
+    if(isDone){ cell.setAttribute('aria-label',`View ${dd.getDate()} ${MO[dd.getMonth()]}`); cell.onclick=()=>gotoDate(iso); }
+    ws.appendChild(cell);
+  }
+  v.appendChild(ws);
+
   const sug=suggestedToday();
   const done=isDoneToday(sug.id);
   const draft=!!DB.drafts[sug.id];
@@ -878,6 +935,16 @@ function renderToday(){
    ============================================================ */
 let trainFilter='all';
 let histFilter=null;
+let histCalOpen=false, calYear=null, calMonth=null;
+function completedDates(){ return new Set(DB.history.map(h=>h.date)); }
+function gotoDate(iso){
+  histFilter=iso;
+  document.querySelectorAll('.tab').forEach(x=>x.setAttribute('aria-selected','false'));
+  document.querySelector('.tab[data-tab="progress"]').setAttribute('aria-selected','true');
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+  $('#view-progress').classList.add('active');
+  renderProgress(); window.scrollTo(0,0);
+}
 function renderTrain(){
   const v=$('#view-train'); v.innerHTML='';
   v.appendChild(el('div','',`<div class="eyebrow" style="margin:2px 2px 4px">Your program</div><div class="h2" style="margin-bottom:14px">Week 14 sessions</div>`));
@@ -958,11 +1025,38 @@ function renderProgress(){
   // history — category tags, day-wise, grouped by month, with a date filter
   v.appendChild(el('div','section-head','<span class="eyebrow">History</span><span style="color:var(--ink-3);font-weight:600;font-size:12px">tap a day to expand</span>'));
   const fb=el('div','date-filter');
-  fb.innerHTML=`<label class="df-field">${I.cal}<input type="date" id="histDate" value="${histFilter||''}" aria-label="Filter history by date"></label>
+  fb.innerHTML=`<button class="cal-toggle${histCalOpen?' on':''}" id="calToggle">${I.cal}<span>Calendar</span></button>
+    <label class="df-field">${I.cal}<input type="date" id="histDate" value="${histFilter||''}" aria-label="Filter history by date"></label>
     <button class="df-clear" id="histClear"${histFilter?'':' hidden'}>Clear</button>`;
   v.appendChild(fb);
+  fb.querySelector('#calToggle').onclick=()=>{ histCalOpen=!histCalOpen; renderProgress(); };
   fb.querySelector('#histDate').onchange=e=>{ histFilter=e.target.value||null; renderProgress(); };
   fb.querySelector('#histClear').onclick=()=>{ histFilter=null; renderProgress(); };
+  if(histCalOpen){
+    if(calYear==null){ const t=new Date(todayISO()+'T00:00'); calYear=t.getFullYear(); calMonth=t.getMonth(); }
+    const done=completedDates();
+    const cal=el('div','cal-panel');
+    const cnt=[...done].filter(x=>{const d=new Date(x+'T00:00');return d.getFullYear()===calYear&&d.getMonth()===calMonth;}).length;
+    cal.innerHTML=`<div class="cal-head"><button class="cal-nav" id="calPrev" aria-label="Previous month">${I.chevL}</button><b>${MONTHS_FULL[calMonth]} ${calYear}</b><button class="cal-nav" id="calNext" aria-label="Next month">${I.chev}</button></div>
+      <div class="cal-dows">${['S','M','T','W','T','F','S'].map(x=>`<span>${x}</span>`).join('')}</div>`;
+    const grid=el('div','cal-grid');
+    const startDow=new Date(calYear,calMonth,1).getDay();
+    const daysIn=new Date(calYear,calMonth+1,0).getDate();
+    for(let i=0;i<startDow;i++) grid.appendChild(el('div','cal-cell empty'));
+    for(let day=1;day<=daysIn;day++){
+      const iso=calYear+'-'+String(calMonth+1).padStart(2,'0')+'-'+String(day).padStart(2,'0');
+      const isDone=done.has(iso), isToday=iso===todayISO(), isSel=histFilter===iso;
+      const cell=el(isDone?'button':'div','cal-cell'+(isDone?' done':'')+(isToday?' today':'')+(isSel?' sel':''));
+      cell.textContent=day;
+      if(isDone) cell.onclick=()=>{ histFilter=(histFilter===iso?null:iso); renderProgress(); };
+      grid.appendChild(cell);
+    }
+    cal.appendChild(grid);
+    cal.appendChild(el('div','cal-legend',`<span class="lg done"></span> Completed${cnt?` · ${cnt} this month`:''} &nbsp; <span class="lg today"></span> Today`));
+    v.appendChild(cal);
+    cal.querySelector('#calPrev').onclick=()=>{ calMonth--; if(calMonth<0){calMonth=11;calYear--;} renderProgress(); };
+    cal.querySelector('#calNext').onclick=()=>{ calMonth++; if(calMonth>11){calMonth=0;calYear++;} renderProgress(); };
+  }
 
   let sorted=[...DB.history].sort((a,b)=>b.ts-a.ts);
   if(histFilter) sorted=sorted.filter(r=>r.date===histFilter);

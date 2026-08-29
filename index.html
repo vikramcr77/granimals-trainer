@@ -1440,6 +1440,19 @@ function renderSheetBody(){
 
     if(isStrength){
       const sets=el('div','sets');
+      // cascade a value down to following sets that are empty or still auto-filled
+      const cascade=(field,si)=>{
+        const autoKey = field==='reps'?'rAuto':'kAuto';
+        const val = st.sets[si][field];
+        const lines = sets.querySelectorAll('.set-line');
+        for(let j=si+1;j<st.sets.length;j++){
+          if(st.sets[j][autoKey] || st.sets[j][field]===''){
+            st.sets[j][field]=val; st.sets[j][autoKey]=true;
+            const inp=lines[j] && lines[j].querySelectorAll('input')[field==='reps'?0:1];
+            if(inp) inp.value=val;
+          }
+        }
+      };
       st.sets.forEach((set,si)=>{
         const line=el('div','set-line');
         line.innerHTML=`
@@ -1449,8 +1462,8 @@ function renderSheetBody(){
           <div class="field"><input inputmode="decimal" placeholder="${st.prev&&st.prev[si]&&st.prev[si].kg?st.prev[si].kg:'–'}" value="${set.kg}" aria-label="Weight kg set ${si+1}"><span class="unit">kg</span></div>
           <button class="set-rm" aria-label="Remove set ${si+1}" ${st.sets.length<=1?'disabled':''}>${I.minus}</button>`;
         const [ri,ki]=line.querySelectorAll('input');
-        ri.oninput=e=>{ set.reps=e.target.value.replace(/[^0-9]/g,''); e.target.value=set.reps; updateSheetProgress(); saveDraft(); };
-        ki.oninput=e=>{ set.kg=e.target.value.replace(/[^0-9.]/g,''); e.target.value=set.kg; updateSheetProgress(); saveDraft(); };
+        ri.oninput=e=>{ set.reps=e.target.value.replace(/[^0-9]/g,''); e.target.value=set.reps; set.rAuto=false; cascade('reps',si); updateSheetProgress(); saveDraft(); };
+        ki.oninput=e=>{ set.kg=e.target.value.replace(/[^0-9.]/g,''); e.target.value=set.kg; set.kAuto=false; cascade('kg',si); updateSheetProgress(); saveDraft(); };
         line.querySelector('.set-rm').onclick=()=>{ if(st.sets.length>1){ st.sets.splice(si,1); renderSheetBody(); saveDraft(); } };
         sets.appendChild(line);
       });
@@ -1567,20 +1580,23 @@ function registerSetTimers(){
       const si=+row.dataset.set, btn=row.querySelector('.tbtn'), bar=row.querySelector('.tbar i');
       const tico=btn.querySelector('.tico'), tt=btn.querySelector('.tt');
       const rm=row.querySelector('.timed-rm'); if(rm) rm.onclick=()=>{ if(st.sets.length>1){ st.sets.splice(si,1); renderSheetBody(); saveDraft(); } };
-      if(st.sets[si].done) return;
       let rem=st.sec, iv=null, running=false;
       const paint=()=>{ tt.textContent=fmt(rem); bar.style.width=((st.sec-rem)/st.sec*100)+'%'; };
-      const finish=()=>{ clearInterval(iv); running=false; st.sets[si].done=true; row.classList.add('done');
-        btn.classList.remove('running'); tico.innerHTML=I.check; tt.textContent='Done'; bar.style.width='100%'; alarm();
+      const doneUI=()=>{ row.classList.add('done'); btn.classList.remove('running'); tico.innerHTML=I.check; tt.textContent='Done'; bar.style.width='100%'; };
+      const start=()=>{ running=true; btn.classList.add('running'); tico.innerHTML=I.pause; ensureAudio();
+        iv=setInterval(()=>{ rem--; if(rem<=0){ rem=0; paint(); finish(); } else { paint(); if(rem<=3) tick(); } },1000);
+        setTimerIntervals.push(iv); };
+      const finish=()=>{ clearInterval(iv); running=false; st.sets[si].done=true; doneUI(); alarm();
         if(st.sets.every(s=>s.done)){ st.done=true; exEl.classList.add('done'); } updateSheetProgress(); saveDraft(); };
       btn.onclick=()=>{
-        if(st.sets[si].done) return;
+        if(st.sets[si].done){ // restart a finished timer
+          st.sets[si].done=false; st.done=false; exEl.classList.remove('done'); row.classList.remove('done');
+          rem=st.sec; start(); updateSheetProgress(); saveDraft(); return;
+        }
         if(running){ clearInterval(iv); running=false; btn.classList.remove('running'); tico.innerHTML=I.play; return; }
-        running=true; btn.classList.add('running'); tico.innerHTML=I.pause; ensureAudio();
-        iv=setInterval(()=>{ rem--; if(rem<=0){ rem=0; paint(); finish(); } else { paint(); if(rem<=3) tick(); } },1000);
-        setTimerIntervals.push(iv);
+        start();
       };
-      paint();
+      if(st.sets[si].done) doneUI(); else paint();
     });
   });
 }

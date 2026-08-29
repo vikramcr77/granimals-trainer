@@ -194,6 +194,9 @@ input{font-family:inherit}
 .scard .chev svg{width:20px; height:20px}
 .scard.open .chev{transform:rotate(90deg)}
 .scard-badge{font-size:10.5px; font-weight:800; text-transform:uppercase; letter-spacing:.6px; padding:3px 8px; border-radius:7px; background:var(--good); color:#fff; flex:none; margin-left:auto}
+.scard.is-today{border-color:var(--accent); box-shadow:0 0 0 1px var(--accent), var(--shadow)}
+.today-badge{font-size:10.5px; font-weight:800; text-transform:uppercase; letter-spacing:.6px; padding:3px 9px; border-radius:7px; background:var(--accent); color:var(--accent-ink); flex:none; margin-left:auto}
+.t-star{color:var(--accent); font-size:9px; vertical-align:2px; margin-left:3px}
 
 .exlist{border-top:1px solid var(--line); padding:6px 16px 12px; display:none}
 .scard.open .exlist{display:block}
@@ -333,6 +336,13 @@ input{font-family:inherit}
 .exercise.done .ex-head .eh b{text-decoration:line-through; color:var(--ink-2)}
 .ex-head .eh span{font-size:12px; color:var(--accent); font-weight:700; font-family:"IBM Plex Mono"}
 .ex-head .pv{font-size:11px; color:var(--ink-3); font-weight:600; font-family:"IBM Plex Mono"; margin-top:2px; display:block}
+.ex-hist{display:flex; align-items:center; gap:8px; margin:0 14px 12px; padding:7px 8px; background:var(--surface-2); border:1px solid var(--line); border-radius:10px}
+.ex-hist .eh-label{flex:1; text-align:center; font-size:12px; color:var(--ink-2); font-weight:600; font-family:"IBM Plex Mono"; min-width:0}
+.ex-hist .eh-label b{color:var(--ink); font-weight:700; font-family:"Manrope"}
+.eh-nav{width:30px; height:30px; flex:none; border-radius:8px; background:var(--surface); border:1px solid var(--line); color:var(--ink-2); display:grid; place-items:center; transition:.15s}
+.eh-nav:hover:not(:disabled){border-color:var(--accent); color:var(--accent)}
+.eh-nav:disabled{opacity:.3; cursor:not-allowed}
+.eh-nav svg{width:15px; height:15px}
 .ex-head .vb{width:36px; height:36px; border-radius:10px; background:var(--surface-2); color:var(--accent); border:1px solid var(--line); display:grid; place-items:center; flex:none}
 .ex-head .vb svg{width:16px; height:16px}
 .sets{padding:0 14px 14px; display:flex; flex-direction:column; gap:8px}
@@ -1031,17 +1041,21 @@ function renderTrain(){
   });
   v.appendChild(fr);
 
-  PROGRAM.filter(s=> trainFilter==='all' || s.type===trainFilter).forEach(s=>{
-    const done = isDoneToday(s.id);
-    const card=el('div','scard');
+  const todayId=suggestedToday().id;
+  let sessions=PROGRAM.filter(s=> trainFilter==='all' || s.type===trainFilter);
+  if(trainFilter==='all') sessions=[...sessions].sort((a,b)=>(a.id===todayId?-1:0)-(b.id===todayId?-1:0)); // today's session first
+  sessions.forEach(s=>{
+    const done = isDoneToday(s.id); const isToday=s.id===todayId;
+    const card=el('div','scard'+(isToday?' is-today':''));
     const b=el('button','scard-btn');
+    const badge = done?`<div class="scard-badge">Done</div>` : DB.drafts[s.id]?`<div class="resume-badge">In progress</div>` : isToday?`<div class="today-badge">Today</div>`:'';
     b.innerHTML=`
       <div class="tag ${s.type}">${s.code}</div>
       <div class="info">
-        <div class="t">${s.short}</div>
+        <div class="t">${s.short}${isToday?' <span class="t-star">●</span>':''}</div>
         <div class="d"><span>${s.ex.length} exercises</span><span class="dot">~${s.est} min</span></div>
       </div>
-      ${done?`<div class="scard-badge">Done</div>`:DB.drafts[s.id]?`<div class="resume-badge">In progress</div>`:''}
+      ${badge}
       <div class="chev">${I.chev}</div>`;
     b.onclick=()=>{ card.classList.toggle('open'); };
     card.appendChild(b);
@@ -1050,11 +1064,8 @@ function renderTrain(){
     s.ex.forEach(ex=>{
       const item=el('div','exitem');
       const r=el('div','exrow');
-      r.innerHTML=`<div class="en"><b>${ex.name}</b><span>${ex.target}</span></div>
-        <button class="vid-btn" aria-label="Watch tutorial for ${ex.name}">${I.play}</button>`;
-      const vb=videoBlock(ex.name, ex.vid);
-      r.querySelector('.vid-btn').onclick=()=>vb.querySelector('.vtoggle').click();
-      item.appendChild(r); item.appendChild(vb);
+      r.innerHTML=`<div class="en"><b>${ex.name}</b><span>${ex.target}</span></div>`;
+      item.appendChild(r); item.appendChild(videoBlock(ex.name, ex.vid));
       list.appendChild(item);
     });
     const start=el('button','start-inline',`${I.play} Start & log this session`);
@@ -1296,6 +1307,7 @@ function renderGoals(){
    SESSION SHEET (logging)
    ============================================================ */
 let activeSession=null, sheetState=null, sheetPast=[], sheetHistIdx=-1;
+function fmtEntry(sets){ return sets.map(x=> x.sec?`${x.sec}s` : x.kg?`${x.reps}×${x.kg}kg` : x.reps?`${x.reps} reps`:'✓').join(', '); }
 function parseSets(target){ const m=target.match(/^(\d+)\s*[×x]/); return m?Math.min(6,+m[1]):1; }
 
 function openSession(sid){
@@ -1308,7 +1320,8 @@ function openSession(sid){
     const nSets = ex.setN || parseSets(ex.target);
     const prev = last && last.sets[ex.name] ? last.sets[ex.name] : null;
     const st = { name:ex.name, target:ex.target, nSets, done:false, prev,
-                 sec:ex.sec||null, timed, rest:ex.rest||s.rest||null, vid:ex.vid||null };
+                 sec:ex.sec||null, timed, rest:ex.rest||s.rest||null, vid:ex.vid||null,
+                 hist: DB.history.filter(h=>h.sets[ex.name]).sort((a,b)=>b.ts-a.ts).map(h=>({date:h.date, sets:h.sets[ex.name]})), hIdx:0 };
     if(isStrength) st.sets = Array.from({length:nSets},()=>({reps:'',kg:''}));
     else if(timed) st.sets = Array.from({length:nSets},()=>({done:false}));
     else st.sets = null;
@@ -1408,11 +1421,21 @@ function renderSheetBody(){
     const head=el('div','ex-head');
     head.innerHTML=`
       <button class="ex-check" aria-label="Mark ${st.name} complete">${I.check}</button>
-      <div class="eh"><b>${st.name}</b><span>Target ${st.target}</span>
-        ${st.prev&&isStrength?`<span class="pv">Last: ${st.prev.map(p=>p.kg?`${p.reps||'-'}×${p.kg}kg`:`${p.reps||'-'}`).join(', ')}</span>`:''}
-      </div>`;
+      <div class="eh"><b>${st.name}</b><span>Target ${st.target}</span></div>`;
     head.querySelector('.ex-check').onclick=()=>{ st.done=!st.done; if(st.timed&&st.sets) st.sets.forEach(s=>s.done=st.done); renderSheetBody(); saveDraft(); };
     ex.appendChild(head);
+    // per-exercise history: ◀ ▶ through past values for THIS exercise
+    if(st.hist && st.hist.length){
+      const hb=el('div','ex-hist');
+      hb.innerHTML=`<button class="eh-nav eh-prev" aria-label="Older">${I.chevL}</button><span class="eh-label"></span><button class="eh-nav eh-next" aria-label="Newer">${I.chev}</button>`;
+      const paint=()=>{ const e=st.hist[st.hIdx]; const d=new Date(e.date+'T00:00');
+        hb.querySelector('.eh-label').innerHTML=`<b>${st.hIdx===0?'Last time':DOW[d.getDay()]+' '+d.getDate()+' '+MO[d.getMonth()]}</b> · ${fmtEntry(e.sets)}`;
+        hb.querySelector('.eh-prev').disabled=st.hIdx>=st.hist.length-1;
+        hb.querySelector('.eh-next').disabled=st.hIdx<=0; };
+      hb.querySelector('.eh-prev').onclick=()=>{ if(st.hIdx<st.hist.length-1){ st.hIdx++; paint(); } };
+      hb.querySelector('.eh-next').onclick=()=>{ if(st.hIdx>0){ st.hIdx--; paint(); } };
+      paint(); ex.appendChild(hb);
+    }
     ex.appendChild(videoBlock(st.name, st.vid));
 
     if(isStrength){

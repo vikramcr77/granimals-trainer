@@ -732,6 +732,193 @@ button.gr-tick:hover{border-color:var(--accent)}
 .exrow .en span.src-badge.claude,.ex-head .eh span.src-badge.claude{color:var(--violet)}
 .exrow .en span.src-badge.saves,.ex-head .eh span.src-badge.saves{color:var(--ink-2)}
 
+
+/* ===== train modes & me ===== */
+.seg.train-seg,.seg.me-seg{display:grid; grid-template-columns:repeat(3,1fr); margin-bottom:4px}
+.seg.train-seg button,.seg.me-seg button{padding:0 6px; font-size:12.5px}
+.me-panel[hidden]{display:none}
+.assess-link{display:flex; align-items:center; gap:10px; width:100%; margin-top:10px; padding:12px 14px; border-radius:13px; background:var(--surface); border:1px solid var(--line); text-align:left; box-shadow:var(--shadow)}
+.assess-link svg{width:17px; height:17px; color:var(--accent); flex:none}
+.assess-link span{flex:1; font-size:12.5px; color:var(--ink-2); font-weight:600}
+.assess-link b{color:var(--ink); margin-right:4px}
+
+/* ===== heavy duty ===== */
+.tag.hd{background:var(--ink); color:var(--bg)}
+.hd-card{background:var(--surface); border:1px solid var(--line); border-radius:var(--r); padding:16px; margin-top:12px; box-shadow:var(--shadow)}
+.hd-h{display:flex; flex-direction:column; gap:2px}
+.hd-badge{align-self:flex-start; font-size:10px; font-weight:800; letter-spacing:.7px; text-transform:uppercase; padding:3px 8px; border-radius:6px; background:var(--ink); color:var(--bg)}
+.hd-h b{font-family:"Oswald"; font-weight:600; font-size:26px; letter-spacing:.4px; margin-top:6px; line-height:1}
+.hd-sub{font-size:13px; color:var(--ink-2); font-weight:600}
+.hd-rules{display:grid; gap:8px; margin-top:12px}
+.hd-rules div{display:flex; gap:10px; font-size:12.5px; line-height:1.4}
+.hd-rules b{flex:none; width:74px; font-weight:800; color:var(--accent)}
+.hd-rules span{color:var(--ink-2); font-weight:500}
+.hd-int{display:flex; align-items:center; gap:12px; margin-top:14px; padding-top:12px; border-top:1px solid var(--line)}
+.hd-int > div:first-child{flex:1; min-width:0}
+.hd-int span{font-size:11.5px; font-weight:700; color:var(--ink-3); text-transform:uppercase; letter-spacing:.5px}
+.hd-int b{display:block; font-family:"Oswald"; font-weight:600; font-size:24px}
+.hd-int em{display:block; font-style:normal; font-size:12px; color:var(--ink-2); font-weight:500; line-height:1.4; margin-top:2px}
+.hd-step{display:flex; gap:8px}
+.hd-step button{width:42px; height:42px; border-radius:12px; background:var(--surface-2); border:1px solid var(--line); font-size:20px; font-family:"Oswald"; color:var(--ink)}
+.hd-step button:disabled{opacity:.3}
+.hd-alert{display:flex; gap:10px; align-items:flex-start; margin-top:10px; padding:12px 14px; border-radius:13px; background:var(--accent-soft); font-size:12.5px; line-height:1.45}
+.hd-alert.soft{background:var(--surface-2)}
+.hd-alert.knee{background:var(--cyan-soft)}
+.hd-alert > svg{width:16px; height:16px; flex:none; margin-top:2px; color:var(--accent)}
+.hd-alert b{display:block; font-weight:800; margin-bottom:2px}
+.hd-alert span{color:var(--ink-2); font-weight:500}
+.hd-alert button{margin-top:8px; font-size:12.5px; font-weight:800; padding:8px 12px; border-radius:9px; background:var(--accent); color:var(--accent-ink)}
+.book-txt{color:var(--gold); font-weight:800}
+.hd-foot{margin:12px 2px 0}
+.ss-tag{display:inline-block!important; font-family:"Manrope"!important; font-size:9.5px!important; font-weight:800; letter-spacing:.5px; text-transform:uppercase; padding:2px 7px; border-radius:6px; margin:5px 6px 0 0; background:var(--ink); color:var(--bg)!important}
+.ex-head .eh span.ex-next{display:block; font-family:"Manrope"; font-size:12px; font-weight:800; color:var(--good); margin-top:5px}
+.ss-link{display:flex; align-items:center; gap:8px; margin:-6px 0 6px 18px; padding:6px 10px; font-size:11.5px; font-weight:800; color:var(--ink-2)}
+.ss-link span{font-size:15px; color:var(--accent)}
+.hd-today{margin-top:12px; background:var(--surface); border:1px solid var(--line); border-radius:var(--r); padding:14px; box-shadow:var(--shadow)}
+.hdt-top{display:flex; align-items:center; gap:12px}
+.hdt-t{flex:1; min-width:0}
+.hdt-t span{display:block; font-size:10.5px; font-weight:800; text-transform:uppercase; letter-spacing:.6px; color:var(--ink-3)}
+.hdt-t b{display:block; font-family:"Oswald"; font-weight:600; font-size:18px; line-height:1.2}
+.hdt-t em{display:block; font-style:normal; font-size:12px; color:var(--ink-2); font-weight:600}
+.hdt-t em.due{color:var(--accent); font-weight:800}
+.hdt-go{display:flex; align-items:center; gap:2px; height:38px; padding:0 12px; border-radius:11px; background:var(--ink); color:var(--bg); font-weight:800; font-size:12.5px; flex:none}
+.hdt-go svg{width:15px; height:15px}
+
+/* ===== explore ===== */
+.exp-intro{margin-top:12px}
+.exp-intro b{display:block; font-family:"Oswald"; font-weight:600; font-size:19px}
+.exp-intro span{font-size:13px; color:var(--ink-2); font-weight:500}
+.exp-map{position:relative; margin-top:12px; background:var(--surface); border:1px solid var(--line); border-radius:var(--r); padding:12px; box-shadow:var(--shadow); display:flex; flex-direction:column; align-items:center}
+.exp-map .exp-seg{align-self:stretch; display:grid; grid-template-columns:1fr 1fr}
+.bodymap{width:min(62%,230px); height:auto; margin-top:8px}
+.bodymap .bm-body{fill:var(--surface-3)}
+.bodymap .bm{fill:color-mix(in srgb,var(--ink-3) 30%,var(--surface-2)); stroke:var(--surface); stroke-width:2; cursor:pointer; transition:fill .15s}
+.bodymap .bm:hover{fill:color-mix(in srgb,var(--accent) 45%,var(--surface-2))}
+.bodymap .bm.on{fill:var(--accent)}
+.exp-chips{margin-top:10px}
+.exp-card{margin-top:12px; background:var(--surface); border:1px solid var(--line); border-radius:var(--r); padding:14px; box-shadow:var(--shadow)}
+.exp-top{display:flex; gap:12px; align-items:flex-start}
+.exp-top > div{flex:1; min-width:0}
+.exp-top b{display:block; font-size:15px; font-weight:800; line-height:1.25}
+.exp-top span{font-size:12px; color:var(--accent); font-weight:700}
+.exp-pick{width:38px; height:38px; flex:none; border-radius:11px; display:grid; place-items:center; border:1.5px solid var(--line-2); color:var(--ink-2); background:var(--surface-2)}
+.exp-pick svg{width:17px; height:17px}
+.exp-pick.on{background:var(--good); border-color:var(--good); color:#fff}
+.exp-setup{display:flex; flex-wrap:wrap; gap:6px; margin-top:10px}
+.exp-setup span{font-size:11.5px; font-weight:700; padding:5px 9px; border-radius:8px; background:var(--surface-2); border:1px solid var(--line); color:var(--ink)}
+.exp-load{display:flex; align-items:center; gap:6px; margin-top:9px; font-size:12px; font-weight:800; color:var(--ink-2); font-family:"IBM Plex Mono"}
+.exp-load svg{width:14px; height:14px; color:var(--gold)}
+.exp-why{font-size:12.5px; color:var(--ink-2); line-height:1.5; margin:8px 0 10px; font-weight:500}
+.exp-why em{font-style:normal; color:var(--violet); font-weight:700}
+.exp-princ{margin-top:14px; background:var(--surface); border:1px solid var(--line); border-radius:var(--r); padding:12px 14px}
+.exp-princ summary{display:flex; align-items:center; gap:8px; font-weight:800; font-size:13.5px; cursor:pointer}
+.exp-princ summary svg{width:16px; height:16px; color:var(--accent)}
+.exp-princ div{display:flex; gap:10px; margin-top:10px; font-size:12.5px; line-height:1.45}
+.exp-princ div b{width:74px; flex:none}
+.exp-princ div span{color:var(--ink-2)}
+.exp-princ p{font-size:12px; color:var(--ink-3); margin-top:10px; line-height:1.45}
+.exp-bar{position:sticky; bottom:calc(var(--tab-h) + 10px); margin-top:14px; display:flex; align-items:center; gap:10px; padding:10px 12px; border-radius:16px; background:var(--ink); color:var(--bg); box-shadow:var(--shadow-lg); z-index:5}
+.exp-bar > div{flex:1; min-width:0}
+.exp-bar b{display:block; font-size:13px}
+.exp-bar span{display:block; font-size:11.5px; opacity:.75; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.exp-clear{width:38px; height:38px; border-radius:10px; display:grid; place-items:center; color:var(--bg); background:rgba(127,127,127,.25)}
+.exp-clear svg{width:16px; height:16px}
+.exp-start{display:flex; align-items:center; gap:6px; height:40px; padding:0 14px; border-radius:11px; background:var(--accent); color:var(--accent-ink); font-weight:800; font-size:13px}
+.exp-start svg{width:14px; height:14px}
+
+/* ===== profile ===== */
+.prof-card{background:var(--surface); border:1px solid var(--line); border-radius:var(--r); padding:16px; margin-top:4px; box-shadow:var(--shadow)}
+.prof-h b{display:block; font-family:"Oswald"; font-weight:600; font-size:18px}
+.prof-h span{font-size:12.5px; color:var(--ink-2); font-weight:500}
+.prof-grid{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:12px}
+.prof-grid label{display:flex; flex-direction:column; gap:5px; min-width:0}
+.prof-grid label.wide{grid-column:1/-1}
+.prof-grid label > span{font-size:12px; font-weight:700; color:var(--ink-2)}
+.prof-grid input,.prof-grid select,.prof-card input[type=password]{height:42px; border-radius:10px; border:1.5px solid var(--line); background:var(--surface-2); color:var(--ink); padding:0 10px; font-family:"IBM Plex Mono"; font-weight:600; font-size:14px; min-width:0; width:100%}
+.prof-grid select{font-family:"Manrope"}
+.prof-grid .seg{display:grid; grid-auto-flow:column; grid-auto-columns:1fr}
+.prof-grid .seg button{padding:0 6px; font-size:12px}
+.prof-out{display:grid; grid-template-columns:repeat(auto-fit,minmax(92px,1fr)); gap:8px; margin-top:14px}
+.prof-out div{background:var(--surface-2); border-radius:11px; padding:9px 10px}
+.prof-out span{display:block; font-size:10.5px; font-weight:800; text-transform:uppercase; letter-spacing:.5px; color:var(--ink-3)}
+.prof-out b{display:block; font-family:"Oswald"; font-weight:600; font-size:21px; line-height:1.2}
+.prof-out b.good{color:var(--good)} .prof-out b.warn{color:var(--warn)} .prof-out b.bad{color:var(--danger)}
+.prof-out em{display:block; font-style:normal; font-size:10.5px; color:var(--ink-2); font-weight:600}
+.prof-note{font-size:12px; color:var(--ink-2); line-height:1.5; margin-top:10px; font-weight:500}
+
+/* ===== food ===== */
+.food-today{display:flex; align-items:center; gap:12px; width:100%; margin-top:12px; padding:12px 14px; text-align:left; background:var(--surface); border:1px solid var(--line); border-radius:var(--r); box-shadow:var(--shadow)}
+.food-today > div{flex:1; min-width:0}
+.food-today b{display:block; font-size:14px; font-weight:800}
+.food-today span{font-size:12px; color:var(--ink-2); font-weight:600}
+.food-today > svg{width:16px; height:16px; color:var(--ink-3); flex:none}
+.ft-ic{width:40px; height:40px; border-radius:12px; display:grid; place-items:center; background:var(--gold-soft); color:var(--gold); flex:none}
+.ft-ic svg{width:18px; height:18px}
+.ft-ring{--p:0; width:46px; height:46px; flex:none; border-radius:50%; display:grid; place-items:center; background:conic-gradient(var(--good) calc(var(--p)*1%), var(--surface-3) 0)}
+.ft-ring i{width:36px; height:36px; border-radius:50%; background:var(--surface); display:grid; place-items:center; font-style:normal; font-size:10.5px; font-weight:800; font-family:"IBM Plex Mono"}
+.ft-ring.big{width:104px; height:104px}
+.ft-ring.big i{width:86px; height:86px; font-family:"Oswald"; font-size:24px; font-weight:600; display:flex; flex-direction:column; line-height:1}
+.ft-ring.big small{font-family:"Manrope"; font-size:10.5px; color:var(--ink-3); font-weight:700; margin-top:3px}
+.food-nav{display:flex; align-items:center; justify-content:space-between; gap:10px; background:var(--surface); border:1px solid var(--line); border-radius:13px; padding:6px}
+.food-nav b{font-size:14px; font-weight:800}
+.food-sum{margin-top:12px; background:var(--surface); border:1px solid var(--line); border-radius:var(--r); padding:16px; box-shadow:var(--shadow)}
+.fs-top{display:flex; align-items:center; gap:16px; margin-bottom:12px}
+.fs-r{flex:1; min-width:0}
+.fs-r > b{display:block; font-family:"Oswald"; font-weight:600; font-size:20px}
+.fs-r > span{font-size:12px; color:var(--ink-2); font-weight:600}
+.fs-day{margin-top:8px; display:grid; grid-template-columns:1fr 1fr}
+.fs-day button{padding:0 4px; font-size:11.5px; height:32px}
+.fm{margin-top:9px}
+.fm-h{display:flex; justify-content:space-between; font-size:12px; font-weight:700}
+.fm-h b{font-family:"IBM Plex Mono"; font-size:12px}
+.fm .pbar{margin-top:5px; height:7px}
+.pbar.prot i{background:var(--accent)} .pbar.carb i{background:var(--gold)} .pbar.fat i{background:var(--cyan)}
+.meal{margin-top:12px; background:var(--surface); border:1px solid var(--line); border-radius:var(--r); padding:12px 14px; box-shadow:var(--shadow)}
+.meal-h{display:flex; justify-content:space-between; align-items:baseline}
+.meal-h b{font-family:"Oswald"; font-weight:600; font-size:17px}
+.meal-h span{font-size:12px; font-weight:800; color:var(--ink-2); font-family:"IBM Plex Mono"}
+.meal-item,.fa-row,.fa-ai-row{display:flex; align-items:center; gap:10px; padding:9px 0; border-bottom:1px dashed var(--line)}
+.mi-t{flex:1; min-width:0}
+.mi-t b{display:block; font-size:13.5px; font-weight:700; line-height:1.25}
+.mi-t span{font-size:11.5px; color:var(--ink-3); font-weight:600}
+.mi-v{text-align:right; flex:none}
+.mi-v b{display:block; font-family:"IBM Plex Mono"; font-size:13px}
+.mi-v span{font-size:10.5px; color:var(--ink-3); font-weight:700}
+.meal-acts{display:flex; gap:8px; margin-top:10px; flex-wrap:wrap}
+.meal-acts .add-set{flex:1; margin:0}
+.fa-panel{margin-top:10px; border-top:1px solid var(--line); padding-top:10px}
+.fa-tabs{display:grid; grid-template-columns:repeat(3,1fr)}
+.fa-body{margin-top:10px}
+.fa-q{width:100%; height:42px; border-radius:10px; border:1.5px solid var(--line); background:var(--surface-2); color:var(--ink); padding:0 12px; font-size:14px; font-family:"Manrope"}
+.fa-q:focus{outline:none; border-color:var(--accent)}
+.fa-list{max-height:340px; overflow-y:auto; margin-top:6px}
+.fa-qty{display:flex; align-items:center; gap:4px; flex:none}
+.fa-qty button{width:26px; height:26px; border-radius:7px; background:var(--surface-2); border:1px solid var(--line); font-weight:800; color:var(--ink)}
+.fa-qty b{min-width:26px; text-align:center; font-family:"IBM Plex Mono"; font-size:12.5px}
+.fa-add{width:34px; height:34px; border-radius:10px; background:var(--accent); color:var(--accent-ink); display:grid; place-items:center; flex:none}
+.fa-add svg{width:15px; height:15px}
+.fa-mine{font-style:normal; font-size:9.5px; font-weight:800; text-transform:uppercase; color:var(--violet); margin-left:4px}
+.fa-empty{font-size:12.5px; color:var(--ink-2); padding:8px 0; line-height:1.5}
+.fa-close{width:100%; margin-top:10px; height:40px; border-radius:11px; background:var(--surface-2); border:1px solid var(--line); font-weight:700; color:var(--ink)}
+.fa-custom{margin-top:0; border:none; box-shadow:none; padding:0}
+.fa-macros{display:grid; grid-template-columns:1fr 1fr; gap:0 10px}
+.fa-save{display:flex; gap:8px; align-items:center; font-size:12.5px; font-weight:600; margin-top:10px; color:var(--ink-2)}
+.fa-save input{width:auto}
+.fa-pick{display:flex; flex-direction:column; align-items:center; gap:4px; padding:24px 12px; border:1.5px dashed var(--line-2); border-radius:13px; cursor:pointer; text-align:center}
+.fa-pick svg{width:26px; height:26px; color:var(--accent)}
+.fa-pick b{font-size:14px}
+.fa-pick span{font-size:12px; color:var(--ink-3); font-weight:600}
+.fa-img{width:100%; max-height:220px; object-fit:cover; border-radius:12px; display:block}
+.fa-busy{display:flex; align-items:center; gap:10px; font-size:13px; font-weight:700; color:var(--ink-2); padding:14px 0}
+.spin{width:18px; height:18px; border-radius:50%; border:2.5px solid var(--line-2); border-top-color:var(--accent); animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.fa-ai-h{display:flex; justify-content:space-between; align-items:center; margin:12px 0 4px}
+.fa-ai-h b{font-size:14px}
+.conf{font-size:10.5px; font-weight:800; text-transform:uppercase; letter-spacing:.5px; padding:3px 8px; border-radius:6px}
+.conf.high{background:color-mix(in srgb,var(--good) 18%,transparent); color:var(--good)} .conf.medium{background:var(--gold-soft); color:var(--gold)} .conf.low{background:var(--danger-soft); color:var(--danger)}
+.fa-ai-row{cursor:pointer}
+.fa-ai-row input{width:18px; height:18px; flex:none; accent-color:var(--accent)}
+.fa-note{font-size:12px; color:var(--ink-2); margin-top:8px; line-height:1.45; font-style:italic}
 </style>
 
 <div id="app">
@@ -754,12 +941,17 @@ button.gr-tick:hover{border-color:var(--accent)}
   <main class="view active" id="view-today" role="tabpanel"></main>
   <!-- ===== TRAIN ===== -->
   <main class="view" id="view-train" role="tabpanel"></main>
-  <!-- ===== ASSESS ===== -->
-  <main class="view" id="view-assess" role="tabpanel"></main>
+  <!-- ===== FOOD ===== -->
+  <main class="view" id="view-food" role="tabpanel"></main>
   <!-- ===== PROGRESS ===== -->
   <main class="view" id="view-progress" role="tabpanel"></main>
-  <!-- ===== GOALS ===== -->
-  <main class="view" id="view-goals" role="tabpanel"></main>
+  <!-- ===== ME: profile & goals · assessments · settings ===== -->
+  <main class="view" id="view-me" role="tabpanel">
+    <div id="meSeg"></div>
+    <div class="me-panel" id="view-goals"></div>
+    <div class="me-panel" id="view-assess"></div>
+    <div class="me-panel" id="view-settings"></div>
+  </main>
 
   <nav class="tabbar" role="tablist" aria-label="Main">
     <button class="tab" role="tab" aria-selected="true" data-tab="today">
@@ -768,14 +960,14 @@ button.gr-tick:hover{border-color:var(--accent)}
     <button class="tab" role="tab" aria-selected="false" data-tab="train">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 6.5h11M6.5 17.5h11M4 9v6M20 9v6"/><path d="M8 8.5v7M16 8.5v7"/></svg><span>Train</span>
     </button>
-    <button class="tab" role="tab" aria-selected="false" data-tab="assess">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4V3h6v1M9 11l2 2 4-4M9 17h6"/></svg><span>Assess</span>
+    <button class="tab" role="tab" aria-selected="false" data-tab="food">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11h18a9 9 0 0 1-18 0z"/><path d="M8 7c0-1.5 1-2 1-3.5M12 7c0-1.5 1-2 1-3.5M16 7c0-1.5 1-2 1-3.5"/></svg><span>Food</span>
     </button>
     <button class="tab" role="tab" aria-selected="false" data-tab="progress">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 15l3.5-4 3 2.5L21 7"/></svg><span>Progress</span>
     </button>
-    <button class="tab" role="tab" aria-selected="false" data-tab="goals">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.4" fill="currentColor"/></svg><span>Goals</span>
+    <button class="tab" role="tab" aria-selected="false" data-tab="me">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg><span>Me</span>
     </button>
   </nav>
 </div>
@@ -838,6 +1030,9 @@ button.gr-tick:hover{border-color:var(--accent)}
 <div class="toast" id="toast"></div>
 
 <script src="phases.js"></script>
+<script src="heavyduty.js"></script>
+<script src="explore.js"></script>
+<script src="food.js"></script>
 <script>
 "use strict";
 /* ============================================================
@@ -948,11 +1143,11 @@ const VIDEOS = {
 };
 // Phases: existing sessions are the Management phase; warm-up/cool-down are shared prep.
 PROGRAM.forEach(s=>{ s.phase = (s.id==='warmup'||s.id==='cooldown') ? 'prep' : 'mgmt'; });
-PROGRAM.push(...(window.REHAB_SESSIONS||[]));
-Object.assign(VIDEOS, window.REHAB_VIDEOS||{});
+PROGRAM.push(...(window.REHAB_SESSIONS||[]), ...(window.HD_SESSIONS||[]));
+Object.assign(VIDEOS, window.REHAB_VIDEOS||{}, window.HD_VIDEOS||{}, window.EXPLORE_VIDEOS||{});
 const PHASES = window.PHASES || [];
 const phaseById = id => PHASES.find(p=>p.id===id);
-const TYPE_LABEL = {strength:'Strength', mobility:'Mobility', cardio:'Conditioning', rehab:'Rehab', sport:'Football'};
+const TYPE_LABEL = {strength:'Strength', mobility:'Mobility', cardio:'Conditioning', rehab:'Rehab', sport:'Football', hd:'Heavy Duty'};
 function srcBadge(src){
   if(src==='claude') return '<span class="src-badge claude" title="Added by Claude — evidence-based ACL / football addition">Added by Claude</span>';
   if(src==='saves') return '<span class="src-badge saves" title="From your saved reels">From your saves</span>';
@@ -979,6 +1174,7 @@ function load(){
 }
 function save(){ try{ localStorage.setItem(KEY, JSON.stringify(DB)); }catch(e){} }
 load();
+expBuildCustom();   // rebuild the Explore custom workout from saved picks
 
 /* ---------- HELPERS ---------- */
 const $ = s => document.querySelector(s);
@@ -1136,6 +1332,8 @@ function renderToday(){
          <div class="cta-hint">${I.bolt} ${draft?'Unsaved progress — pick up where you left off':focusHint(sug)}</div>` }`;
   v.appendChild(f);
   if(!done) f.querySelector('#startFocus').onclick=()=>openSession(sug.id);
+  const hdc=hdTodayCard(); if(hdc) v.appendChild(hdc);
+  v.appendChild(foodTodayCard());
 
   // stats
   const wk=weekHistory();
@@ -1209,7 +1407,7 @@ function gotoDate(iso){
 }
 let trainPhase=null;
 function switchTab(name){ const t=document.querySelector('.tab[data-tab="'+name+'"]'); if(t) t.click(); }
-function gotoPhase(id){ trainPhase=id; renderTrain(); switchTab('train'); }
+function gotoPhase(id){ trainPhase=id; DB.trainMode='rehab'; save(); renderTrain(); switchTab('train'); }
 
 /* ---------- ASSESSMENT HELPERS (LSI + phase gates) ---------- */
 const TESTS=[
@@ -1313,8 +1511,18 @@ function sessionCard(s, todayId){
 
 function renderTrain(){
   const v=$('#view-train'); v.innerHTML='';
+  const mode=DB.trainMode||'rehab';
+  v.appendChild(el('div','',`<div class="eyebrow" style="margin:2px 2px 4px">Your programs</div><div class="h2" style="margin-bottom:12px">Train</div>`));
+  const seg=el('div','seg train-seg');
+  [['rehab','Rehab'],['hd','Heavy Duty'],['explore','Explore']].forEach(([k,l])=>{
+    const b=el('button','',l); b.setAttribute('aria-pressed',k===mode); b.onclick=()=>{ DB.trainMode=k; save(); renderTrain(); window.scrollTo(0,0); }; seg.appendChild(b); });
+  v.appendChild(seg);
+  if(mode==='hd') return renderHDTrain(v);
+  if(mode==='explore') return renderExplore(v);
+  renderRehabTrain(v);
+}
+function renderRehabTrain(v){
   const ph = trainPhase || DB.phase;
-  v.appendChild(el('div','',`<div class="eyebrow" style="margin:2px 2px 4px">Your program</div><div class="h2" style="margin-bottom:14px">Training phases</div>`));
   const fr=el('div','filter-row phase-row');
   PHASES.forEach(p=>{
     const c=el('button','chip'+(p.id===DB.phase?' is-cur':''),`${p.code} · ${p.name}`);
@@ -1325,6 +1533,9 @@ function renderTrain(){
   v.appendChild(fr);
   requestAnimationFrame(()=>{ const a=fr.querySelector('[aria-pressed="true"]'); if(a) fr.scrollLeft=a.offsetLeft-20; });
   v.appendChild(gateCard(ph));
+  const al=el('button','assess-link',`${I.cal}<span><b>Assessments</b> weekly check-ins & test days</span>${I.chev}`);
+  al.onclick=()=>{ mePanel='assess'; renderMe(); switchTab('me'); };
+  v.appendChild(al);
 
   const sessions=phaseSessions(ph);
   if(sessions.some(s=>s.ex.some(e=>e.src))){
@@ -1467,7 +1678,8 @@ function drawChart(){
    ============================================================ */
 function renderGoals(){
   const v=$('#view-goals'); v.innerHTML='';
-  v.appendChild(el('div','',`<div class="eyebrow" style="margin:2px 2px 4px">Set the target</div><div class="h2" style="margin-bottom:4px">Goals</div>`));
+  v.appendChild(profileSection());
+  v.appendChild(el('div','section-head','<span class="eyebrow">Training goals</span>'));
 
   // weekly sessions goal
   const wk=weekHistory().length;
@@ -1581,7 +1793,7 @@ function openSession(sid){
     const prev = last && last.sets[ex.name] ? last.sets[ex.name] : null;
     // per-exercise mode: timed hold → countdown; loaded/strength → reps×kg; otherwise → tick
     const mode = timed ? 'timed' : (isStrength || ex.log) ? 'log' : 'tick';
-    const st = { name:ex.name, target:ex.target, nSets, done:false, prev, mode, src:ex.src||null, note:ex.note||null,
+    const st = { name:ex.name, target:ex.target, nSets, done:false, prev, mode, src:ex.src||null, note:ex.note||null, ss:ex.ss||null, range:ex.range||null,
                  sec:ex.sec||null, timed, rest:ex.rest||s.rest||null, vid:ex.vid||null,
                  hist: DB.history.filter(h=>h.sets[ex.name]).sort((a,b)=>b.ts-a.ts).map(h=>({date:h.date, sets:h.sets[ex.name]})), hIdx:0 };
     if(mode==='log') st.sets = Array.from({length:nSets},()=>({reps:'',kg:''}));
@@ -1686,7 +1898,7 @@ function renderSheetBody(){
     const head=el('div','ex-head');
     head.innerHTML=`
       <button class="ex-check" aria-label="Mark ${st.name} complete">${I.check}</button>
-      <div class="eh"><b>${st.name}</b><span>Target ${st.target}</span>${srcBadge(st.src)}${st.note?`<em class="ex-cue">${st.note}</em>`:''}</div>`;
+      <div class="eh"><b>${st.name}</b><span>Target ${st.target}${st.ss?' · to failure':''}</span>${st.ss?`<span class="ss-tag">Superset ${st.ss}</span>`:''}${srcBadge(st.src)}${hdNextTarget(st)?`<span class="ex-next">${hdNextTarget(st)}</span>`:''}${st.note?`<em class="ex-cue">${st.note}</em>`:''}</div>`;
     head.querySelector('.ex-check').onclick=()=>{ st.done=!st.done; if(st.timed&&st.sets) st.sets.forEach(s=>s.done=st.done); renderSheetBody(); saveDraft(); };
     ex.appendChild(head);
     // per-exercise history: ◀ ▶ through past values for THIS exercise
@@ -1771,6 +1983,8 @@ function renderSheetBody(){
       ex.appendChild(note);
     }
     body.appendChild(ex);
+    const nx=sheetState[ei+1];
+    if(st.ss && nx && nx.ss===st.ss) body.appendChild(el('div','ss-link',`<span>↓</span> Superset — go straight into the next exercise, no rest`));
   });
   registerSetTimers();
   updateSheetProgress();
@@ -2104,7 +2318,17 @@ function renderAssess(){
   v.appendChild(h);
 }
 
-function renderAll(){ updateHeaderPhase(); renderToday(); renderTrain(); renderAssess(); renderProgress(); renderGoals(); }
+let mePanel='profile';
+function renderMe(){
+  const seg=$('#meSeg'); if(!seg) return;
+  seg.className='me-head';
+  seg.innerHTML=`<div class="eyebrow" style="margin:2px 2px 4px">You</div><div class="h2" style="margin-bottom:12px">Me</div>
+    <div class="seg me-seg">${[['profile','Profile & goals'],['assess','Assessments'],['settings','Settings']].map(([k,l])=>`<button data-p="${k}" aria-pressed="${mePanel===k}">${l}</button>`).join('')}</div>`;
+  seg.querySelectorAll('[data-p]').forEach(b=>b.onclick=()=>{ mePanel=b.dataset.p; renderMe(); window.scrollTo(0,0); });
+  ['goals','assess','settings'].forEach(id=>{ const p=$('#view-'+id); if(p) p.hidden = (id==='goals'?'profile':id)!==mePanel; });
+  renderGoals(); renderAssess(); renderSettings();
+}
+function renderAll(){ updateHeaderPhase(); renderToday(); renderTrain(); renderFood(); renderProgress(); renderMe(); }
 const tabs=document.querySelectorAll('.tab');
 tabs.forEach(t=>{
   t.onclick=()=>{

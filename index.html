@@ -14,6 +14,7 @@
   --accent:#D62D3A; --accent-ink:#FFFFFF; --accent-soft:#FCE4E5; --accent-deep:#B21F2B;
   --teal:#3D6FD6; --teal-soft:#E6EDFB; --teal-ink:#1E3F82;
   --gold:#B4801F; --gold-soft:#F6EBD4;
+  --violet:#6D4FD1; --violet-soft:#ECE7FB; --cyan:#0B8293; --cyan-soft:#DCF1F4; --pitch:#3F7F18; --pitch-soft:#E4F1DA;
   --good:#1E9E62; --warn:#C98A00; --danger:#D64541; --danger-soft:#FBE6E4;
   --shadow:0 1px 2px rgba(16,20,24,.05), 0 4px 16px rgba(16,20,24,.07);
   --shadow-lg:0 8px 40px rgba(16,20,24,.18);
@@ -28,6 +29,7 @@
   --accent:#FF4C59; --accent-ink:#160406; --accent-soft:#3A1B20; --accent-deep:#FF6B76;
   --teal:#5B8DEF; --teal-soft:#182438; --teal-ink:#9DBBF6;
   --gold:#E0A93A; --gold-soft:#332818;
+  --violet:#B19CFB; --violet-soft:#29223F; --cyan:#3CC6D8; --cyan-soft:#11313A; --pitch:#8FD65E; --pitch-soft:#1D2D16;
   --good:#35C88B; --warn:#E0A93A; --danger:#F76D5E; --danger-soft:#3A1E1D;
   --shadow:0 1px 2px rgba(0,0,0,.35), 0 4px 18px rgba(0,0,0,.5);
   --shadow-lg:0 10px 44px rgba(0,0,0,.6);
@@ -40,6 +42,7 @@
   --accent:#FF4C59; --accent-ink:#160406; --accent-soft:#3A1B20; --accent-deep:#FF6B76;
   --teal:#5B8DEF; --teal-soft:#182438; --teal-ink:#9DBBF6;
   --gold:#E0A93A; --gold-soft:#332818;
+  --violet:#B19CFB; --violet-soft:#29223F; --cyan:#3CC6D8; --cyan-soft:#11313A; --pitch:#8FD65E; --pitch-soft:#1D2D16;
   --good:#35C88B; --warn:#E0A93A; --danger:#F76D5E; --danger-soft:#3A1E1D;
   --shadow:0 1px 2px rgba(0,0,0,.35), 0 4px 18px rgba(0,0,0,.5);
   --shadow-lg:0 10px 44px rgba(0,0,0,.6);
@@ -606,6 +609,129 @@ button.cal-cell{cursor:pointer}
 /* today: weight-entry cue */
 .cta-hint{position:relative; margin-top:10px; font-size:12px; color:#A9B4C2; font-weight:600; display:flex; align-items:center; gap:7px; justify-content:center}
 .cta-hint svg{width:14px; height:14px; opacity:.8}
+
+/* ===== phases, journey, sources ===== */
+.tag.rehab{background:var(--cyan-soft); color:var(--cyan)}
+.tag.sport{background:var(--pitch-soft); color:var(--pitch)}
+.src-badge{display:inline-block; font-family:"Manrope"; font-size:9.5px; font-weight:800; text-transform:uppercase; letter-spacing:.5px; padding:2px 7px; border-radius:6px; margin:4px 6px 0 0; vertical-align:middle; white-space:nowrap}
+.src-badge.claude{background:var(--violet-soft); color:var(--violet); border:1px dashed color-mix(in srgb,var(--violet) 55%,transparent)}
+.src-badge.saves{background:var(--surface-3); color:var(--ink-2)}
+.exrow .en .src-badge{margin-top:5px}
+.ex-cue{display:block; font-style:normal; font-size:12px; color:var(--ink-2); font-weight:500; margin-top:5px; line-height:1.4}
+.claude-txt{color:var(--violet); font-weight:800}
+.src-legend{display:flex; align-items:center; flex-wrap:wrap; gap:2px 6px; margin:14px 2px 0; font-size:11.5px; color:var(--ink-2); font-weight:600}
+.src-legend .src-badge{margin:0}
+.src-legend span:not(.src-badge){margin-right:8px}
+.rehab-note{display:flex; gap:10px; align-items:flex-start; padding:12px 14px; border-radius:13px; margin-bottom:12px; font-size:12.5px; font-weight:600; line-height:1.4; background:var(--cyan-soft); color:var(--ink)}
+.rehab-note svg{width:16px; height:16px; flex:none; margin-top:1px; color:var(--cyan)}
+
+.journey{margin-top:14px; background:var(--surface); border:1px solid var(--line); border-radius:var(--r); padding:14px 12px 12px; box-shadow:var(--shadow)}
+.jr-head{display:flex; align-items:center; justify-content:space-between; margin:0 4px 12px}
+.jr-head span{font-family:"Oswald"; font-weight:600; font-size:13px; letter-spacing:1px; text-transform:uppercase; color:var(--ink-3)}
+.jr-link{display:inline-flex; align-items:center; gap:2px; font-size:12.5px; font-weight:700; color:var(--accent)}
+.jr-link svg{width:15px; height:15px}
+.jr-track{display:grid; grid-template-columns:repeat(5,1fr); position:relative}
+.jr-track::before{content:""; position:absolute; left:10%; right:10%; top:17px; height:2px; background:var(--line-2)}
+.jr-node{position:relative; display:flex; flex-direction:column; align-items:center; gap:6px; padding:0 2px}
+.jr-dot{width:36px; height:36px; border-radius:50%; display:grid; place-items:center; font-family:"Oswald"; font-weight:600; font-size:13px; background:var(--surface-2); border:2px solid var(--line-2); color:var(--ink-3); position:relative; z-index:1}
+.jr-name{font-size:10.5px; font-weight:700; color:var(--ink-3); text-align:center; line-height:1.2}
+.jr-node.past .jr-dot{background:var(--good); border-color:var(--good); color:#fff}
+.jr-node.past .jr-name{color:var(--ink-2)}
+.jr-node.cur .jr-dot{background:var(--accent); border-color:var(--accent); color:var(--accent-ink); box-shadow:0 0 0 4px color-mix(in srgb,var(--accent) 22%,transparent)}
+.jr-node.cur .jr-name{color:var(--accent)}
+
+.phase-row .chip.is-cur{border-color:var(--accent)}
+.phase-card{margin-top:12px; background:var(--surface); border:1px solid var(--line); border-radius:var(--r); padding:16px; box-shadow:var(--shadow)}
+.phase-card.cur{border-color:color-mix(in srgb,var(--accent) 55%,var(--line))}
+.pc-top{display:flex; align-items:center; gap:12px}
+.pc-code{width:44px; height:44px; border-radius:12px; display:grid; place-items:center; flex:none; font-family:"Oswald"; font-weight:600; font-size:17px; background:var(--accent-soft); color:var(--accent)}
+.pc-t{flex:1; min-width:0}
+.pc-t b{display:block; font-family:"Oswald"; font-weight:600; font-size:18px; letter-spacing:.3px; line-height:1.1}
+.pc-t span{font-size:12.5px; color:var(--ink-2); font-weight:600}
+.pc-cur{font-size:10.5px; font-weight:800; text-transform:uppercase; letter-spacing:.6px; padding:4px 9px; border-radius:7px; background:var(--accent); color:var(--accent-ink); flex:none}
+.pc-set{font-size:12px; font-weight:700; padding:7px 11px; border-radius:9px; border:1px solid var(--line-2); color:var(--ink); background:var(--surface-2); flex:none}
+.pc-set:hover{border-color:var(--accent); color:var(--accent)}
+.pc-goal{font-size:13px; color:var(--ink-2); line-height:1.5; margin:10px 0 0; font-weight:500}
+.pc-gate{margin-top:14px; padding-top:12px; border-top:1px solid var(--line)}
+.pc-gh{display:flex; justify-content:space-between; align-items:baseline; margin-bottom:8px}
+.pc-gh span:first-child{font-family:"Oswald"; font-weight:600; font-size:13px; letter-spacing:.8px; text-transform:uppercase; color:var(--ink-2)}
+.pc-count{font-size:12px; font-weight:800; color:var(--ink-2); font-variant-numeric:tabular-nums}
+.gate-row{display:flex; gap:10px; align-items:flex-start; padding:7px 0}
+.gr-ic{width:24px; height:24px; flex:none; border-radius:7px; display:grid; place-items:center; font-size:13px; font-weight:800; background:var(--surface-2); border:1.5px solid var(--line-2); color:var(--ink-3)}
+.gate-row.ok .gr-ic{background:var(--good); border-color:var(--good); color:#fff}
+.gate-row.no .gr-ic{background:var(--danger-soft); border-color:var(--danger); color:var(--danger)}
+button.gr-tick:hover{border-color:var(--accent)}
+.gr-t{font-size:13px; font-weight:600; color:var(--ink); line-height:1.35}
+.gr-t em{display:block; font-style:normal; font-size:11px; color:var(--ink-3); font-weight:600; margin-top:1px}
+.pc-next{width:100%; margin-top:10px; height:44px; border-radius:12px; background:var(--accent); color:var(--accent-ink); font-family:"Oswald"; font-weight:600; letter-spacing:.6px; text-transform:uppercase; font-size:14px; display:flex; align-items:center; justify-content:center; gap:4px}
+.pc-next svg{width:16px; height:16px}
+.pc-foot{font-size:11px; color:var(--ink-3); margin-top:12px; line-height:1.45; font-weight:500}
+
+/* ===== own-video links ===== */
+.vthumb.mine{background:linear-gradient(135deg,var(--violet),color-mix(in srgb,var(--violet) 60%,#000))}
+.vplayer.ig{padding-bottom:125%}
+.vmine{border-top:1px solid var(--line); padding:8px 10px 10px}
+.vmine-btn{display:flex; align-items:center; gap:6px; font-size:12px; font-weight:700; color:var(--ink-2); padding:4px 2px}
+.vmine-btn svg{width:13px; height:13px}
+.vmine-btn:hover{color:var(--accent)}
+.vmine-form input{width:100%; height:42px; margin-top:8px; border-radius:10px; border:1.5px solid var(--line); background:var(--surface); color:var(--ink); padding:0 12px; font-size:13px; font-family:"Manrope"}
+.vmine-form input:focus{outline:none; border-color:var(--accent)}
+.vmine-act{display:flex; gap:8px; margin-top:8px}
+.vmine-act button{height:36px; padding:0 14px; border-radius:9px; font-size:12.5px; font-weight:700; background:var(--surface); border:1px solid var(--line); color:var(--ink)}
+.vmine-act .vm-save{background:var(--accent); border-color:var(--accent); color:var(--accent-ink)}
+.vmine-act .vm-del{color:var(--danger)}
+.vmine-hint{font-size:11px; color:var(--ink-3); margin-top:7px; font-weight:500}
+.vmine-err{font-size:11.5px; color:var(--danger); margin-top:5px; font-weight:700}
+
+/* ===== assess ===== */
+.leg-pick{display:flex; align-items:center; justify-content:space-between; gap:12px; background:var(--surface); border:1px solid var(--line); border-radius:var(--r); padding:12px 14px; box-shadow:var(--shadow)}
+.leg-pick > span{font-size:13.5px; font-weight:700}
+.seg{display:flex; background:var(--surface-2); border:1px solid var(--line); border-radius:11px; padding:3px; gap:3px}
+.seg button{height:34px; padding:0 16px; border-radius:8px; font-size:13px; font-weight:700; color:var(--ink-2)}
+.seg button[aria-pressed="true"]{background:var(--accent); color:var(--accent-ink)}
+.as-actions{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:12px}
+.as-actions button{text-align:left; padding:14px; border-radius:var(--r); background:var(--surface); border:1px solid var(--line); box-shadow:var(--shadow); transition:.15s}
+.as-actions button:hover{border-color:var(--accent)}
+.as-actions b{display:block; font-family:"Oswald"; font-weight:600; font-size:16px; letter-spacing:.3px}
+.as-actions span{display:block; font-size:11.5px; color:var(--ink-2); font-weight:600; margin-top:4px; line-height:1.35}
+.as-form{margin-top:12px; background:var(--surface); border:1.5px solid var(--accent); border-radius:var(--r); padding:16px; box-shadow:var(--shadow)}
+.as-fh{display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:10px; flex-wrap:wrap}
+.as-fh b{font-family:"Oswald"; font-weight:600; font-size:18px}
+.as-date{font-size:12px; font-weight:700; color:var(--ink-2); display:flex; align-items:center; gap:6px}
+.as-form input,.as-form select,.as-form textarea{width:100%; min-width:0; border-radius:10px; border:1.5px solid var(--line); background:var(--surface-2); color:var(--ink); padding:9px 10px; font-family:"IBM Plex Mono"; font-size:14px; font-weight:600}
+.as-form textarea{font-family:"Manrope"; font-weight:500; resize:vertical}
+.as-form input:focus,.as-form select:focus,.as-form textarea:focus{outline:none; border-color:var(--accent); background:var(--surface)}
+.as-date input{width:auto; padding:6px 8px; font-size:12.5px}
+.as-field{display:block; margin-top:10px}
+.as-field > span{display:block; font-size:12px; font-weight:700; color:var(--ink-2); margin-bottom:5px}
+.as-lr,.as-row{display:grid; grid-template-columns:1.35fr 1fr 1fr 52px; gap:8px; align-items:center}
+.as-lr{margin:4px 0 2px; font-size:10.5px; color:var(--ink-3); text-transform:uppercase; letter-spacing:.4px}
+.as-lr b{font-weight:800}
+.as-row{margin-top:8px}
+.as-row > span{font-size:12.5px; font-weight:700; line-height:1.25}
+.as-row em{font-style:normal; color:var(--ink-3); font-weight:600; font-size:11px}
+.as-lsi{font-style:normal; font-family:"IBM Plex Mono"; font-weight:700; font-size:13px; text-align:center; color:var(--ink-3)}
+.as-lsi.good,.lsi-chip.good{color:var(--good)} .as-lsi.warn,.lsi-chip.warn{color:var(--warn)} .as-lsi.bad,.lsi-chip.bad{color:var(--danger)}
+.as-btns{display:flex; gap:10px; margin-top:14px}
+.as-btns button{flex:1; height:46px; border-radius:12px; font-weight:700; font-size:14px; border:1px solid var(--line); background:var(--surface-2); color:var(--ink)}
+.as-btns .as-save{background:var(--accent); border-color:var(--accent); color:var(--accent-ink)}
+.lsi-grid{display:grid; grid-template-columns:1fr 1fr; gap:10px}
+.lsi-card{background:var(--surface); border:1px solid var(--line); border-radius:13px; padding:12px; box-shadow:var(--shadow)}
+.lsi-card span{display:block; font-size:11.5px; font-weight:700; color:var(--ink-2)}
+.lsi-card b{display:block; font-family:"Oswald"; font-weight:600; font-size:26px; margin-top:2px}
+.lsi-card em{display:block; font-style:normal; font-family:"IBM Plex Mono"; font-size:10.5px; color:var(--ink-3); margin-top:2px}
+.lsi-card.good b{color:var(--good)} .lsi-card.warn b{color:var(--warn)} .lsi-card.bad b{color:var(--danger)}
+.lsi-legend{display:flex; gap:12px; flex-wrap:wrap; margin:10px 2px 0; font-size:11px; font-weight:700}
+.lsi-legend .good{color:var(--good)} .lsi-legend .warn{color:var(--warn)} .lsi-legend .bad{color:var(--danger)}
+.as-hrow{align-items:flex-start; cursor:default}
+.as-sum{font-size:12px; color:var(--ink-2); font-weight:600; margin-top:5px; line-height:1.5; display:flex; flex-wrap:wrap; gap:4px 6px}
+.lsi-chip{font-family:"IBM Plex Mono"; font-size:11px; font-weight:700; background:var(--surface-2); padding:2px 7px; border-radius:6px}
+.as-note{font-size:12px; color:var(--ink-3); font-style:italic; margin-top:4px}
+.tab span{font-size:10px}
+.exrow .en span.src-badge,.ex-head .eh span.src-badge{display:table; font-family:"Manrope",sans-serif; font-size:9.5px; font-weight:800; letter-spacing:.5px; margin:6px 0 0; line-height:1.5}
+.exrow .en span.src-badge.claude,.ex-head .eh span.src-badge.claude{color:var(--violet)}
+.exrow .en span.src-badge.saves,.ex-head .eh span.src-badge.saves{color:var(--ink-2)}
+
 </style>
 
 <div id="app">
@@ -628,6 +754,8 @@ button.cal-cell{cursor:pointer}
   <main class="view active" id="view-today" role="tabpanel"></main>
   <!-- ===== TRAIN ===== -->
   <main class="view" id="view-train" role="tabpanel"></main>
+  <!-- ===== ASSESS ===== -->
+  <main class="view" id="view-assess" role="tabpanel"></main>
   <!-- ===== PROGRESS ===== -->
   <main class="view" id="view-progress" role="tabpanel"></main>
   <!-- ===== GOALS ===== -->
@@ -639,6 +767,9 @@ button.cal-cell{cursor:pointer}
     </button>
     <button class="tab" role="tab" aria-selected="false" data-tab="train">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 6.5h11M6.5 17.5h11M4 9v6M20 9v6"/><path d="M8 8.5v7M16 8.5v7"/></svg><span>Train</span>
+    </button>
+    <button class="tab" role="tab" aria-selected="false" data-tab="assess">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4V3h6v1M9 11l2 2 4-4M9 17h6"/></svg><span>Assess</span>
     </button>
     <button class="tab" role="tab" aria-selected="false" data-tab="progress">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 15l3.5-4 3 2.5L21 7"/></svg><span>Progress</span>
@@ -706,6 +837,7 @@ button.cal-cell{cursor:pointer}
 
 <div class="toast" id="toast"></div>
 
+<script src="phases.js"></script>
 <script>
 "use strict";
 /* ============================================================
@@ -814,6 +946,18 @@ const VIDEOS = {
   'Thread the Needle':'7C8-zj3nRro','Inner Thigh Adductor Stretch':'WPvLsecoswc',
   'Deep Squat Ankle Rocker':'RjfHTvQCrZk','Diaphragmatic Breathing':'xrVBxbM6ZsA',
 };
+// Phases: existing sessions are the Management phase; warm-up/cool-down are shared prep.
+PROGRAM.forEach(s=>{ s.phase = (s.id==='warmup'||s.id==='cooldown') ? 'prep' : 'mgmt'; });
+PROGRAM.push(...(window.REHAB_SESSIONS||[]));
+Object.assign(VIDEOS, window.REHAB_VIDEOS||{});
+const PHASES = window.PHASES || [];
+const phaseById = id => PHASES.find(p=>p.id===id);
+const TYPE_LABEL = {strength:'Strength', mobility:'Mobility', cardio:'Conditioning', rehab:'Rehab', sport:'Football'};
+function srcBadge(src){
+  if(src==='claude') return '<span class="src-badge claude" title="Added by Claude — evidence-based ACL / football addition">Added by Claude</span>';
+  if(src==='saves') return '<span class="src-badge saves" title="From your saved reels">From your saves</span>';
+  return '';
+}
 PROGRAM.forEach(s=>s.ex.forEach(ex=>{ const v=VIDEOS[ex.name]; if(v) ex.vid='https://www.youtube.com/watch?v='+v; }));
 const byId = id => PROGRAM.find(s=>s.id===id);
 // suggested strength rotation for "today"
@@ -827,6 +971,11 @@ function load(){
   if(!DB.goals) DB.goals = { weekly:4, bwCurrent:72, bwTarget:68 };
   if(!DB.drafts) DB.drafts = {};
   if(!DB.goals.trainDays) DB.goals.trainDays = [1,2,4,5]; // Mon,Tue,Thu,Fri (0=Sun)
+  if(!DB.phase) DB.phase = 'r1';          // current phase on the journey
+  if(!DB.assess) DB.assess = [];          // weekly check-ins + test days
+  if(!DB.gateManual) DB.gateManual = {};  // manual criteria ticks per phase
+  if(!DB.myVids) DB.myVids = {};          // user's own video links per exercise
+  if(DB.involved===undefined) DB.involved = null; // 'L' | 'R' injured knee
 }
 function save(){ try{ localStorage.setItem(KEY, JSON.stringify(DB)); }catch(e){} }
 load();
@@ -906,13 +1055,33 @@ $('#brandName').textContent = 'Vikram';
 /* ============================================================
    RENDER: TODAY
    ============================================================ */
+function phaseSessions(ph){ return PROGRAM.filter(s=>s.phase===ph); }
 function suggestedToday(){
-  // rotate strength days based on how many strength sessions logged
-  const strengthDone = DB.history.filter(h=>byId(h.sid)&&byId(h.sid).type==='strength').length;
-  return byId(ROTATION[strengthDone % ROTATION.length]);
+  const ph = DB.phase || 'r1';
+  if(ph==='mgmt'){
+    // rotate strength days based on how many strength sessions logged
+    const strengthDone = DB.history.filter(h=>byId(h.sid)&&byId(h.sid).type==='strength').length;
+    return byId(ROTATION[strengthDone % ROTATION.length]);
+  }
+  const list = phaseSessions(ph);
+  const doneToday = list.find(s=>isDoneToday(s.id));
+  if(doneToday) return doneToday;                       // keep showing today's session as done
+  const lastTs = id => DB.history.filter(h=>h.sid===id).reduce((m,h)=>Math.max(m,h.ts),-1);
+  return [...list].sort((a,b)=>lastTs(a.id)-lastTs(b.id))[0];  // least recently trained first
+}
+function updateHeaderPhase(){
+  const p = phaseById(DB.phase); const sub=document.querySelector('.brand .sub');
+  if(p && sub) sub.textContent = `${p.code} · ${p.name}`;
 }
 function isDoneToday(sid){ return DB.history.some(h=>h.date===todayISO() && h.sid===sid); }
 
+function focusHint(s){
+  const loaded=s.type==='strength'||s.ex.some(e=>e.log), timed=s.ex.some(e=>e.sec);
+  if(loaded && timed) return 'Log reps &amp; weight · timers for the holds';
+  if(loaded) return 'Enter your reps &amp; weight for each set';
+  if(timed) return 'Timed holds — tap a set to start the countdown';
+  return 'Tick each exercise as you finish it';
+}
 function renderToday(){
   const v=$('#view-today'); v.innerHTML='';
   const now=new Date(); const hr=now.getHours();
@@ -940,6 +1109,15 @@ function renderToday(){
   v.appendChild(wl);
   wh.querySelector('#todayCal').onclick=openCalendar;
 
+  // journey: P1 → P4 → Management
+  const ji=PHASES.findIndex(p=>p.id===DB.phase);
+  const jc=el('div','journey');
+  jc.innerHTML=`<div class="jr-head"><span>Your journey</span><button class="jr-link" id="jrMore">Phase details ${I.chev}</button></div>
+    <div class="jr-track">${PHASES.map((p,i)=>`<button class="jr-node${i<ji?' past':i===ji?' cur':''}" data-ph="${p.id}" aria-label="${p.code} ${p.name}${i===ji?' (current)':''}"><span class="jr-dot">${i<ji?'✓':p.code}</span><span class="jr-name">${p.name}</span></button>`).join('')}</div>`;
+  jc.querySelectorAll('.jr-node').forEach(b=>b.onclick=()=>gotoPhase(b.dataset.ph));
+  jc.querySelector('#jrMore').onclick=()=>gotoPhase(DB.phase);
+  v.appendChild(jc);
+
   const sug=suggestedToday();
   const done=isDoneToday(sug.id);
   const draft=!!DB.drafts[sug.id];
@@ -955,7 +1133,7 @@ function renderToday(){
     ${ done
       ? `<div class="done-badge">${I.check} Logged today — nice work. Recover well.</div>`
       : `<button class="cta" id="startFocus">${I.play} ${draft?'Resume session':'Start &amp; log workout'}</button>
-         <div class="cta-hint">${I.bolt} ${draft?'Unsaved progress — pick up where you left off':'Enter your reps &amp; weight for each set'}</div>` }`;
+         <div class="cta-hint">${I.bolt} ${draft?'Unsaved progress — pick up where you left off':focusHint(sug)}</div>` }`;
   v.appendChild(f);
   if(!done) f.querySelector('#startFocus').onclick=()=>openSession(sug.id);
 
@@ -1029,51 +1207,133 @@ function gotoDate(iso){
   $('#view-progress').classList.add('active');
   renderProgress(); window.scrollTo(0,0);
 }
+let trainPhase=null;
+function switchTab(name){ const t=document.querySelector('.tab[data-tab="'+name+'"]'); if(t) t.click(); }
+function gotoPhase(id){ trainPhase=id; renderTrain(); switchTab('train'); }
+
+/* ---------- ASSESSMENT HELPERS (LSI + phase gates) ---------- */
+const TESTS=[
+  {k:'single',t:'Single hop',u:'cm'}, {k:'triple',t:'Triple hop',u:'cm'}, {k:'cross',t:'Crossover hop',u:'cm'},
+  {k:'timed',t:'6 m timed hop',u:'s',inv:true}, {k:'ybal',t:'Y-balance anterior',u:'cm'},
+  {k:'calf',t:'Single-leg calf raises',u:'reps'}, {k:'bridge',t:'Single-leg bridge',u:'reps'},
+  {k:'slsq',t:'Single-leg squat',u:'reps'}, {k:'quad',t:'Quad strength',u:'kg'},
+];
+function latestAssess(type){ return DB.assess.filter(a=>a.type===type).sort((a,b)=>b.ts-a.ts)[0]||null; }
+function lsiOf(rec,k){
+  if(!rec||!DB.involved||!rec.v[k]) return null;
+  const inv=+rec.v[k][DB.involved], un=+rec.v[k][DB.involved==='L'?'R':'L'];
+  if(!inv||!un) return null;
+  const t=TESTS.find(x=>x.k===k);
+  return Math.round((t&&t.inv ? un/inv : inv/un)*100);   // timed test: faster is better
+}
+function gateCheck(k){
+  const w=latestAssess('weekly'), b=latestAssess('big');
+  const W=(f,fn)=> (w && w.v[f]!=='' && w.v[f]!=null) ? fn(+w.v[f]) : null;
+  const L=(t,th)=>{ const l=lsiOf(b,t); return l==null?null:l>=th; };
+  switch(k){
+    case 'pain2': return W('pain',x=>x<=2);
+    case 'swell0': return W('swell',x=>x<=1);
+    case 'ext0': return W('ext',x=>x<=0);
+    case 'flex120': return W('flex',x=>x>=120);
+    case 'flex135': return W('flex',x=>x>=135);
+    case 'bal30': return W('bal',x=>x>=30);
+    case 'calf25': { const v=b&&DB.involved&&b.v.calf? +b.v.calf[DB.involved] : 0; return v? v>=25 : null; }
+    case 'bridge80': return L('bridge',80);
+    case 'sq80': return L('slsq',80);
+    case 'yb4': { const y=b&&b.v.ybal; const l=y&&+y.L, r=y&&+y.R; return (l&&r)? Math.abs(l-r)<=4 : null; }
+    case 'hop85': case 'hop90': { const th=k==='hop85'?85:90; const ls=['single','triple','cross','timed'].map(t=>lsiOf(b,t)).filter(x=>x!=null); return ls.length? ls.every(x=>x>=th) : null; }
+    case 'quad80': return L('quad',80);
+    case 'quad90': return L('quad',90);
+    case 'rsi65': return (b&&b.v.rsi)? +b.v.rsi>=65 : null;
+  }
+  return null;
+}
+function gateStatus(ph){
+  const p=phaseById(ph); const man=DB.gateManual[ph]||{};
+  const rows=p.gate.map((g,i)=>{ const auto=g.k?gateCheck(g.k):null; return {g,i,auto,ok:g.k? auto===true : !!man[i]}; });
+  return {rows, ok:rows.filter(r=>r.ok).length, total:rows.length};
+}
+function setPhase(id,msg){ DB.phase=id; trainPhase=id; save(); updateHeaderPhase(); renderAll(); toast(msg||`Now in ${phaseById(id).code} · ${phaseById(id).name}`); }
+
+function gateCard(ph){
+  const p=phaseById(ph); const ix=PHASES.findIndex(x=>x.id===ph); const cur=ph===DB.phase;
+  const gs=gateStatus(ph); const next=PHASES[ix+1];
+  const card=el('div','phase-card'+(cur?' cur':''));
+  card.innerHTML=`
+    <div class="pc-top"><span class="pc-code">${p.code}</span><div class="pc-t"><b>${p.name}</b><span>${p.sub}</span></div>
+      ${cur?'<span class="pc-cur">Current</span>':'<button class="pc-set">Set as current</button>'}</div>
+    <p class="pc-goal">${p.goal}</p>
+    ${gs.total?`<div class="pc-gate"><div class="pc-gh"><span>To move on</span><span class="pc-count">${gs.ok}/${gs.total} met</span></div>
+      ${gs.rows.map(r=>`<div class="gate-row${r.ok?' ok':(r.g.k&&r.auto===false)?' no':''}">
+        ${r.g.k?`<span class="gr-ic">${r.auto===null?'–':r.ok?'✓':'✕'}</span>`:`<button class="gr-ic gr-tick${r.ok?' on':''}" data-i="${r.i}" aria-pressed="${r.ok}" aria-label="Mark criterion met">${r.ok?'✓':''}</button>`}
+        <span class="gr-t">${r.g.t}${r.g.k?`<em>${r.auto===null?'Needs an assessment':'From your latest assessment'}</em>`:'<em>Tick when true</em>'}</span></div>`).join('')}
+      ${cur&&next?`<button class="pc-next">Move to ${next.code} · ${next.name} ${I.chev}</button>`:''}</div>`:''}
+    <div class="pc-foot">Criteria from evidence-based ACL return-to-sport guidelines. A guide only — your physio's call always wins.</div>`;
+  const setB=card.querySelector('.pc-set'); if(setB) setB.onclick=()=>setPhase(ph);
+  card.querySelectorAll('.gr-tick').forEach(b=>b.onclick=()=>{ const m=DB.gateManual[ph]=DB.gateManual[ph]||{}; m[b.dataset.i]=!m[b.dataset.i]; save(); renderAll(); });
+  const nb=card.querySelector('.pc-next');
+  if(nb) nb.onclick=()=>{
+    const go=()=>setPhase(next.id,`Moved up to ${next.code} · ${next.name} 🎉`);
+    if(gs.ok<gs.total) confirmAction('Not all criteria met', `${gs.ok} of ${gs.total} criteria are met. Moving on early raises re-injury risk — check with your physio first.`, 'Move anyway', go);
+    else go();
+  };
+  return card;
+}
+
+function sessionCard(s, todayId){
+  const done=isDoneToday(s.id); const isToday=s.id===todayId;
+  const card=el('div','scard'+(isToday?' is-today':''));
+  const b=el('button','scard-btn');
+  const badge = done?`<div class="scard-badge">Done</div>` : DB.drafts[s.id]?`<div class="resume-badge">In progress</div>` : isToday?`<div class="today-badge">Today</div>`:'';
+  const claudeN=s.ex.filter(e=>e.src==='claude').length;
+  b.innerHTML=`
+    <div class="tag ${s.type}">${s.code}</div>
+    <div class="info">
+      <div class="t">${s.short}${isToday?' <span class="t-star">●</span>':''}</div>
+      <div class="d"><span>${s.ex.length} exercises</span><span class="dot">~${s.est} min</span>${claudeN===s.ex.length?'<span class="dot claude-txt">Added by Claude</span>':''}</div>
+    </div>
+    ${badge}
+    <div class="chev">${I.chev}</div>`;
+  b.onclick=()=>{ card.classList.toggle('open'); };
+  card.appendChild(b);
+  const list=el('div','exlist');
+  s.ex.forEach(ex=>{
+    const item=el('div','exitem');
+    const r=el('div','exrow');
+    r.innerHTML=`<div class="en"><b>${ex.name}</b><span>${ex.target}</span>${srcBadge(ex.src)}</div>`;
+    item.appendChild(r); item.appendChild(videoBlock(ex.name, ex.vid));
+    list.appendChild(item);
+  });
+  const start=el('button','start-inline',`${I.play} Start & log this session`);
+  start.onclick=()=>openSession(s.id);
+  list.appendChild(start);
+  card.appendChild(list);
+  return card;
+}
+
 function renderTrain(){
   const v=$('#view-train'); v.innerHTML='';
-  v.appendChild(el('div','',`<div class="eyebrow" style="margin:2px 2px 4px">Your program</div><div class="h2" style="margin-bottom:14px">Week 14 sessions</div>`));
-  const filters=[['all','All'],['strength','Strength'],['mobility','Mobility'],['cardio','Core']];
-  const fr=el('div','filter-row');
-  filters.forEach(([k,l])=>{
-    const c=el('button','chip',l); c.setAttribute('aria-pressed',k===trainFilter);
-    c.onclick=()=>{trainFilter=k; renderTrain();};
+  const ph = trainPhase || DB.phase;
+  v.appendChild(el('div','',`<div class="eyebrow" style="margin:2px 2px 4px">Your program</div><div class="h2" style="margin-bottom:14px">Training phases</div>`));
+  const fr=el('div','filter-row phase-row');
+  PHASES.forEach(p=>{
+    const c=el('button','chip'+(p.id===DB.phase?' is-cur':''),`${p.code} · ${p.name}`);
+    c.setAttribute('aria-pressed',p.id===ph);
+    c.onclick=()=>{ trainPhase=p.id; renderTrain(); };
     fr.appendChild(c);
   });
   v.appendChild(fr);
+  requestAnimationFrame(()=>{ const a=fr.querySelector('[aria-pressed="true"]'); if(a) fr.scrollLeft=a.offsetLeft-20; });
+  v.appendChild(gateCard(ph));
 
+  const sessions=phaseSessions(ph);
+  if(sessions.some(s=>s.ex.some(e=>e.src))){
+    v.appendChild(el('div','src-legend',`${srcBadge('saves')}<span>your saved reels</span>${srcBadge('claude')}<span>evidence-based extras</span>`));
+  }
   const todayId=suggestedToday().id;
-  let sessions=PROGRAM.filter(s=> trainFilter==='all' || s.type===trainFilter);
-  if(trainFilter==='all') sessions=[...sessions].sort((a,b)=>(a.id===todayId?-1:0)-(b.id===todayId?-1:0)); // today's session first
-  sessions.forEach(s=>{
-    const done = isDoneToday(s.id); const isToday=s.id===todayId;
-    const card=el('div','scard'+(isToday?' is-today':''));
-    const b=el('button','scard-btn');
-    const badge = done?`<div class="scard-badge">Done</div>` : DB.drafts[s.id]?`<div class="resume-badge">In progress</div>` : isToday?`<div class="today-badge">Today</div>`:'';
-    b.innerHTML=`
-      <div class="tag ${s.type}">${s.code}</div>
-      <div class="info">
-        <div class="t">${s.short}${isToday?' <span class="t-star">●</span>':''}</div>
-        <div class="d"><span>${s.ex.length} exercises</span><span class="dot">~${s.est} min</span></div>
-      </div>
-      ${badge}
-      <div class="chev">${I.chev}</div>`;
-    b.onclick=()=>{ card.classList.toggle('open'); };
-    card.appendChild(b);
-
-    const list=el('div','exlist');
-    s.ex.forEach(ex=>{
-      const item=el('div','exitem');
-      const r=el('div','exrow');
-      r.innerHTML=`<div class="en"><b>${ex.name}</b><span>${ex.target}</span></div>`;
-      item.appendChild(r); item.appendChild(videoBlock(ex.name, ex.vid));
-      list.appendChild(item);
-    });
-    const start=el('button','start-inline',`${I.play} Start & log this session`);
-    start.onclick=()=>openSession(s.id);
-    list.appendChild(start);
-    card.appendChild(list);
-    v.appendChild(card);
-  });
+  [...sessions].sort((a,b)=>(a.id===todayId?-1:0)-(b.id===todayId?-1:0)).forEach(s=>v.appendChild(sessionCard(s,todayId)));
+  v.appendChild(el('div','section-head','<span class="eyebrow">Warm-up &amp; cool-down · every phase</span>'));
+  phaseSessions('prep').forEach(s=>v.appendChild(sessionCard(s,todayId)));
 }
 
 /* ============================================================
@@ -1294,7 +1554,7 @@ function renderGoals(){
     if(!DB.history.length){ toast('No history yet'); return; }
     confirmAction('Clear all history?', `All ${DB.history.length} logged session(s) will be permanently deleted. This can't be undone.`, 'Delete all', ()=>{ DB.history=[]; save(); renderAll(); toast('History cleared'); }); }});
   rows.push({icon:I.bolt, cls:'danger', t:'Reset everything', s:'History, drafts & goals back to defaults', fn:()=>{
-    confirmAction('Reset the whole app?', 'Deletes all history and in-progress sessions and restores default goals. This can\'t be undone.', 'Reset all', ()=>{ DB.history=[]; DB.drafts={}; DB.goals={weekly:4,bwCurrent:72,bwTarget:68}; save(); renderAll(); toast('App reset'); }); }});
+    confirmAction('Reset the whole app?', 'Deletes all history, assessments and in-progress sessions and restores default goals. This can\'t be undone.', 'Reset all', ()=>{ DB.history=[]; DB.drafts={}; DB.assess=[]; DB.gateManual={}; DB.goals={weekly:4,bwCurrent:72,bwTarget:68,trainDays:[1,2,4,5]}; save(); renderAll(); toast('App reset'); }); }});
   rows.forEach(r=>{
     const b=el('button','data-row'+(r.cls?' '+r.cls:''));
     b.innerHTML=`<div class="di">${r.icon}</div><div class="dt"><b>${r.t}</b><span>${r.s}</span></div>`;
@@ -1319,11 +1579,13 @@ function openSession(sid){
     const timed = !!ex.sec;
     const nSets = ex.setN || parseSets(ex.target);
     const prev = last && last.sets[ex.name] ? last.sets[ex.name] : null;
-    const st = { name:ex.name, target:ex.target, nSets, done:false, prev,
+    // per-exercise mode: timed hold → countdown; loaded/strength → reps×kg; otherwise → tick
+    const mode = timed ? 'timed' : (isStrength || ex.log) ? 'log' : 'tick';
+    const st = { name:ex.name, target:ex.target, nSets, done:false, prev, mode, src:ex.src||null, note:ex.note||null,
                  sec:ex.sec||null, timed, rest:ex.rest||s.rest||null, vid:ex.vid||null,
                  hist: DB.history.filter(h=>h.sets[ex.name]).sort((a,b)=>b.ts-a.ts).map(h=>({date:h.date, sets:h.sets[ex.name]})), hIdx:0 };
-    if(isStrength) st.sets = Array.from({length:nSets},()=>({reps:'',kg:''}));
-    else if(timed) st.sets = Array.from({length:nSets},()=>({done:false}));
+    if(mode==='log') st.sets = Array.from({length:nSets},()=>({reps:'',kg:''}));
+    else if(mode==='timed') st.sets = Array.from({length:nSets},()=>({done:false}));
     else st.sets = null;
     return st;
   });
@@ -1339,7 +1601,7 @@ function openSession(sid){
   }
   sheetPast = DB.history.filter(h=>h.sid===sid).sort((a,b)=>b.ts-a.ts);
   sheetHistIdx = -1;
-  $('#sheetKick').textContent = s.type==='strength'?'Strength · '+s.code : s.type==='mobility'?'Mobility · '+s.code : 'Conditioning · '+s.code;
+  $('#sheetKick').textContent = (TYPE_LABEL[s.type]||'Session')+' · '+s.code;
   $('#sheetTitle').textContent = s.short;
   renderSheetBody();
   $('#scrim').classList.add('show'); $('#sheet').classList.add('show');
@@ -1413,7 +1675,10 @@ function renderSheetBody(){
   if(activeSession.circuit){
     body.appendChild(el('div','circuit-note',`${I.rest}<span>Circuit · ${activeSession.circuit}. Run the timed moves each round.</span>`));
   }
-  if(isStrength){
+  if(activeSession.phase && activeSession.phase!=='mgmt' && activeSession.phase!=='prep'){
+    body.appendChild(el('div','rehab-note',`${I.info}<span>Rehab rule: pain ≤ 3/10 during, and back to baseline by next morning. If the knee swells or pain lingers, drop back a level and tell your physio.</span>`));
+  }
+  if(sheetState.some(x=>x.mode==='log')){
     body.appendChild(el('div','log-hint',`${I.info}<span>Enter your <b>reps × weight</b> for each set below — it saves to your history and drives your progress &amp; goals.</span>`));
   }
   sheetState.forEach((st,ei)=>{
@@ -1421,7 +1686,7 @@ function renderSheetBody(){
     const head=el('div','ex-head');
     head.innerHTML=`
       <button class="ex-check" aria-label="Mark ${st.name} complete">${I.check}</button>
-      <div class="eh"><b>${st.name}</b><span>Target ${st.target}</span></div>`;
+      <div class="eh"><b>${st.name}</b><span>Target ${st.target}</span>${srcBadge(st.src)}${st.note?`<em class="ex-cue">${st.note}</em>`:''}</div>`;
     head.querySelector('.ex-check').onclick=()=>{ st.done=!st.done; if(st.timed&&st.sets) st.sets.forEach(s=>s.done=st.done); renderSheetBody(); saveDraft(); };
     ex.appendChild(head);
     // per-exercise history: ◀ ▶ through past values for THIS exercise
@@ -1438,7 +1703,7 @@ function renderSheetBody(){
     }
     ex.appendChild(videoBlock(st.name, st.vid));
 
-    if(isStrength){
+    if(st.mode==='log'){
       const sets=el('div','sets');
       // cascade a value down to following sets that are empty or still auto-filled
       const cascade=(field,si)=>{
@@ -1511,11 +1776,10 @@ function renderSheetBody(){
   updateSheetProgress();
 }
 function updateSheetProgress(){
-  const isStrength=activeSession.type==='strength';
   let done=0, total=sheetState.length;
   sheetState.forEach(st=>{
     let c=false;
-    if(isStrength) c = st.done || (st.sets&&st.sets.some(s=>s.reps||s.kg));
+    if(st.mode==='log') c = st.done || (st.sets&&st.sets.some(s=>s.reps||s.kg));
     else if(st.timed) c = st.done || (st.sets&&st.sets.some(s=>s.done));
     else c = st.done;
     if(c) done++;
@@ -1528,10 +1792,9 @@ function updateSheetProgress(){
 }
 $('#finishBtn').onclick=()=>{
   if(!activeSession) return;
-  const isStrength=activeSession.type==='strength';
   const sets={};
   sheetState.forEach(st=>{
-    if(isStrength){
+    if(st.mode==='log'){
       const rows=st.sets.map(s=>({reps:s.reps?+s.reps:0,kg:s.kg?+s.kg:0})).filter(s=>s.reps||s.kg);
       if(rows.length) sets[st.name]=rows; else if(st.done) sets[st.name]=[{reps:0,kg:0}];
     } else if(st.timed){
@@ -1611,31 +1874,68 @@ $('#rest15').onclick=()=>{ restRem+=15; restTotal=Math.max(restTotal,restRem); p
 $('#restSkip').onclick=()=>{ clearInterval(restInterval); hideRest(); };
 
 /* ---------- INLINE EXPANDABLE VIDEO ---------- */
-function ytId(u){ const m=u&&u.match(/[?&]v=([\w-]+)/); return m?m[1]:null; }
+function ytId(u){ const e=embedFor(u); return e&&e.kind==='yt'?e.id:null; }
+function escAttr(s){ return String(s||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;'); }
+// Turn a YouTube / Google Drive / Instagram link into an inline-embeddable URL.
+function embedFor(u){
+  if(!u) return null; let m;
+  if((m=u.match(/(?:youtube\.com\/(?:watch\?(?:.*&)?v=|shorts\/|embed\/|live\/)|youtu\.be\/)([\w-]{11})/)))
+    return {kind:'yt', id:m[1], src:`https://www.youtube-nocookie.com/embed/${m[1]}?rel=0&playsinline=1&modestbranding=1`};
+  if((m=u.match(/drive\.google\.com\/(?:file\/d\/|open\?id=|uc\?(?:.*&)?id=)([\w-]{10,})/)))
+    return {kind:'drive', src:`https://drive.google.com/file/d/${m[1]}/preview`};
+  if((m=u.match(/instagram\.com\/(?:[\w.]+\/)?(reels?|p|tv)\/([\w-]+)/)))
+    return {kind:'ig', src:`https://www.instagram.com/${m[1].startsWith('reel')?'reel':m[1]}/${m[2]}/embed`};
+  return null;
+}
 function videoBlock(name, vid){
-  const id=ytId(vid||''); const link=vid||ytLink(name);
   const wrap=el('div','vblock');
-  wrap.innerHTML=`
-    <button class="vtoggle" aria-expanded="false">
-      <span class="vthumb">${I.play}</span>
-      <span class="vtl"><b>Watch tutorial</b><span>${id?'Plays inline':'Search on YouTube'}</span></span>
-      <span class="vchev">${I.chev}</span>
-    </button>
-    <div class="vpanel">
-      <div class="vplayer"></div>
-      <a class="vmore" href="${link}" target="_blank" rel="noopener">${I.ext} Video won't play? Watch on YouTube</a>
-    </div>`;
-  const toggle=wrap.querySelector('.vtoggle'), player=wrap.querySelector('.vplayer');
-  toggle.onclick=()=>{
-    const open=wrap.classList.toggle('open'); toggle.setAttribute('aria-expanded',open);
-    toggle.querySelector('.vtl span').textContent = open ? 'Hide tutorial' : (id?'Plays inline':'Search on YouTube');
-    if(open && !player.dataset.loaded){
-      player.innerHTML = id
-        ? `<iframe src="https://www.youtube-nocookie.com/embed/${id}?rel=0&playsinline=1&modestbranding=1" title="${name} tutorial" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen loading="lazy"></iframe>`
-        : `<div class="vid-fallback">${I.play}<p>No exact tutorial matched this move — search YouTube for a demo.</p><a href="${ytLink(name)}" target="_blank" rel="noopener">Search YouTube ↗</a></div>`;
-      player.dataset.loaded='1';
-    } else if(!open){ player.innerHTML=''; player.dataset.loaded=''; }  // stop playback on collapse
+  const build=(openNow)=>{
+    const mine=DB.myVids[name]; const url=mine||vid; const em=embedFor(url); const link=url||ytLink(name);
+    const sub=()=> mine?'Your video':em?'Plays inline':'Search on YouTube';
+    wrap.className='vblock';
+    wrap.innerHTML=`
+      <button class="vtoggle" aria-expanded="false">
+        <span class="vthumb${mine?' mine':''}">${I.play}</span>
+        <span class="vtl"><b>${mine?'Watch your video':'Watch tutorial'}</b><span>${sub()}</span></span>
+        <span class="vchev">${I.chev}</span>
+      </button>
+      <div class="vpanel">
+        <div class="vplayer${em&&em.kind==='ig'?' ig':''}"></div>
+        <a class="vmore" href="${escAttr(link)}" target="_blank" rel="noopener">${I.ext} Video won't play? Open it directly</a>
+        <div class="vmine">
+          <button class="vmine-btn">${I.plus} ${mine?'Change or remove your video':'Use my own video (YouTube, Drive, Instagram)'}</button>
+          <div class="vmine-form" hidden>
+            <input type="url" inputmode="url" placeholder="Paste a YouTube, Google Drive or Instagram link" value="${escAttr(mine)}" aria-label="Your video link for ${escAttr(name)}">
+            <div class="vmine-act"><button class="vm-save">Save</button>${mine?'<button class="vm-del">Remove mine</button>':''}<button class="vm-cancel">Cancel</button></div>
+            <p class="vmine-hint">Google Drive videos must be shared as “Anyone with the link”.</p>
+            <p class="vmine-err" hidden>That link isn't a YouTube, Drive or Instagram video — check it and try again.</p>
+          </div>
+        </div>
+      </div>`;
+    const toggle=wrap.querySelector('.vtoggle'), player=wrap.querySelector('.vplayer');
+    toggle.onclick=()=>{
+      const open=wrap.classList.toggle('open'); toggle.setAttribute('aria-expanded',open);
+      toggle.querySelector('.vtl span').textContent = open ? 'Hide' : sub();
+      if(open && !player.dataset.loaded){
+        player.innerHTML = em
+          ? `<iframe src="${em.src}" title="${escAttr(name)} video" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen loading="lazy"></iframe>`
+          : `<div class="vid-fallback">${I.play}<p>No exact tutorial matched this move — search YouTube, or add your own video below.</p><a href="${ytLink(name)}" target="_blank" rel="noopener">Search YouTube ↗</a></div>`;
+        player.dataset.loaded='1';
+      } else if(!open){ player.innerHTML=''; player.dataset.loaded=''; }  // stop playback on collapse
+    };
+    const form=wrap.querySelector('.vmine-form'), inp=form.querySelector('input'), err=form.querySelector('.vmine-err');
+    wrap.querySelector('.vmine-btn').onclick=()=>{ form.hidden=!form.hidden; if(!form.hidden) inp.focus(); };
+    form.querySelector('.vm-cancel').onclick=()=>{ form.hidden=true; err.hidden=true; };
+    form.querySelector('.vm-save').onclick=()=>{
+      const val=inp.value.trim();
+      if(!embedFor(val)){ err.hidden=false; return; }
+      DB.myVids[name]=val; save(); build(true); toast('Your video saved');
+    };
+    const del=form.querySelector('.vm-del');
+    if(del) del.onclick=()=>{ delete DB.myVids[name]; save(); build(true); toast('Back to the tutorial video'); };
+    if(openNow) toggle.click();
   };
+  build(false);
   return wrap;
 }
 
@@ -1695,7 +1995,116 @@ function emptyState(title,msg){
 /* ============================================================
    NAV / BOOT
    ============================================================ */
-function renderAll(){ renderToday(); renderTrain(); renderProgress(); renderGoals(); }
+/* ============================================================
+   RENDER: ASSESS  (weekly check-ins + test days → LSI + phase gates)
+   ============================================================ */
+let assessForm=null; // 'weekly' | 'big' | null
+const SWELL=['None','Trace','1+','2+','3+'];
+function lsiClass(x){ return x==null?'':x>=90?'good':x>=80?'warn':'bad'; }
+function weeklySummary(v){
+  const p=[];
+  if(v.pain!=='' && v.pain!=null) p.push(`Pain ${v.pain}/10`);
+  if(v.swell!=='' && v.swell!=null) p.push(`Swelling ${SWELL[+v.swell]||v.swell}`);
+  if(v.flex) p.push(`Flex ${v.flex}°`);
+  if(v.ext!=='' && v.ext!=null) p.push(+v.ext<=0?'Full ext':`Ext −${v.ext}°`);
+  if(v.bal) p.push(`Balance ${v.bal}s`);
+  return p.join(' · ')||'No values';
+}
+function assessFormEl(type){
+  const f=el('div','as-form');
+  const today=todayISO();
+  const legHdr = DB.involved ? `<div class="as-lr"><span></span><b>Left${DB.involved==='L'?' (injured)':''}</b><b>Right${DB.involved==='R'?' (injured)':''}</b><b>LSI</b></div>` : '';
+  const num=(name,ph,extra='')=>`<input name="${name}" inputmode="decimal" placeholder="${ph}" ${extra}>`;
+  f.innerHTML = `<div class="as-fh"><b>${type==='weekly'?'Weekly check-in':'Test day'}</b><label class="as-date">Date <input type="date" name="date" value="${today}" max="${today}"></label></div>` +
+    (type==='weekly' ? `
+      <label class="as-field"><span>Pain now (0–10)</span>${num('pain','0')}</label>
+      <label class="as-field"><span>Swelling (stroke test)</span><select name="swell"><option value="">—</option>${SWELL.map((s,i)=>`<option value="${i}">${s}</option>`).join('')}</select></label>
+      <label class="as-field"><span>Knee bend / flexion (°)</span>${num('flex','e.g. 125')}</label>
+      <label class="as-field"><span>Extension lacking (°) · 0 = full</span>${num('ext','0')}</label>
+      <label class="as-field"><span>Single-leg balance, injured side (s)</span>${num('bal','e.g. 30')}</label>`
+    : `${legHdr}${TESTS.map(t=>`<div class="as-row" data-k="${t.k}"><span>${t.t} <em>${t.u}</em></span>${num(t.k+'_L','L')}${num(t.k+'_R','R')}<i class="as-lsi">–</i></div>`).join('')}
+      <label class="as-field"><span>ACL-RSI confidence score (0–100)</span>${num('rsi','e.g. 70')}</label>`) +
+    `<label class="as-field"><span>Notes</span><textarea name="notes" rows="2" placeholder="How did the knee feel? Anything your physio said…"></textarea></label>
+     <div class="as-btns"><button class="as-cancel">Cancel</button><button class="as-save">Save ${type==='weekly'?'check-in':'test day'}</button></div>`;
+  const q=n=>f.querySelector(`[name="${n}"]`);
+  // live LSI preview on test day
+  f.querySelectorAll('.as-row').forEach(row=>{
+    const k=row.dataset.k, out=row.querySelector('.as-lsi');
+    const upd=()=>{ const l=lsiOf({v:{[k]:{L:q(k+'_L').value,R:q(k+'_R').value}}},k); out.textContent=l==null?'–':l+'%'; out.className='as-lsi '+lsiClass(l); };
+    row.querySelectorAll('input').forEach(i=>i.oninput=upd);
+  });
+  f.querySelector('.as-cancel').onclick=()=>{ assessForm=null; renderAssess(); };
+  f.querySelector('.as-save').onclick=()=>{
+    const date=q('date').value||today; const v={notes:q('notes').value.trim()};
+    if(type==='weekly'){ ['pain','swell','flex','ext','bal'].forEach(k=>v[k]=q(k).value.trim()); }
+    else { TESTS.forEach(t=>{ const L=q(t.k+'_L').value.trim(), R=q(t.k+'_R').value.trim(); if(L||R) v[t.k]={L,R}; }); v.rsi=q('rsi').value.trim(); }
+    const filled=Object.entries(v).some(([k,x])=>k!=='notes' && x!=='' && x!=null);
+    if(!filled && !v.notes){ toast('Enter at least one value'); return; }
+    DB.assess.push({id:'a'+Date.now(), type, date, ts:new Date(date+'T12:00').getTime()+(Date.now()%1000), v});
+    save(); assessForm=null; renderAll(); toast(type==='weekly'?'Check-in saved':'Test day saved');
+  };
+  return f;
+}
+function renderAssess(){
+  const v=$('#view-assess'); if(!v) return; v.innerHTML='';
+  v.appendChild(el('div','',`<div class="eyebrow" style="margin:2px 2px 4px">Track your knee</div><div class="h2" style="margin-bottom:12px">Assessments</div>`));
+
+  const leg=el('div','leg-pick');
+  leg.innerHTML=`<span>Injured knee</span><div class="seg">${['L','R'].map(x=>`<button aria-pressed="${DB.involved===x}" data-l="${x}">${x==='L'?'Left':'Right'}</button>`).join('')}</div>`;
+  leg.querySelectorAll('button').forEach(b=>b.onclick=()=>{ DB.involved=b.dataset.l; save(); renderAll(); });
+  v.appendChild(leg);
+  if(!DB.involved) v.appendChild(el('div','help-note',`${I.info}<p>Pick your <b>injured knee</b> so the app can compare it with your healthy side (limb symmetry index, LSI).</p>`));
+
+  if(assessForm){ v.appendChild(assessFormEl(assessForm)); }
+  else {
+    const act=el('div','as-actions');
+    act.innerHTML=`<button data-t="weekly"><b>Weekly check-in</b><span>Pain · swelling · bend · balance — 1 min</span></button>
+                   <button data-t="big"><b>Test day</b><span>Hop tests · strength · Y-balance → LSI</span></button>`;
+    act.querySelectorAll('button').forEach(b=>b.onclick=()=>{ assessForm=b.dataset.t; renderAssess(); });
+    v.appendChild(act);
+  }
+
+  v.appendChild(el('div','section-head','<span class="eyebrow">Your current phase</span>'));
+  v.appendChild(gateCard(DB.phase));
+
+  const b=latestAssess('big');
+  if(b){
+    const d=new Date(b.date+'T00:00');
+    v.appendChild(el('div','section-head',`<span class="eyebrow">Latest test day · ${d.getDate()} ${MO[d.getMonth()]} ${d.getFullYear()}</span>`));
+    const g=el('div','lsi-grid');
+    TESTS.filter(t=>b.v[t.k]).forEach(t=>{
+      const l=lsiOf(b,t.k);
+      g.appendChild(el('div','lsi-card '+lsiClass(l),`<span>${t.t}</span><b>${l==null?'–':l+'%'}</b><em>L ${b.v[t.k].L||'–'} · R ${b.v[t.k].R||'–'} ${t.u}</em>`));
+    });
+    if(b.v.rsi) g.appendChild(el('div','lsi-card '+(+b.v.rsi>=65?'good':'warn'),`<span>ACL-RSI</span><b>${b.v.rsi}</b><em>confidence · target ≥ 65</em>`));
+    v.appendChild(g);
+    v.appendChild(el('div','lsi-legend','<span class="good">≥ 90% return-to-sport</span><span class="warn">80–89%</span><span class="bad">&lt; 80%</span>'));
+  }
+
+  v.appendChild(el('div','section-head','<span class="eyebrow">History</span>'));
+  if(!DB.assess.length){
+    v.appendChild(emptyState('No assessments yet','Log a weekly check-in or a test day. You can back-date entries to add your old physio assessments.'));
+    return;
+  }
+  const h=el('div','hist');
+  [...DB.assess].sort((a,b)=>b.ts-a.ts).forEach(a=>{
+    const d=new Date(a.date+'T00:00');
+    const sum = a.type==='weekly' ? weeklySummary(a.v)
+      : TESTS.filter(t=>a.v[t.k]).map(t=>{ const l=lsiOf(a,t.k); return `<span class="lsi-chip ${lsiClass(l)}">${t.t.replace('Single-leg ','SL ')} ${l==null?'–':l+'%'}</span>`; }).join('') || 'Test values saved';
+    const row=el('div','hist-row as-hrow');
+    row.innerHTML=`<div class="tag ${a.type==='weekly'?'mobility':'rehab'}">${a.type==='weekly'?'WK':'TD'}</div>
+      <div class="hi"><b>${a.type==='weekly'?'Weekly check-in':'Test day'}</b><span>${DOW[d.getDay()]} ${d.getDate()} ${MO[d.getMonth()]} ${d.getFullYear()}</span><div class="as-sum">${sum}</div>${a.v.notes?`<div class="as-note">“${escAttr(a.v.notes)}”</div>`:''}</div>
+      <button class="del" aria-label="Delete this assessment">${I.trash}</button>`;
+    row.querySelector('.del').onclick=()=>confirmAction('Delete this assessment?','It will be removed from your history and phase checks.','Delete',()=>{
+      const i=DB.assess.indexOf(a); const rm=DB.assess.splice(i,1)[0]; save(); renderAll();
+      toast('Assessment deleted',()=>{ DB.assess.splice(i,0,rm); save(); renderAll(); });
+    });
+    h.appendChild(row);
+  });
+  v.appendChild(h);
+}
+
+function renderAll(){ updateHeaderPhase(); renderToday(); renderTrain(); renderAssess(); renderProgress(); renderGoals(); }
 const tabs=document.querySelectorAll('.tab');
 tabs.forEach(t=>{
   t.onclick=()=>{

@@ -86,6 +86,32 @@ const EXP_MUSCLES=[
     {n:'Plank Saw', r:'Anti-extension core', setup:['Forearm plank','Rock forward and back from the shoulders'], load:'3 × 30 sec',
       why:'Stiffens the trunk for heavy lifting; from your rehab program.', cite:'Practical'},
   ]},
+  { id:'forearms', name:'Forearms', view:'f', ex:[
+    {n:'Reverse Barbell Curl', r:'Brachioradialis & wrist extensors', setup:['Overhand grip, shoulder width','Elbows pinned','Slow lowering'], load:'10–15 reps',
+      why:'The overhand grip shifts the work to the brachioradialis and forearm extensors.', cite:'EMG studies'},
+    {n:'Dumbbell Wrist Curl', r:'Wrist flexors', setup:['Forearms on thighs or a bench','Let the dumbbell roll to your fingertips','Curl the wrist up'], load:'15–20 reps',
+      why:'Small muscles respond well to higher reps and a full stretch at the fingertips.', cite:'Practical'},
+    {n:'Dumbbell Alternating Hammer Curl', r:'Brachioradialis', setup:['Thumbs-up grip','No swinging'], load:'8–12 reps',
+      why:'The neutral grip loads the brachioradialis, the thickest part of the forearm.', cite:'EMG studies'},
+    {n:"Farmer's Walk", r:'Grip & forearms', setup:['Heavy dumbbells at your sides','Tall posture, short quick steps'], load:'3 × 30–40 m',
+      why:'Builds grip strength that carries over to deadlifts, rows and pull-ups.', cite:'Practical'},
+  ]},
+  { id:'adductors', name:'Adductors', view:'f', ex:[
+    {n:'Hip Adduction Machine', r:'Inner thigh', setup:['Start wide for a deep stretch','Squeeze in, control back out'], load:'12–20 reps',
+      why:'Direct loading through a long range for a big muscle group that most programs skip.', cite:'Practical'},
+    {n:'Copenhagen Plank (Short Lever)', r:'Adductors', setup:['Knee on bench, bottom leg free','Hips high, body straight'], load:'3 × 20 sec each side',
+      why:'A Copenhagen-based adductor programme cut groin problems in footballers by about 40%.', cite:'Harøy et al., 2019'},
+    {n:'Barbell Back Squat', r:'Adductors & glutes', setup:['Full depth','Slightly wider stance'], load:'5–10 reps',
+      why:'Full-depth squats grew the adductors more than half squats.', cite:'Kubo et al., 2019'},
+  ]},
+  { id:'lowerback', name:'Lower back', view:'b', ex:[
+    {n:'45° Back Extension', r:'Spinal erectors', setup:['Pad just below the hips','Spine neutral','Hinge down, extend to straight — no hyperextension'], load:'12–20 reps · hold a plate',
+      why:'Trains the erectors through a controlled range; a neutral spine keeps the focus on the lower back.', cite:'Practical'},
+    {n:'Romanian Deadlift', r:'Erectors & hamstrings', setup:['Soft knees','Hips back, back flat','Bar close to the legs'], load:'6–10 reps · 1–2 RIR',
+      why:'The erectors work hard holding a flat back while the hamstrings lengthen under load.', cite:'Biomechanics'},
+    {n:'Conventional Deadlift', r:'Erectors (isometric)', setup:['Bar against shins','Back flat, head up'], load:'5–8 reps',
+      why:'Heavy isometric work for the whole back side of the body.', cite:'Practical'},
+  ]},
   { id:'quads', name:'Quads', view:'f', ex:[
     {n:'Barbell Back Squat', r:'Quads & glutes', setup:['Full depth (hip crease below knee)','Feet shoulder width, toes slightly out'], load:'5–10 reps · 1–3 RIR',
       why:'Full squats grew glutes and adductors more than half squats, with similar quad growth.', cite:'Kubo et al., 2019'},
@@ -140,33 +166,28 @@ function expBuildCustom(){
     equip:'From Explore', ex:names.map(n=>({name:n, target:'3 × 8–12', vid:expVid(n)})) };
   PROGRAM.push(s); return s;
 }
+function expInView(mid,view){ return (window.BODY_MAP&&BODY_MAP[view]||[]).some(([g])=>g===mid); }
 function expBodySVG(view){
-  const R=(id,x,y,w,h,rx=9)=>`<rect class="bm m-${id}" data-m="${id}" x="${x}" y="${y}" width="${w}" height="${h}" rx="${rx}"/>`;
-  const E=(id,cx,cy,rx,ry)=>`<ellipse class="bm m-${id}" data-m="${id}" cx="${cx}" cy="${cy}" rx="${rx}" ry="${ry}"/>`;
-  const base=`<circle class="bm-body" cx="100" cy="32" r="20"/><rect class="bm-body" x="91" y="50" width="18" height="16" rx="5"/>
-    <rect class="bm-body" x="34" y="200" width="16" height="44" rx="8"/><rect class="bm-body" x="150" y="200" width="16" height="44" rx="8"/>`;
-  const front = base + E('shoulders',60,86,17,14)+E('shoulders',140,86,17,14)+R('chest',68,78,31,40,10)+R('chest',101,78,31,40,10)
-    + R('biceps',36,104,18,52)+R('biceps',146,104,18,52)+R('abs',78,122,44,70,10)
-    + R('quads',68,200,29,92,12)+R('quads',103,200,29,92,12)+R('calves',72,306,22,66,10)+R('calves',106,306,22,66,10);
-  const back = base + R('traps',76,64,48,24,10)+E('shoulders',60,86,17,14)+E('shoulders',140,86,17,14)
-    + R('back',68,92,31,62,10)+R('back',101,92,31,62,10)+R('back',84,156,32,34,8)
-    + R('triceps',36,104,18,52)+R('triceps',146,104,18,52)
-    + E('glutes',85,210,18,20)+E('glutes',115,210,18,20)
-    + R('hams',68,232,29,64,12)+R('hams',103,232,29,64,12)+R('calves',72,306,22,66,10)+R('calves',106,306,22,66,10);
-  return `<svg viewBox="0 0 200 380" class="bodymap" role="img" aria-label="${view==='f'?'Front':'Back'} body map — tap a muscle">${view==='f'?front:back}</svg>`;
+  const parts=(window.BODY_MAP&&BODY_MAP[view])||[];
+  const shapes=parts.map(([g,polys])=>polys.map(pt=>g
+      ? `<polygon class="bm" data-m="${g}" points="${pt}"><title>${(EXP_MUSCLES.find(m=>m.id===g)||{}).name||g}</title></polygon>`
+      : `<polygon class="bm-body" points="${pt}"/>`).join('')).join('');
+  return `<svg viewBox="0 0 100 200" class="bodymap" role="img" aria-label="${view==='f'?'Front':'Back'} body map — tap a muscle">${shapes}</svg>`;
 }
 function renderExplore(v){
   const intro=el('div','exp-intro');
   intro.innerHTML=`<b>Build muscle — evidence first</b><span>Tap a muscle to see the best exercises for growth, with exact setup and the research behind each one.</span>`;
   v.appendChild(intro);
   const map=el('div','exp-map');
-  map.innerHTML=`<div class="seg exp-seg"><button data-v="f" aria-pressed="${expView==='f'}">Front</button><button data-v="b" aria-pressed="${expView==='b'}">Back</button></div>${expBodySVG(expView)}`;
-  map.querySelectorAll('.exp-seg button').forEach(b=>b.onclick=()=>{ expView=b.dataset.v; const first=EXP_MUSCLES.find(m=>m.view===expView); if(EXP_MUSCLES.find(m=>m.id===expMuscle).view!==expView && !['shoulders','calves'].includes(expMuscle)) expMuscle=first.id; renderTrain(); });
+  const cur=EXP_MUSCLES.find(x=>x.id===expMuscle);
+  map.innerHTML=`<div class="seg exp-seg"><button data-v="f" aria-pressed="${expView==='f'}">Front</button><button data-v="b" aria-pressed="${expView==='b'}">Back</button></div>
+    <div class="exp-fig">${expBodySVG(expView)}</div><div class="exp-sel"><span>Selected</span><b>${cur?cur.name:''}</b><em>${cur?cur.ex.length+' exercises':''}</em></div>`;
+  map.querySelectorAll('.exp-seg button').forEach(b=>b.onclick=()=>{ expView=b.dataset.v; if(!expInView(expMuscle,expView)) expMuscle=EXP_MUSCLES.find(m=>m.view===expView).id; renderTrain(); });
   map.querySelectorAll('.bm').forEach(r=>{ if(r.dataset.m===expMuscle) r.classList.add('on'); r.onclick=()=>{ expMuscle=r.dataset.m; renderTrain(); }; });
   v.appendChild(map);
   // accessible chip list (every muscle, both views)
   const chips=el('div','filter-row exp-chips');
-  EXP_MUSCLES.forEach(m=>{ const c=el('button','chip',m.name); c.setAttribute('aria-pressed',m.id===expMuscle); c.onclick=()=>{ expMuscle=m.id; if(!['shoulders','calves'].includes(m.id)) expView=m.view; renderTrain(); }; chips.appendChild(c); });
+  EXP_MUSCLES.forEach(m=>{ const c=el('button','chip',m.name); c.setAttribute('aria-pressed',m.id===expMuscle); c.onclick=()=>{ expMuscle=m.id; if(!expInView(m.id,expView)) expView=m.view; renderTrain(); }; chips.appendChild(c); });
   v.appendChild(chips);
   requestAnimationFrame(()=>{ const a=chips.querySelector('[aria-pressed="true"]'); if(a) chips.scrollLeft=a.offsetLeft-20; });
 
@@ -200,4 +221,4 @@ function renderExplore(v){
     v.appendChild(bar);
   }
 }
-window.EXPLORE_VIDEOS={"Incline Dumbbell Press":"0f6-uCUKqgA","Flat Barbell Bench Press":"4Y2ZdHCOXok","Seated Cable Fly":"CT7vDnPJZ9w","Lat Pulldown":"VXKfH6ciEBI","Chest-Supported Row":"ro2vfHfD0DQ","Pull-Up":"ylVmNQlKdAI","Seated Cable Row":"7o2oolbmzeI","Reverse Pec Deck":"6yMdhi2DVao","Incline Dumbbell Curl":"soxrZlIl35U","Preacher Curl":"fIWP-FRFNU0","Bayesian Cable Curl":"4O24gFksZ04","Overhead Cable Triceps Extension":"IaJWPqP-Bjo","EZ-Bar Skull Crusher":"F-S4K5inM9I","Close-Grip Bench Press":"UYJsFzqdgK4","Hack Squat":"VY8ko6ecfso","Seated Leg Curl":"G5iP_YcDQdE","Lying Leg Curl":"lUH80pneL5w","Romanian Deadlift":"Roe2hOnzXf4","45° Back Extension":"KA2AuDQipSQ","Seated Calf Raise":"I1uQtobaNRQ","Cable Crunch":"kc0PRn372lo","Hanging Leg Raise":"Nw0LOKe3_l8","Bulgarian Split Squat":"-4LVK1crLSw","Walking Lunge":"YYWhkctnP2o"};   // filled after embed check
+window.EXPLORE_VIDEOS={"Dumbbell Wrist Curl":"VGkF2NTtao0","Reverse Barbell Curl":"YO98hq3vX7g","Farmer's Walk":"8OtwXwrJizk","Hip Adduction Machine":"fpVHoidfg60","Incline Dumbbell Press":"0f6-uCUKqgA","Flat Barbell Bench Press":"4Y2ZdHCOXok","Seated Cable Fly":"CT7vDnPJZ9w","Lat Pulldown":"VXKfH6ciEBI","Chest-Supported Row":"ro2vfHfD0DQ","Pull-Up":"ylVmNQlKdAI","Seated Cable Row":"7o2oolbmzeI","Reverse Pec Deck":"6yMdhi2DVao","Incline Dumbbell Curl":"soxrZlIl35U","Preacher Curl":"fIWP-FRFNU0","Bayesian Cable Curl":"4O24gFksZ04","Overhead Cable Triceps Extension":"IaJWPqP-Bjo","EZ-Bar Skull Crusher":"F-S4K5inM9I","Close-Grip Bench Press":"UYJsFzqdgK4","Hack Squat":"VY8ko6ecfso","Seated Leg Curl":"G5iP_YcDQdE","Lying Leg Curl":"lUH80pneL5w","Romanian Deadlift":"Roe2hOnzXf4","45° Back Extension":"KA2AuDQipSQ","Seated Calf Raise":"I1uQtobaNRQ","Cable Crunch":"kc0PRn372lo","Hanging Leg Raise":"Nw0LOKe3_l8","Bulgarian Split Squat":"-4LVK1crLSw","Walking Lunge":"YYWhkctnP2o"};   // filled after embed check

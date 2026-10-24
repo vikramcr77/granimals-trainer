@@ -1,0 +1,18 @@
+https://app-rosgfyegjtqttc6zcxehi5x7fax5wfmjmex757x6hq23onn57h4n.makeproxy-c.figma.site
+C: WebSocket connection to 'wss://app-rosgfyegjtqttc6zcxehi5x7fax5wfmjmex757x6hq23onn57h4n.makeproxy-c.figma.site/?token=8M7O2-9GeZW-' failed: Error during WebSocket handshake: 'Upgrade' header must not 
+C: WebSocket connection to 'wss://localhost:3000/?token=8M7O2-9GeZW-' failed: Error in connection establishment: net::ERR_SSL_PROTOCOL_ERROR
+C: [vite] failed to connect to websocket.
+your current setup:
+  (browser) app-rosgfyegjtqttc6zcxehi5x7fax5wfmjmex757x6hq23onn57h4n.makeproxy-c.figma.site/ <--[HTTP]--> localhost:3000/ (server)
+  (browser
+C: Failed to load resource: the server responded with a status of 404 (Not Found)
+C: WebSocket connection to 'wss://app-rosgfyegjtqttc6zcxehi5x7fax5wfmjmex757x6hq23onn57h4n.makeproxy-c.figma.site/?token=8M7O2-9GeZW-' failed: Error during WebSocket handshake: 'Upgrade' header must not 
+C: WebSocket connection to 'wss://localhost:3000/?token=8M7O2-9GeZW-' failed: Error in connection establishment: net::ERR_SSL_PROTOCOL_ERROR
+C: [vite] failed to connect to websocket.
+your current setup:
+  (browser) app-rosgfyegjtqttc6zcxehi5x7fax5wfmjmex757x6hq23onn57h4n.makeproxy-c.figma.site/ <--[HTTP]--> localhost:3000/ (server)
+  (browser
+0 [ 'Reading image 2 of 2…', false, true ]
+body [{"date":"2026-10-20","w":74.3,"smm":35.2,"pbf":17.7,"ts":1792527373707}]
+status Reading image 2 of 2…
+errors []

@@ -1,0 +1,18 @@
+ M index.html
+ index.html | 493 +++++++++++++++++++++++++++++++++++++++++++++++++------------
+ 1 file changed, 401 insertions(+), 92 deletions(-)
+ids persisted true cols 4 guides 4
+editor open true title Scan · 12 Oct 2026 sel [ 'smvh6o1bopsp56' ]
+after read {
+saved {"r":{"date":"2026-10-20","w":74.3,"smm":35.2,"pbf":17.7,"ts":4,"id":"smvh6o1bopsp56","time":"17:50","hasImg":true},"blob":161984,"thumbs":1,"toast":"Scan updatedUndo"}
+reopen img be-img true
+lightbox true
+lightbox closed true editor still open true
+moved first 2026-07-15 74.3
+undo 2026-10-20
+removed { has: false, blob: false }
+restored { has: true, blob: true }
+deleted 3 editor closed true
+add flow {
+errors [
+]

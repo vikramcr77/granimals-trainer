@@ -62,35 +62,52 @@ function nutTargets(date){
   const prot = Math.round(w*g.p);
   const fat = Math.round(Math.max(0.6*w, kcal*0.25/9));
   const carb = Math.max(0, Math.round((kcal-prot*4-fat*9)/4));
-  const waterRest=Math.round(w*35/50)*50;                              // ≈35 ml/kg
-  const water=waterRest+(train?500:0);
-  return {bmr:Math.round(bmr), tdee:r10(bmr*(+p.activity||1.2)), rest, trainKcal:rest+sessKcal, sessKcal, train, kcal, p:prot, c:carb, f:fat, goal:g.label, water, waterRest};
+  return {bmr:Math.round(bmr), tdee:r10(bmr*(+p.activity||1.2)), rest, trainKcal:rest+sessKcal, sessKcal, train, kcal, p:prot, c:carb, f:fat, goal:g.label};
 }
 function dayLog(date){ if(!DB.food) DB.food={}; return DB.food[date]||(DB.food[date]=[]); }
 function dayTotals(date){ return dayLog(date).reduce((t,x)=>{ t.kcal+=x.kcal*x.qty; t.p+=x.p*x.qty; t.c+=x.c*x.qty; t.f+=x.f*x.qty; return t; },{kcal:0,p:0,c:0,f:0}); }
 function addFood(meal,item,qty){ dayLog(foodDate).push({id:'f'+Date.now()+Math.random().toString(36).slice(2,6), meal, qty:+qty||1, ...item}); save(); }
 
+/* ---------- Profile (shown at the top of Me → Profile) ---------- */
+function profileSection(){
+  const p=profile(); const t=nutTargets(todayISO()); const b=bmiInfo();
+  const c=el('div','prof-card');
+  c.innerHTML=`<div class="prof-h"><b>Body & nutrition profile</b><span>Used for BMI and your daily calorie & protein targets.</span></div>
+    <div class="prof-grid">
+      <label><span>Sex</span><div class="seg prof-sex">${[['m','Male'],['f','Female']].map(([k,l])=>`<button data-sex="${k}" aria-pressed="${p.sex===k}">${l}</button>`).join('')}</div></label>
+      <label><span>Age</span><input name="age" inputmode="numeric" value="${p.age||''}" placeholder="years"></label>
+      <label><span>Height (cm)</span><input name="height" inputmode="decimal" value="${p.height||''}" placeholder="e.g. 175"></label>
+      <label><span>Weight (kg)</span><input name="weight" inputmode="decimal" value="${DB.goals.bwCurrent||''}" placeholder="e.g. 72"></label>
+      <label class="wide"><span>Daily life (not counting workouts)</span><select name="activity">${ACTIVITY.map(([v,l])=>`<option value="${v}"${+p.activity===v?' selected':''}>${l}</option>`).join('')}</select></label>
+      <label class="wide"><span>Goal</span><div class="seg prof-goal">${Object.entries(GOALS).map(([k,g])=>`<button data-goal="${k}" aria-pressed="${p.goal===k}">${g.label}</button>`).join('')}</div></label>
+    </div>
+    ${t?`<div class="prof-out">
+      <div><span>BMI</span><b class="${b.cls}">${b.bmi}</b><em>${b.cat}</em></div>
+      <div><span>BMR</span><b>${t.bmr}</b><em>kcal at rest</em></div>
+      <div><span>Rest day</span><b>${t.rest}</b><em>kcal target</em></div>
+      <div><span>Training day</span><b>${t.trainKcal}</b><em>+${t.sessKcal} for the session</em></div>
+      <div><span>Protein</span><b>${t.p} g</b><em>every day</em></div>
+    </div>
+    <p class="prof-note">${t.goal}: ${p.goal==='lean'?'~10% above maintenance to build muscle with minimal fat':p.goal==='cut'?'~20% below maintenance; protein stays high to keep muscle':'eat at maintenance'}. Protein ${GOALS[p.goal].p} g/kg (research plateaus around 1.6–2.2 g/kg — Morton et al., 2018). BMI can't tell muscle from fat, so it reads high on lifters.</p>`
+    :`<p class="prof-note">Fill in age, height and weight to see your BMI and targets.</p>`}`;
+  const upd=(fn)=>{ fn(); save(); renderAll(); };
+  c.querySelectorAll('[data-sex]').forEach(b=>b.onclick=()=>upd(()=>p.sex=b.dataset.sex));
+  c.querySelectorAll('[data-goal]').forEach(b=>b.onclick=()=>upd(()=>p.goal=b.dataset.goal));
+  c.querySelector('[name=age]').onchange=e=>upd(()=>p.age=e.target.value.replace(/[^0-9]/g,''));
+  c.querySelector('[name=height]').onchange=e=>upd(()=>p.height=e.target.value.replace(/[^0-9.]/g,''));
+  c.querySelector('[name=weight]').onchange=e=>upd(()=>{ const v=+e.target.value.replace(/[^0-9.]/g,''); if(v) DB.goals.bwCurrent=v; });
+  c.querySelector('[name=activity]').onchange=e=>upd(()=>p.activity=+e.target.value);
+  return c;
+}
+
 /* ---------- Today card ---------- */
 function foodTodayCard(){
   const t=nutTargets(todayISO()); const tot=dayTotals(todayISO());
   const c=el('button','food-today');
-  if(!t){ c.innerHTML=`<span class="ft-ic">${I.bolt}</span><div><b>Set up your plan</b><span>1-minute guided setup → calories, protein & water</span></div>${I.chev}`; c.onclick=()=>openWizard(); return c; }
+  if(!t){ c.innerHTML=`<span class="ft-ic">${I.bolt}</span><div><b>Set up nutrition targets</b><span>Add age, height & weight in Me → Profile</span></div>${I.chev}`; c.onclick=()=>{ mePanel='profile'; renderMe(); switchTab('me'); }; return c; }
   const pct=Math.min(100,Math.round(tot.kcal/t.kcal*100));
-  c.innerHTML=`<span class="ft-ring" style="--p:${pct}"><i>${pct}%</i></span><div><b>${Math.round(tot.kcal)} / ${t.kcal} kcal</b><span>Protein ${Math.round(tot.p)} / ${t.p} g · Water ${(waterCount(todayISO())*0.25).toFixed(1)} / ${(t.water/1000).toFixed(1)} L</span></div>${I.chev}`;
+  c.innerHTML=`<span class="ft-ring" style="--p:${pct}"><i>${pct}%</i></span><div><b>${Math.round(tot.kcal)} / ${t.kcal} kcal</b><span>Protein ${Math.round(tot.p)} / ${t.p} g · ${t.train?'Training day':'Rest day'}</span></div>${I.chev}`;
   c.onclick=()=>{ foodDate=todayISO(); switchTab('food'); };
-  return c;
-}
-
-
-/* ---------- Water ---------- */
-function waterCount(date){ return (DB.water||{})[date]||0; }
-function waterCard(date,t){
-  const goal = t ? t.water : 2500; const n=Math.max(8, Math.round(goal/250)); const have=waterCount(date);
-  const c=el('div','water');
-  c.innerHTML=`<div class="meal-h"><b>Water</b><span>${(have*0.25).toFixed(2).replace(/\.?0+$/,'')} / ${(goal/1000).toFixed(1)} L</span></div>
-    <div class="glasses big">${Array.from({length:n},(_,i)=>`<button class="${i<have?'on':''}" aria-label="${i<have?'Remove':'Add'} glass ${i+1}" data-i="${i}"></button>`).join('')}</div>
-    <p class="pc-foot">Each glass is 250 ml. Tap to fill.</p>`;
-  c.querySelectorAll('[data-i]').forEach(b=>b.onclick=()=>{ const i=+b.dataset.i; DB.water=DB.water||{}; DB.water[date] = (i+1===have)? i : i+1; save(); renderFood(); renderToday(); });
   return c;
 }
 
@@ -107,8 +124,8 @@ function renderFood(){
 
   const t=nutTargets(foodDate), tot=dayTotals(foodDate);
   if(!t){
-    const s=el('div','help-note',`${I.info}<p><b>Answer a few quick questions</b> to get calorie, protein and water targets. You can still log food without them.</p>`);
-    const b=el('button','pc-set','Start guided setup'); b.style.marginTop='8px'; b.onclick=()=>openWizard();
+    const s=el('div','help-note',`${I.info}<p><b>Add your age, height and weight</b> to get calorie and protein targets. You can still log food without them.</p>`);
+    const b=el('button','pc-set','Set up profile'); b.style.marginTop='8px'; b.onclick=()=>{ mePanel='profile'; renderMe(); switchTab('me'); };
     s.querySelector('p').appendChild(document.createElement('br')); s.querySelector('p').appendChild(b); v.appendChild(s);
   } else {
     const pct=Math.min(100,Math.round(tot.kcal/t.kcal*100)); const left=Math.round(t.kcal-tot.kcal);
@@ -121,7 +138,6 @@ function renderFood(){
     sc.querySelectorAll('.fs-day button').forEach(b=>b.onclick=()=>{ DB.foodDay=DB.foodDay||{}; DB.foodDay[foodDate]=b.dataset.t; save(); renderFood(); renderToday(); });
     v.appendChild(sc);
   }
-  v.appendChild(waterCard(foodDate, t));
 
   const yday=addDaysISO(foodDate,-1);
   MEALS.forEach(([k,label])=>{
@@ -209,7 +225,7 @@ function compressImage(file,max=1024){
     img.onerror=()=>rej(new Error('Could not read that image')); img.src=URL.createObjectURL(file); });
 }
 async function aiAnalyzeFood(dataUrl){
-  const mod=await import(AI_SDK); const Anthropic=mod.default;
+  const mod=await new Function('url','return import(url)')(AI_SDK); const Anthropic=mod.default;
   const client=new Anthropic({apiKey:aiKey(), dangerouslyAllowBrowser:true});
   try{
     const resp=await client.beta.messages.create({
@@ -273,6 +289,16 @@ function foodPhotoUI(meal,label){
 /* ---------- Settings panel (Me → Settings) ---------- */
 function renderSettings(){
   const v=$('#view-settings'); if(!v) return; v.innerHTML='';
+  const q=el('div','prof-card');
+  q.innerHTML=`<div class="prof-h"><b>Quick sessions</b><span>Same exercises, fewer sets and shorter holds, about 30% less time.</span></div>
+    <div class="as-btns"><button class="${DB.quick?'as-save':'as-cancel'}" aria-pressed="${!!DB.quick}">${DB.quick?'On: shorter workouts':'Off: full program'}</button></div>
+    <p class="prof-note">Main lifts keep their sets; extra sets on other moves are trimmed. Your history and progress are not changed. Turn it off any time to get the full program back.</p>`;
+  q.querySelector('button').onclick=()=>{ DB.quick=!DB.quick; save(); applyQuick(); renderAll(); toast(DB.quick?'Quick sessions on':'Full program restored'); };
+  v.appendChild(q);
+  const pdf=el('div','prof-card');
+  pdf.innerHTML=`<div class="prof-h"><b>Physio program (PDF)</b><span>Week 14 Management plan from Radhika Bhaiya. Days 1–6, Warm Up and Cool Down are in Train → MG.</span></div>
+    <div class="as-btns"><a class="as-save" href="/docs/week14-program.pdf" target="_blank" rel="noopener" style="text-align:center;text-decoration:none">Open PDF</a></div>`;
+  v.appendChild(pdf);
   const k=aiKey();
   const c=el('div','prof-card');
   c.innerHTML=`<div class="prof-h"><b>Food photo analysis</b><span>Uses Claude to estimate calories and macros from a meal photo.</span></div>
@@ -283,4 +309,5 @@ function renderSettings(){
     try{ localStorage.setItem(AI_KEY_STORE,val); }catch(e){} renderSettings(); toast('API key saved on this device'); };
   const rm=c.querySelector('.as-cancel'); if(rm) rm.onclick=()=>{ try{ localStorage.removeItem(AI_KEY_STORE); }catch(e){} renderSettings(); toast('API key removed'); };
   v.appendChild(c);
+  if(window.GSync) window.GSync.renderCards(v); // account sync + backup file (sync.js)
 }

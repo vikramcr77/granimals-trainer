@@ -5,7 +5,7 @@
 
 import { useEffect } from "react"
 
-const VERSION = "10"
+const VERSION = "11"
 const SCRIPTS = ["phases", "heavyduty", "explore", "food", "profile", "bodymap", "app", "sync"].map(
   (name) => `/legacy/${name}.js?v=${VERSION}`,
 )

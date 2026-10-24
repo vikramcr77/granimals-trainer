@@ -747,6 +747,7 @@ button.cal-cell{cursor:pointer}
 .src-badge{display:inline-block; font-family:"Manrope"; font-size:9.5px; font-weight:800; text-transform:uppercase; letter-spacing:.5px; padding:2px 7px; border-radius:6px; margin:4px 6px 0 0; vertical-align:middle; white-space:nowrap}
 .src-badge.claude{background:var(--violet-soft); color:var(--violet); border:1px dashed color-mix(in srgb,var(--violet) 55%,transparent)}
 .src-badge.saves{background:var(--surface-3); color:var(--ink-2)}
+.src-badge.physio{background:var(--cyan-soft); color:var(--cyan)}
 .exrow .en .src-badge{margin-top:5px}
 .ex-cue{display:block; font-style:normal; font-size:12px; color:var(--ink-2); font-weight:500; margin-top:5px; line-height:1.4}
 .claude-txt{color:var(--violet); font-weight:800}
@@ -862,6 +863,7 @@ button.gr-tick:hover{border-color:var(--accent)}
 .exrow .en span.src-badge,.ex-head .eh span.src-badge{display:table; font-family:"Manrope",sans-serif; font-size:9.5px; font-weight:800; letter-spacing:.5px; margin:6px 0 0; line-height:1.5}
 .exrow .en span.src-badge.claude,.ex-head .eh span.src-badge.claude{color:var(--violet)}
 .exrow .en span.src-badge.saves,.ex-head .eh span.src-badge.saves{color:var(--ink-2)}
+.exrow .en span.src-badge.physio,.ex-head .eh span.src-badge.physio{color:var(--cyan)}
 
 
 /* ===== train modes & me ===== */

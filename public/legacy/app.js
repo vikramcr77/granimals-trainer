@@ -129,7 +129,8 @@ Object.assign(VIDEOS, window.REHAB_VIDEOS||{}, window.HD_VIDEOS||{}, window.EXPL
 const PHASES = window.PHASES || [];
 const phaseById = id => PHASES.find(p=>p.id===id);
 const TYPE_LABEL = {strength:'Strength', mobility:'Mobility', cardio:'Conditioning', rehab:'Rehab', sport:'Football', hd:'Heavy Duty'};
-function srcBadge(src){
+function srcBadge(src, rec){
+  if(src==='physio') return `<span class="src-badge physio" title="${escAttr('From the videos you sent your physio'+(rec?' · '+rec:''))}">Sent to physio</span>`;
   if(src==='claude') return '<span class="src-badge claude" title="Added by Claude — evidence-based ACL / football addition">Added by Claude</span>';
   if(src==='saves') return '<span class="src-badge saves" title="From your saved reels">From your saves</span>';
   return '';
@@ -522,7 +523,7 @@ function sessionCard(s, todayId){
   s.ex.forEach(ex=>{
     const item=el('div','exitem');
     const r=el('div','exrow');
-    r.innerHTML=`<div class="en"><b>${ex.name}</b><span>${ex.target}</span>${srcBadge(ex.src)}</div>`;
+    r.innerHTML=`<div class="en"><b>${ex.name}</b><span>${ex.target}${ex.rec?` · ${ex.rec}`:''}</span>${srcBadge(ex.src, ex.rec)}</div>`;
     item.appendChild(r); item.appendChild(videoBlock(ex.name, ex.vid));
     list.appendChild(item);
   });
@@ -563,7 +564,7 @@ function renderRehabTrain(v){
 
   const sessions=phaseSessions(ph);
   if(sessions.some(s=>s.ex.some(e=>e.src))){
-    v.appendChild(el('div','src-legend',`${srcBadge('saves')}<span>your saved reels</span>${srcBadge('claude')}<span>evidence-based extras</span>`));
+    v.appendChild(el('div','src-legend',`${srcBadge('physio')}<span>your physio videos</span>${srcBadge('saves')}<span>your saved reels</span>${srcBadge('claude')}<span>evidence-based extras</span>`));
   }
   const todayId=suggestedToday().id;
   // MG follows the PDF order: Warm Up, Day 1–6, Cool Down
@@ -1408,7 +1409,7 @@ function openSession(sid){
     const prev = last && last.sets[ex.name] ? last.sets[ex.name] : null;
     // per-exercise mode: timed hold → countdown; loaded/strength → reps×kg; otherwise → tick
     const mode = timed ? 'timed' : (isStrength || ex.log) ? 'log' : 'tick';
-    const st = { name:ex.name, target:ex.target, nSets, done:false, prev, mode, src:ex.src||null, note:ex.note||null, ss:ex.ss||null, range:ex.range||null,
+    const st = { name:ex.name, target:ex.target, nSets, done:false, prev, mode, src:ex.src||null, rec:ex.rec||null, note:ex.note||null, ss:ex.ss||null, range:ex.range||null,
                  sec:ex.sec||null, timed, rest:ex.rest||s.rest||null, vid:ex.vid||null,
                  hist: DB.history.filter(h=>h.sets[ex.name]).sort((a,b)=>b.ts-a.ts).map(h=>({date:h.date, sets:h.sets[ex.name]})), hIdx:0 };
     if(mode==='log') st.sets = Array.from({length:nSets},()=>({reps:'',kg:''}));
@@ -1513,7 +1514,7 @@ function renderSheetBody(){
     const head=el('div','ex-head');
     head.innerHTML=`
       <button class="ex-check" aria-label="Mark ${st.name} complete">${I.check}</button>
-      <div class="eh"><b>${st.name}</b><span>Target ${st.target}${st.ss?' · to failure':''}</span>${st.ss?`<span class="ss-tag">Superset ${st.ss}</span>`:''}${srcBadge(st.src)}${hdNextTarget(st)?`<span class="ex-next">${hdNextTarget(st)}</span>`:''}${st.note?`<em class="ex-cue">${st.note}</em>`:''}</div>`;
+      <div class="eh"><b>${st.name}</b><span>Target ${st.target}${st.ss?' · to failure':''}</span>${st.ss?`<span class="ss-tag">Superset ${st.ss}</span>`:''}${srcBadge(st.src, st.rec)}${hdNextTarget(st)?`<span class="ex-next">${hdNextTarget(st)}</span>`:''}${st.note?`<em class="ex-cue">${st.note}</em>`:''}</div>`;
     head.querySelector('.ex-check').onclick=()=>{ st.done=!st.done; if(st.timed&&st.sets) st.sets.forEach(s=>s.done=st.done); renderSheetBody(); saveDraft(); };
     ex.appendChild(head);
     // per-exercise history: ◀ ▶ through past values for THIS exercise

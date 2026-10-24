@@ -1,0 +1,67 @@
+Seq,Drive #,File,Recorded date,Recorded time,Duration (s),Exercise,Confidence,Changed on recheck,Batch
+67,524,IMG_3290,2025-03-09,19:59,59,Bodyweight sumo squat (wide-stance hold),Med,-,2
+68,523,IMG_3296,2025-03-10,20:23,42,Bodyweight hip hinge (good morning),Med,-,2
+69,522,IMG_3297,2025-03-10,20:26,38,Lateral band walk (band at ankles),Med,-,2
+70,521,IMG_3303,2025-03-11,07:36,29,Wall sit,Med,-,2
+71,520,IMG_3302,2025-03-11,07:33,55,Bodyweight sumo squat (wide-stance hold),Med,-,2
+72,519,IMG_3301,2025-03-11,07:27,58,Half-kneeling front-foot lift (hip flexor activation),Med,-,2
+73,518,IMG_3301(1),2025-03-11,07:27,58,DUPLICATE of #72 (identical file),-,-,2
+74,517,IMG_3328,2025-03-13,20:15,29,Wall sit,Med,-,2
+75,516,IMG_3326,2025-03-13,20:11,44,Bodyweight sumo squat (wide-stance hold),Med,-,2
+76,515,IMG_3337,2025-03-14,07:52,73,Bodyweight hip hinge (good morning),Med,-,2
+77,514,IMG_3338,2025-03-14,07:57,65,Lateral band walk (band at ankles),Med,-,2
+78,513,IMG_3325,2025-03-13,20:03,74,Half-kneeling front-foot lift (hip flexor activation),Med,-,2
+79,512,IMG_3351,2025-03-15,10:48,32,Wall sit,High,-,2
+80,511,IMG_3350,2025-03-15,10:46,40,Bodyweight sumo squat (wide-stance hold),Med,-,2
+81,510,IMG_3408,2025-03-17,20:19,62,Foam roller calf / hamstring release,Med,-,2
+82,509,IMG_3409,2025-03-17,20:36,65,Stability-ball bridge → hamstring curl,Med,-,2
+83,508,IMG_3414,2025-03-18,07:41,43,Stability-ball plank (hands on ball),Med,-,2
+84,507,IMG_3413,2025-03-18,07:14,94,Banded dead bug (band around feet),Med,-,2
+85,506,IMG_3433,2025-03-19,07:50,43,Stability-ball plank (hands on ball),Med,-,2
+86,505,IMG_3432,2025-03-19,07:43,115,Banded dead bug (band around feet),Med,-,2
+87,504,IMG_3445,2025-03-20,21:20,98,Stability-ball glute bridge,Med,-,2
+88,503,IMG_3450,2025-03-21,09:34,84,Stability-ball plank (hands on ball),Med,-,2
+89,502,IMG_3449,2025-03-21,09:25,119,Banded dead bug (band around feet),High,-,2
+90,501,IMG_3458,2025-03-22,08:44,59,"Ball release (hamstring/calf, seated) → ankle mobilisation",Med,-,2
+91,500,IMG_3459,2025-03-22,09:00,67,Stability-ball glute bridge,High,-,2
+92,499,IMG_3459(1),2025-03-22,09:00,67,DUPLICATE of #91 (identical file),-,-,2
+93,498,IMG_3520,2025-03-24,08:07,56,Heel-elevated squat (heels on plate),High,-,2
+94,497,IMG_3518,2025-03-24,07:35,110,Feet-elevated glute bridge on box,High,-,2
+95,496,IMG_3519,2025-03-24,07:47,211,Bulgarian split squat (rear foot on box),High,-,2
+96,495,IMG_3546,2025-03-25,21:15,53,Supine leg raises → windshield wipers,Med,-,2
+97,494,IMG_3545,2025-03-25,21:10,52,Forearm plank with alternating leg lift,High,-,2
+98,493,IMG_3549,2025-03-26,06:38,117,Feet-elevated glute bridge on box,High,-,2
+99,492,IMG_3550,2025-03-26,06:50,123,Bulgarian split squat (rear foot on box),High,-,2
+100,491,IMG_3556,2025-03-27,07:57,76,Forearm plank with alternating leg lift → rock-back,Med,-,2
+101,490,IMG_3557,2025-03-27,08:02,79,Supine knees-to-chest → windshield wipers,Med,-,2
+102,489,IMG_3575,2025-03-28,08:30,115,Bulgarian split squat (rear foot on box),High,-,2
+103,488,IMG_3574,2025-03-28,08:22,104,Feet-elevated glute bridge on box,High,-,2
+104,487,IMG_3617,2025-03-29,19:11,46,Forearm plank with alternating leg lift,High,-,2
+105,486,IMG_3618,2025-03-29,19:15,57,Windshield wipers (supine trunk rotation),Med,-,2
+106,485,IMG_3692,2025-03-31,09:21,91,Banded dead bug (band around feet),Med,-,2
+107,484,IMG_3693,2025-03-31,09:44,76,Seated cross-legged dumbbell hold / wrist rotations,Med,-,2
+108,483,IMG_3711,2025-04-01,07:28,56,Side plank (both sides),High,-,2
+109,482,IMG_3711(1),2025-04-01,07:28,56,DUPLICATE of #108 (identical file),-,-,2
+110,481,IMG_3710,2025-04-01,07:20,65,Banded knee side plank with clamshell,Med,-,2
+111,480,IMG_3710(1),2025-04-01,07:20,65,DUPLICATE of #110 (identical file),-,-,2
+112,479,IMG_3712,2025-04-01,07:45,124,"Star excursion / Y-balance reaches (single-leg stance, hands on hips)",High,Y,2
+113,478,IMG_3722,2025-04-02,07:41,41,Seated cross-legged kettlebell hold,Med,-,2
+114,477,IMG_3720,2025-04-02,07:26,85,Banded dead bug (band around feet),Med,-,2
+115,476,IMG_3723,2025-04-02,08:04,189,"Kettlebell-loaded ankle dorsiflexion (knee over toe, foot on box)",Med,-,2
+116,475,IMG_3734,2025-04-03,08:11,82,Banded knee side plank with clamshell,Med,-,2
+117,474,IMG_3735,2025-04-03,08:27,51,Copenhagen side plank (top leg on stool),High,-,2
+118,473,IMG_3736,2025-04-03,08:40,91,Standing hip abduction / leg swings,Med,-,2
+119,472,IMG_3743,2025-04-04,07:31,82,Banded dead bug (band around feet),Med,-,2
+120,471,IMG_3744,2025-04-04,07:38,67,Seated cross-legged kettlebell hold,Med,-,2
+121,470,IMG_3746,2025-04-04,08:06,179,Seated knee raise with kettlebell on thigh (on box),Med,-,2
+122,469,IMG_3754,2025-04-05,08:53,61,Banded knee side plank with clamshell (both sides),Med,-,2
+123,468,IMG_3755,2025-04-05,08:59,56,Copenhagen side plank (top leg on stool),High,-,2
+124,467,IMG_3756,2025-04-05,09:11,189,"Star excursion / Y-balance reaches (single-leg, multi-direction toe taps)",High,Y,2
+125,466,IMG_3960,2025-04-07,21:27,26,"Stability-ball leg raise (ball between lower legs, hips on floor)",Med,Y,2
+126,465,IMG_3959,2025-04-07,21:18,61,Crunches,High,-,2
+127,464,IMG_3961,2025-04-07,21:37,48,Decline slant-board squat,High,-,2
+128,463,IMG_3968,2025-04-08,07:46,62,Jump rope (skipping),High,-,2
+129,462,IMG_3965,2025-04-08,07:33,56,Bodyweight sumo squat,High,-,2
+130,461,IMG_3966,2025-04-08,07:37,78,"Reverse lunge (knee to floor), alternating",Med,-,2
+131,460,IMG_3967,2025-04-08,07:40,60,Standing banded hip extension (band anchored low),Med,-,2
+132,459,IMG_3964,2025-04-08,07:13,82,Bodyweight hip hinge (good morning),High,-,2

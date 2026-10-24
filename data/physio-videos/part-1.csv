@@ -1,0 +1,67 @@
+Seq,Drive #,File,Recorded date,Recorded time,Duration (s),Exercise,Confidence,Changed on recheck,Batch
+1,590,IMG_2274,2025-01-23,07:52,34,"Gait / walking drill",High,N,1
+2,589,IMG_2277,2025-01-23,08:09,6,"Foam roller quad / outer-thigh (ITB) release",Med,Y,1
+3,588,IMG_2276,2025-01-23,08:09,34,"Prone foam roller quad release",High,N,1
+4,587,IMG_2273,2025-01-23,07:50,87,"Bodyweight squat",High,N,1
+5,586,IMG_2275,2025-01-23,07:58,65,"Single-leg balance, alternating legs",Med,Y,1
+6,585,IMG_2538,2025-01-29,18:45,68,"Single-leg balance, eyes closed",High,N,1
+7,584,IMG_2536,2025-01-29,18:37,65,"Walking lunges",Med,Y,1
+8,583,IMG_2534,2025-01-29,18:30,61,"Bodyweight squat",High,N,1
+9,582,IMG_2539,2025-01-29,18:53,114,"Prone hip rotation → quadruped rock-backs (bolster under knee)",Med,Y,1
+10,581,IMG_2552,2025-01-30,18:29,101,"Seated long-arc knee extension (towel at ankle)",High,N,1
+11,580,IMG_2554,2025-01-30,18:47,71,"Jumping jacks / low hops",Med,Y,1
+12,579,IMG_2550,2025-01-30,18:08,62,"Seated towel scrunch (toe curls)",Med,Y,1
+13,578,IMG_2635,2025-01-31,18:51,48,"Goblet squat to chair (kettlebell)",Med,Y,1
+14,577,IMG_2636,2025-01-31,18:54,53,"Walking practice (long strides)",Med,Y,1
+15,576,IMG_2637,2025-01-31,19:02,76,"Single-leg balance, eyes closed",High,N,1
+16,575,IMG_2638,2025-01-31,19:14,91,"Quadruped rock-backs → child's pose (knee-bend stretch, towel roll)",High,Y,1
+17,574,IMG_2662,2025-02-01,18:20,70,"Seated towel scrunch (toe curls)",Med,Y,1
+18,573,IMG_2663,2025-02-01,18:37,126,"Seated long-arc knee extension (cloth ankle weight)",High,N,1
+19,572,IMG_2667,2025-02-01,19:09,52,"Mini squats (partial squat)",Med,Y,1
+20,571,IMG_2675,2025-02-02,19:57,41,"Light jogging (outdoor, night)",Med,Y,1
+21,570,IMG_2676,2025-02-02,20:04,73,"Single-leg balance beside rail",High,N,1
+22,569,IMG_2674,2025-02-02,19:51,64,"Bodyweight squat (outdoor)",High,Y,1
+23,568,IMG_2679,2025-02-02,21:10,82,"Side-lying hip stretch → supine leg raises",Low,Y,1
+24,567,IMG_2696,2025-02-03,19:28,18,"Supine straight leg raise",High,N,1
+25,566,IMG_2698,2025-02-03,19:37,20,"Stair descent / step-down practice",Med,N,1
+26,565,IMG_2699,2025-02-03,19:38,26,"Step-up / step-down on single step",Med,N,1
+27,564,IMG_2697,2025-02-03,19:34,37,"Wall sit with ball squeeze between knees",Med,N,1
+28,563,IMG_2711,2025-02-05,10:34,82,"Alternating foot taps onto stool",Med,Y,1
+29,562,IMG_2712,2025-02-05,10:57,36,"Step-up onto stool (single leg)",Med,Y,1
+30,561,IMG_2716,2025-02-05,18:32,67,"Single-leg glute bridge",High,N,1
+31,560,IMG_2717,2025-02-05,18:35,73,"Step-up / step-down on low step",Med,N,1
+32,559,IMG_2739,2025-02-06,18:25,120,"Calf raise on step edge",Med,N,1
+33,558,IMG_2740,2025-02-06,19:03,96,"Forward step-down (heel tap)",High,N,1
+34,557,IMG_2782,2025-02-11,09:23,77,"Supine straight leg raise",Med,Y,1
+35,556,IMG_2783,2025-02-11,09:27,82,"Step-down taps from brick (single leg)",Med,Y,1
+36,555,IMG_2791,2025-02-12,10:39,26,"Banded glute bridge (band above knees)",High,Y,1
+37,554,IMG_2792,2025-02-12,10:43,67,"Banded terminal knee extension (TKE)",Med,Y,1
+38,553,IMG_2793,2025-02-12,10:52,52,"Lateral band walk (band at ankles)",High,N,1
+39,552,IMG_2875,2025-02-14,17:40,49,"Banded glute bridge (on bed)",Med,Y,1
+40,551,IMG_2876,2025-02-14,17:47,82,"Banded terminal knee extension (TKE)",Med,Y,1
+41,550,IMG_2877,2025-02-14,18:34,57,"Lateral band walk (band at ankles)",High,N,1
+42,549,IMG_2929,2025-02-19,08:09,80,"Leg extension machine",High,N,1
+43,548,IMG_2930,2025-02-19,08:15,64,"Leg press (45° sled)",High,N,1
+44,547,IMG_2978,2025-02-21,09:20,72,"Dumbbell deadlift",Med,Y,1
+45,546,IMG_2979,2025-02-21,09:31,90,"Lateral step-down / heel taps from step",Med,Y,1
+46,545,IMG_2992,2025-02-22,09:13,59,"Dumbbell sumo deadlift / sumo squat",Med,N,1
+47,544,IMG_2994,2025-02-22,09:28,78,"Weighted hip hike on box (kettlebell on free foot)",Med,Y,1
+48,543,IMG_3086,2025-02-24,19:28,63,"Foam roller hamstring/calf → seated knee hug",Med,Y,1
+49,542,IMG_3089,2025-02-24,20:00,64,"Downward dog to plank flow",High,N,1
+50,541,IMG_3087,2025-02-24,19:55,58,"Banded walks (mini-band at ankles)",Med,Y,1
+51,540,IMG_3095,2025-02-25,21:09,62,"Cable hip extension / abduction (ankle strap)",Med,Y,1
+52,539,IMG_3094,2025-02-25,21:00,93,"Lateral band walk (band above knees)",Med,N,1
+53,538,IMG_3123,2025-02-27,19:59,68,"Foam roller hamstring/calf → seated knee hug",Med,Y,1
+54,537,IMG_3124,2025-02-27,20:29,75,"Lateral band walk (band at ankles)",Med,Y,1
+55,536,IMG_3125,2025-02-27,20:34,70,"Downward dog to plank flow",Med,Y,1
+56,535,IMG_3137,2025-02-28,09:52,91,"Lateral band walk (band above knees)",High,N,1
+57,534,IMG_3138,2025-02-28,09:58,80,"Cable hip abduction / adduction (ankle strap)",Med,Y,1
+58,533,IMG_3152,2025-03-02,19:27,87,"Lateral band walk (band at ankles)",High,N,1
+59,532,IMG_3153,2025-03-02,19:31,60,"Inchworm / walkout to plank",Med,Y,1
+60,531,IMG_3151,2025-03-02,19:02,63,"Foam roller hamstring/calf → seated knee hug",Med,Y,1
+61,530,IMG_3178,2025-03-05,19:10,79,"Banded quadruped donkey kick",High,N,1
+62,529,IMG_3179,2025-03-05,19:18,113,"Banded glute bridge (band above knees)",High,N,1
+63,528,IMG_3191,2025-03-06,07:11,47,"Bodyweight sumo squat",Med,Y,1
+64,527,IMG_3197,2025-03-07,09:19,45,"Banded donkey kick (quadruped hip extension)",High,Y,1
+65,526,IMG_3204,2025-03-07,19:50,45,"Lateral lunge",Med,N,1
+66,525,IMG_3196,2025-03-07,08:58,121,"Glute bridge",High,N,1

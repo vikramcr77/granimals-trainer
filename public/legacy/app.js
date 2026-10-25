@@ -142,12 +142,22 @@ const ROTATION = ['push','pull','posterior','core','legs'];
 
 /* ---------- STATE / STORAGE ---------- */
 const KEY='granimals_v1';
+// Weekly plan, index 0=Sun. Office Mon/Tue/Thu get rehab (shorter pick); Heavy Duty on
+// work-from-home Wed & Sat so it never shares a day with rehab; Sunday is rest.
+const PLAN_DEFAULT=['rest','rehab','rehab','hd','rehab','rehab','hd'];
+const OFFICE_DEFAULT=[1,2,4];
 let DB = { history:[], goals:null, theme:null, drafts:{} };
 function load(){
   try{ const r=localStorage.getItem(KEY); if(r) DB=Object.assign(DB,JSON.parse(r)); }catch(e){}
   if(!DB.goals) DB.goals = { weekly:4, bwCurrent:72, bwTarget:68 };
   if(!DB.drafts) DB.drafts = {};
   if(!DB.goals.trainDays) DB.goals.trainDays = [1,2,4,5]; // Mon,Tue,Thu,Fri (0=Sun)
+  if(!Array.isArray(DB.goals.week) || DB.goals.week.length!==7){
+    DB.goals.week=[...PLAN_DEFAULT]; DB.goals.office=[...OFFICE_DEFAULT];
+    if(DB.goals.weekly===4) DB.goals.weekly=DB.goals.week.filter(t=>t!=='rest').length;
+  }
+  if(!Array.isArray(DB.goals.office)) DB.goals.office=[...OFFICE_DEFAULT];
+  syncTrainDays();
   if(!DB.phase) DB.phase = 'r1';          // current phase on the journey
   if(!DB.body) DB.body = [];            // body composition scans (InBody etc.)
   let newIds=false; // scan images live in IndexedDB (too big for localStorage), keyed by scan id
@@ -277,6 +287,16 @@ $('#brandName').textContent = 'Vikram';
    RENDER: TODAY
    ============================================================ */
 function phaseSessions(ph){ return PROGRAM.filter(s=>s.phase===ph); }
+// Weekly plan helpers. trainDays (calendar missed/rest) follows the plan.
+function syncTrainDays(){ DB.goals.trainDays=DB.goals.week.map((t,i)=>t==='rest'?-1:i).filter(i=>i>=0); }
+function dowOf(iso){ return new Date((iso||todayISO())+'T00:00').getDay(); }
+function dayPlan(iso){ return DB.goals.week[dowOf(iso)]||'rest'; }
+function isOfficeDay(iso){ return (DB.goals.office||[]).includes(dowOf(iso)); }
+function nextPlanDay(type){
+  for(let i=1;i<=7;i++){ const iso=addDaysISO(todayISO(),i); if(dayPlan(iso)===type) return iso; }
+  return null;
+}
+const OFFICE_MAX_MIN=25; // office days pick sessions this short or shorter
 function suggestedToday(){
   const ph = DB.phase || 'r1';
   if(ph==='mgmt'){
@@ -288,7 +308,10 @@ function suggestedToday(){
   const doneToday = list.find(s=>isDoneToday(s.id));
   if(doneToday) return doneToday;                       // keep showing today's session as done
   const lastTs = id => DB.history.filter(h=>h.sid===id).reduce((m,h)=>Math.max(m,h.ts),-1);
-  return [...list].sort((a,b)=>lastTs(a.id)-lastTs(b.id))[0];  // least recently trained first
+  // office days: only the shorter sessions, so the longer ones roll to work-from-home days
+  const short = isOfficeDay() ? list.filter(s=>s.est<=OFFICE_MAX_MIN) : [];
+  const pool = short.length ? short : list;
+  return [...pool].sort((a,b)=>lastTs(a.id)-lastTs(b.id))[0];  // least recently trained first
 }
 function updateHeaderPhase(){
   const p = phaseById(DB.phase); const sub=document.querySelector('.brand .sub');
@@ -342,8 +365,32 @@ function renderToday(){
   const sug=suggestedToday();
   const done=isDoneToday(sug.id);
   const draft=!!DB.drafts[sug.id];
+  const plan=dayPlan(); const hdN=hdNext(); const hdS=byId(hdN.id);
+  const hdToday = plan==='hd' && hdS && hdN.daysLeft<=0 && !done;
+  const restToday = !done && !draft && (plan==='rest' || (plan==='hd' && !hdToday));
+  const nextRehab=nextPlanDay('rehab');
+  const nextRehabTxt = nextRehab ? `${DAYS[dowOf(nextRehab)]}${isOfficeDay(nextRehab)?' (office · shorter session)':''}` : '';
   const f=el('div','focus');
-  f.innerHTML = `
+  if(hdToday){
+    f.innerHTML = `
+    <div class="kick">Heavy Duty day · ${hdS.code}</div>
+    <h3>${hdS.short}</h3>
+    <div class="meta">
+      <span>${I.clock} ~${hdS.est} min</span>
+      <span>${I.dumb} ${hdS.ex.length} exercises</span>
+      <span>${I.layers} ${hdS.equip.split(' · ')[0]}</span>
+    </div>
+    <button class="cta" id="startFocus">${I.play} ${DB.drafts[hdS.id]?'Resume session':'Start &amp; log workout'}</button>
+    <div class="cta-hint">${I.bolt} No rehab today${nextRehabTxt?` — next rehab ${nextRehabTxt}`:''}</div>`;
+  } else if(restToday){
+    const hdDone = HD_ORDER.some(isDoneToday);
+    const why = hdDone ? 'Heavy Duty logged today — nice work' : plan==='hd' ? `Heavy Duty isn't due yet (next ${DAYS[dowOf(hdN.due)]})` : 'Planned rest — recovery is when the knee adapts';
+    f.innerHTML = `
+    <div class="kick">${isOfficeDay()?'Office day · ':''}${hdDone?'Heavy Duty done':'Rest day'}</div>
+    <h3>${hdDone?'Done for today':'Recover'}</h3>
+    <p class="rest-copy">${why}.${nextRehabTxt?` Next rehab: ${nextRehabTxt}.`:''}</p>
+    <button class="cta ghost" id="startFocus">${I.play} Train anyway · ${sug.short}</button>`;
+  } else f.innerHTML = `
     <div class="kick">Today's focus · ${sug.code}</div>
     <h3>${sug.short}</h3>
     <div class="meta">
@@ -355,9 +402,10 @@ function renderToday(){
       ? `<div class="done-badge">${I.check} Logged today — nice work. Recover well.</div>`
       : `<button class="cta" id="startFocus">${I.play} ${draft?'Resume session':'Start &amp; log workout'}</button>
          <div class="cta-hint">${I.bolt} ${draft?'Unsaved progress — pick up where you left off':focusHint(sug)}</div>` }`;
+  if(!hdToday && !restToday && !done && !draft && isOfficeDay()) f.querySelector('.cta-hint').innerHTML=`${I.bolt} Office day — shorter session picked`;
   v.appendChild(f);
-  if(!done) f.querySelector('#startFocus').onclick=()=>openSession(sug.id);
-  const hdc=hdTodayCard(); if(hdc) v.appendChild(hdc);
+  const startB=f.querySelector('#startFocus'); if(startB) startB.onclick=()=>openSession(hdToday?hdS.id:sug.id);
+  if(!hdToday){ const hdc=hdTodayCard(); if(hdc) v.appendChild(hdc); }
   v.appendChild(foodTodayCard());
 
   // stats
@@ -1308,19 +1356,26 @@ function renderGoals(){
     <div class="pcap">${wk}/${DB.goals.weekly} done this week</div>`;
   v.appendChild(g1);
 
-  // training-days schedule (drives missed vs rest in the calendar)
+  // weekly plan: rehab / Heavy Duty / rest per weekday + office days (also drives missed vs rest in the calendar)
   const td=el('div','goalcard');
-  td.innerHTML=`<div class="gh"><div class="gi accent">${I.cal}</div><b>Training days</b></div>
-    <p class="td-hint">Pick your workout days. The calendar marks these <b>red if missed</b>, and other days grey (rest / not scheduled).</p>`;
-  const tdRow=el('div','td-row');
+  td.innerHTML=`<div class="gh"><div class="gi accent">${I.cal}</div><b>Weekly plan</b></div>
+    <p class="td-hint">Tap a day to switch <b>Rehab → Heavy Duty → Rest</b>, so the two never share a day. Office days get a shorter rehab session. Missed planned days show <b>red</b> in the calendar.</p>`;
+  const tdRow=el('div','td-row plan-row'), offRow=el('div','td-row off-row');
+  const PLAN_LAB={rehab:'Rehab',hd:'HD',rest:'Rest'}, ORDER=['rehab','hd','rest'];
   ['S','M','T','W','T','F','S'].forEach((lab,idx)=>{
-    const on=(DB.goals.trainDays||[]).includes(idx);
-    const b=el('button','td-day'+(on?' on':''),lab);
-    b.setAttribute('aria-pressed',on);
-    b.onclick=()=>{ const set=new Set(DB.goals.trainDays||[]); set.has(idx)?set.delete(idx):set.add(idx); DB.goals.trainDays=[...set].sort((a,b)=>a-b); save(); renderGoals(); renderToday(); };
+    const t=DB.goals.week[idx];
+    const b=el('button','td-day plan-day '+t,`<span>${lab}</span><em>${PLAN_LAB[t]}</em>`);
+    b.setAttribute('aria-label',`${DAYS[idx]}: ${PLAN_LAB[t]}. Tap to change`);
+    b.onclick=()=>{ DB.goals.week[idx]=ORDER[(ORDER.indexOf(t)+1)%ORDER.length]; syncTrainDays(); save(); renderGoals(); renderToday(); };
     tdRow.appendChild(b);
+    const off=(DB.goals.office||[]).includes(idx);
+    const o=el('button','td-off'+(off?' on':''),'Office');
+    o.setAttribute('aria-pressed',off); o.setAttribute('aria-label',`${DAYS[idx]} office day`);
+    o.onclick=()=>{ const s=new Set(DB.goals.office||[]); s.has(idx)?s.delete(idx):s.add(idx); DB.goals.office=[...s].sort((a,b)=>a-b); save(); renderGoals(); renderToday(); };
+    offRow.appendChild(o);
   });
   td.appendChild(tdRow);
+  td.appendChild(offRow);
   v.appendChild(td);
 
   // bodyweight goal
@@ -1382,7 +1437,7 @@ function renderGoals(){
     if(!DB.history.length){ toast('No history yet'); return; }
     confirmAction('Clear all history?', `All ${DB.history.length} logged session(s) will be permanently deleted. This can't be undone.`, 'Delete all', ()=>{ DB.history=[]; save(); renderAll(); toast('History cleared'); }); }});
   rows.push({icon:I.bolt, cls:'danger', t:'Reset everything', s:'History, drafts & goals back to defaults', fn:()=>{
-    confirmAction('Reset the whole app?', 'Deletes all history, assessments and in-progress sessions and restores default goals. This can\'t be undone.', 'Reset all', ()=>{ DB.history=[]; DB.drafts={}; DB.assess=[]; DB.gateManual={}; DB.goals={weekly:4,bwCurrent:72,bwTarget:68,trainDays:[1,2,4,5]}; save(); renderAll(); toast('App reset'); }); }});
+    confirmAction('Reset the whole app?', 'Deletes all history, assessments and in-progress sessions and restores default goals. This can\'t be undone.', 'Reset all', ()=>{ DB.history=[]; DB.drafts={}; DB.assess=[]; DB.gateManual={}; DB.goals={weekly:6,bwCurrent:72,bwTarget:68,week:[...PLAN_DEFAULT],office:[...OFFICE_DEFAULT]}; syncTrainDays(); save(); renderAll(); toast('App reset'); }); }});
   rows.forEach(r=>{
     const b=el('button','data-row'+(r.cls?' '+r.cls:''));
     b.innerHTML=`<div class="di">${r.icon}</div><div class="dt"><b>${r.t}</b><span>${r.s}</span></div>`;
@@ -1509,13 +1564,18 @@ function renderSheetBody(){
   if(sheetState.some(x=>x.mode==='log')){
     body.appendChild(el('div','log-hint',`${I.info}<span>Enter your <b>reps × weight</b> for each set below — it saves to your history and drives your progress &amp; goals.</span>`));
   }
+  if(sheetState.some(x=>x.range)){
+    body.appendChild(el('div','log-hint',`${I.bolt}<span><b>Weight suggestions</b> update as you type. Your max is estimated from reps × weight to failure (average of the Epley, Wathan &amp; Mayhew formulas), then solved for the weight that lands you about a third into the rep range.</span>`));
+  }
   sheetState.forEach((st,ei)=>{
     const ex=el('div','exercise'+(st.done?' done':'')); ex.dataset.ex=ei;
     const head=el('div','ex-head');
     head.innerHTML=`
       <button class="ex-check" aria-label="Mark ${st.name} complete">${I.check}</button>
-      <div class="eh"><b>${st.name}</b><span>Target ${st.target}${st.ss?' · to failure':''}</span>${st.ss?`<span class="ss-tag">Superset ${st.ss}</span>`:''}${srcBadge(st.src, st.rec)}${hdNextTarget(st)?`<span class="ex-next">${hdNextTarget(st)}</span>`:''}${st.note?`<em class="ex-cue">${st.note}</em>`:''}</div>`;
+      <div class="eh"><b>${st.name}</b><span>Target ${st.target}${st.ss?' · to failure':''}</span>${st.ss?`<span class="ss-tag">Superset ${st.ss}</span>`:''}${srcBadge(st.src, st.rec)}${st.range?`<span class="ex-next" aria-live="polite">${hdSuggestHTML(st)}</span>`:''}${st.note?`<em class="ex-cue">${st.note}</em>`:''}</div>`;
     head.querySelector('.ex-check').onclick=()=>{ st.done=!st.done; if(st.timed&&st.sets) st.sets.forEach(s=>s.done=st.done); renderSheetBody(); saveDraft(); };
+    const suggEl=head.querySelector('.ex-next');
+    const refreshSugg=()=>{ if(suggEl) suggEl.innerHTML=hdSuggestHTML(st); };
     ex.appendChild(head);
     // per-exercise history: ◀ ▶ through past values for THIS exercise
     if(st.hist && st.hist.length){
@@ -1555,8 +1615,8 @@ function renderSheetBody(){
           <div class="field"><input inputmode="decimal" placeholder="${st.prev&&st.prev[si]&&st.prev[si].kg?st.prev[si].kg:'–'}" value="${set.kg}" aria-label="Weight kg set ${si+1}"><span class="unit">kg</span></div>
           <button class="set-rm" aria-label="Remove set ${si+1}" ${st.sets.length<=1?'disabled':''}>${I.minus}</button>`;
         const [ri,ki]=line.querySelectorAll('input');
-        ri.oninput=e=>{ set.reps=e.target.value.replace(/[^0-9]/g,''); e.target.value=set.reps; set.rAuto=false; cascade('reps',si); updateSheetProgress(); saveDraft(); };
-        ki.oninput=e=>{ set.kg=e.target.value.replace(/[^0-9.]/g,''); e.target.value=set.kg; set.kAuto=false; cascade('kg',si); updateSheetProgress(); saveDraft(); };
+        ri.oninput=e=>{ set.reps=e.target.value.replace(/[^0-9]/g,''); e.target.value=set.reps; set.rAuto=false; cascade('reps',si); refreshSugg(); updateSheetProgress(); saveDraft(); };
+        ki.oninput=e=>{ set.kg=e.target.value.replace(/[^0-9.]/g,''); e.target.value=set.kg; set.kAuto=false; cascade('kg',si); refreshSugg(); updateSheetProgress(); saveDraft(); };
         line.querySelector('.set-rm').onclick=()=>{ if(st.sets.length>1){ st.sets.splice(si,1); renderSheetBody(); saveDraft(); } };
         sets.appendChild(line);
       });
@@ -1963,5 +2023,36 @@ tabs.forEach(t=>{
 window.addEventListener('scroll',()=>{ $('#topbar').classList.toggle('scrolled', window.scrollY>4); },{passive:true});
 window.addEventListener('resize',()=>{ if($('#view-progress').classList.contains('active')) drawChart(); });
 matchMedia('(prefers-color-scheme:dark)').addEventListener?.('change',()=>{ if(!DB.theme){applyTheme(); if($('#view-progress').classList.contains('active'))drawChart();} });
+
+// No zoom: iOS Safari ignores user-scalable=no, so block its pinch gestures directly.
+['gesturestart','gesturechange','gestureend'].forEach(t=>document.addEventListener(t,e=>e.preventDefault(),{passive:false}));
+document.addEventListener('touchmove',e=>{ if(e.touches.length>1) e.preventDefault(); },{passive:false});
+
+// Pull to refresh — only in the home-screen app (browsers already have their own).
+// Sends any unsynced changes first (max 3 s), then reloads to pick up app updates.
+(function pullToRefresh(){
+  const standalone = matchMedia('(display-mode: standalone)').matches || navigator.standalone===true;
+  if(!standalone) return;
+  const GO=70, MAX=110;
+  const ind=el('div','ptr',`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 1 1-3-6.7L21 8"/><path d="M21 3v5h-5"/></svg><span>Pull to refresh</span>`);
+  ind.setAttribute('role','status'); document.body.appendChild(ind);
+  const label=ind.querySelector('span'), icon=ind.querySelector('svg');
+  let y0=null, d=0, busy=false;
+  const blocked=()=>document.querySelector('#scrim.show, .show[role="dialog"], dialog[open]');
+  const paint=()=>{ ind.style.transform=`translate(-50%, ${d-50}px)`; ind.style.opacity=Math.min(1,d/GO);
+    icon.style.transform=`rotate(${d*3}deg)`; const ready=d>=GO; ind.classList.toggle('ready',ready);
+    label.textContent=ready?'Release to refresh':'Pull to refresh'; };
+  const reset=()=>{ d=0; ind.style.transition='transform .2s, opacity .2s'; paint(); setTimeout(()=>{ ind.style.transition=''; },220); };
+  addEventListener('touchstart',e=>{ y0 = (busy||window.scrollY>0||e.touches.length>1||blocked()) ? null : e.touches[0].clientY; d=0; },{passive:true});
+  addEventListener('touchmove',e=>{ if(y0===null) return; if(window.scrollY>0){ y0=null; reset(); return; }
+    d=Math.min(MAX,Math.max(0,e.touches[0].clientY-y0)*0.5); paint(); },{passive:true});
+  addEventListener('touchend',async()=>{
+    if(y0===null) return; y0=null;
+    if(d<GO){ reset(); return; }
+    busy=true; ind.classList.add('busy'); d=GO; paint(); label.textContent='Refreshing…'; icon.style.transform='';
+    try{ await Promise.race([window.GSync&&GSync.flush?GSync.flush():null, new Promise(r=>setTimeout(r,3000))]); }catch(e){}
+    location.reload();
+  });
+})();
 
 renderAll();

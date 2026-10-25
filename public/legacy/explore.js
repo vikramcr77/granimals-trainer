@@ -157,6 +157,182 @@ const EXP_MUSCLES=[
 ];
 
 let expView='f', expMuscle='chest';
+/* Exercise groups (by region / function) and an A/B rotation per muscle.
+   Each session pairs a different region or muscle length, so alternating A and B covers
+   the whole muscle across the week. Variety across regions grows muscles more evenly than
+   one exercise alone (Costa et al. 2021; Kassiano et al. 2022), and training at long muscle
+   lengths gets priority in A (Maeo 2021/2023; Pedrosa 2022). */
+const EXP_GROUPS={
+  chest:[ {g:'Upper chest', why:'Incline presses hit the clavicular head', ex:['Incline Dumbbell Press']},
+          {g:'Mid & lower chest', why:'Flat and dipping presses', ex:['Flat Barbell Bench Press','Parallel Bar Dips']},
+          {g:'Flyes', why:'Isolation with a deep stretch', ex:['Seated Cable Fly','Pec Deck']} ],
+  back:[ {g:'Lats · vertical pull', why:'Pulling down from overhead', ex:['Lat Pulldown','Pull-Up','Close-Grip Palms-Up Pulldown']},
+         {g:'Mid & upper back · rows', why:'Pulling toward the torso', ex:['Chest-Supported Row','Seated Cable Row']},
+         {g:'Whole back · hinge', why:'Heavy full-body pull', ex:['Conventional Deadlift']} ],
+  traps:[ {g:'Upper traps', why:'Shrugging', ex:['Barbell Shrug']},
+          {g:'Mid traps & rear delts', why:'Pulling with elbows high', ex:['Face Pull']} ],
+  shoulders:[ {g:'Side delts', why:'Width — raises out to the side', ex:['Cable Lateral Raises','Dumbbell Lateral Raise']},
+              {g:'Front delts', why:'Overhead pressing', ex:['Seated Dumbbell Shoulder Press']},
+              {g:'Rear delts', why:'Reverse flyes', ex:['Reverse Pec Deck','Bent-Over Dumbbell Lateral Raise']} ],
+  biceps:[ {g:'Long head', why:'Arm behind the body stretches it', ex:['Incline Dumbbell Curl','Bayesian Cable Curl']},
+           {g:'Short head', why:'Arm in front of the body', ex:['Preacher Curl']},
+           {g:'Whole biceps', why:'Heaviest, most loadable curl', ex:['Barbell Curl']},
+           {g:'Brachialis', why:'Neutral grip, thicker-looking arm', ex:['Dumbbell Alternating Hammer Curl']} ],
+  triceps:[ {g:'Long head', why:'Arm overhead stretches it', ex:['Overhead Cable Triceps Extension','EZ-Bar Skull Crusher']},
+            {g:'Lateral & medial heads', why:'Arm by your side, heavy pressing', ex:['Triceps Pushdown','Close-Grip Bench Press']} ],
+  abs:[ {g:'Spinal flexion', why:'Curling the trunk', ex:['Cable Crunch','Hanging Leg Raise']},
+        {g:'Anti-extension', why:'Bracing against movement', ex:['Plank Saw']} ],
+  forearms:[ {g:'Brachioradialis & extensors', why:'Overhand and neutral grips', ex:['Reverse Barbell Curl','Dumbbell Alternating Hammer Curl']},
+             {g:'Flexors & grip', why:'Wrist curls and carries', ex:['Dumbbell Wrist Curl',"Farmer's Walk"]} ],
+  adductors:[ {g:'Isolation', why:'Direct inner-thigh work', ex:['Hip Adduction Machine','Copenhagen Plank (Short Lever)']},
+              {g:'Compound', why:'Deep squats', ex:['Barbell Back Squat']} ],
+  lowerback:[ {g:'Isolation', why:'Back extensions', ex:['45° Back Extension']},
+              {g:'Hinges', why:'Holding a flat back under load', ex:['Romanian Deadlift','Conventional Deadlift']} ],
+  quads:[ {g:'Squat pattern', why:'Heavy two-leg knee bend', ex:['Hack Squat','Barbell Back Squat','Leg Press']},
+          {g:'Single leg', why:'Each leg on its own', ex:['Bulgarian Split Squat']},
+          {g:'Rectus femoris', why:'Leg extensions isolate it', ex:['Leg Extension']} ],
+  hams:[ {g:'Knee flexion · curls', why:'Bending the knee', ex:['Seated Leg Curl','Lying Leg Curl','Nordic Hamstring Curl (Assisted)']},
+         {g:'Hip hinge', why:'Stretching at the hip', ex:['Romanian Deadlift']} ],
+  glutes:[ {g:'Hip extension', why:'Hardest at the top (short length)', ex:['Barbell Hip Thrust','45° Back Extension']},
+           {g:'Deep hip flexion', why:'Stretched under load', ex:['Bulgarian Split Squat','Barbell Back Squat','Walking Lunge']} ],
+  calves:[ {g:'Gastrocnemius', why:'Straight-knee raises', ex:['Standing Calf Raise']},
+           {g:'Soleus', why:'Bent-knee raises', ex:['Seated Calf Raise','Bent-Knee Calf Raise']} ],
+};
+// Equal-sized sessions. Each one covers the muscle's key regions/lengths (`why`), so either
+// session alone is a complete workout and alternating adds variety. Spare exercises are swap-ins.
+// Small muscles: 2 exercises (~4–6 sets). Bigger muscles: 2 exercises plus the overlap they get
+// from compound lifts. An exercise may sit in both sessions when it's the only one for a region.
+const EXP_SPLIT={
+  chest:{why:'Each session: one press + one fly (stretch)', A:['Incline Dumbbell Press','Seated Cable Fly'], B:['Flat Barbell Bench Press','Pec Deck'], swap:['Parallel Bar Dips']},
+  back:{why:'Each session: one vertical pull (lats) + one row (mid back)', A:['Lat Pulldown','Chest-Supported Row'], B:['Pull-Up','Seated Cable Row'], swap:['Close-Grip Palms-Up Pulldown','Conventional Deadlift']},
+  traps:{why:'Upper traps one day, mid traps the next', A:['Barbell Shrug'], B:['Face Pull'], swap:[]},
+  shoulders:{why:'Each session: side delts + rear delts (presses for chest already train the front)', A:['Cable Lateral Raises','Reverse Pec Deck'], B:['Dumbbell Lateral Raise','Bent-Over Dumbbell Lateral Raise'], swap:['Seated Dumbbell Shoulder Press']},
+  biceps:{why:'Each session: one long-head curl (arm behind) + one short-head or heavy curl', A:['Incline Dumbbell Curl','Preacher Curl'], B:['Bayesian Cable Curl','Barbell Curl'], swap:['Dumbbell Alternating Hammer Curl']},
+  triceps:{why:'Each session: one overhead (long head) + one arm-down (lateral & medial)', A:['Overhead Cable Triceps Extension','Triceps Pushdown'], B:['EZ-Bar Skull Crusher','Close-Grip Bench Press'], swap:[]},
+  abs:{why:'Each session: one loaded crunch/raise + bracing', A:['Cable Crunch','Plank Saw'], B:['Hanging Leg Raise','Plank Saw'], swap:[]},
+  forearms:{why:'Each session: one for the extensors/brachioradialis + one for the flexors/grip', A:['Reverse Barbell Curl','Dumbbell Wrist Curl'], B:['Dumbbell Alternating Hammer Curl',"Farmer's Walk"], swap:[]},
+  adductors:{why:'One isolation per session (squats already train them)', A:['Hip Adduction Machine'], B:['Copenhagen Plank (Short Lever)'], swap:['Barbell Back Squat']},
+  lowerback:{why:'One hinge or extension per session', A:['Romanian Deadlift'], B:['45° Back Extension'], swap:['Conventional Deadlift']},
+  quads:{why:'Each session: one heavy two-leg lift + one isolation or single-leg', A:['Hack Squat','Leg Extension'], B:['Leg Press','Bulgarian Split Squat'], swap:['Barbell Back Squat']},
+  hams:{why:'Each session: one curl (knee) + one hinge or eccentric', A:['Seated Leg Curl','Romanian Deadlift'], B:['Lying Leg Curl','Nordic Hamstring Curl (Assisted)'], swap:[]},
+  glutes:{why:'Each session: one hip extension (short length) + one deep-stretch lift', A:['Barbell Hip Thrust','Bulgarian Split Squat'], B:['45° Back Extension','Barbell Back Squat'], swap:['Walking Lunge']},
+  calves:{why:'Each session: straight-knee (gastrocnemius) + bent-knee (soleus)', A:['Standing Calf Raise','Seated Calf Raise'], B:['Standing Calf Raise','Bent-Knee Calf Raise'], swap:[]},
+};
+function expGroupOf(mid,name){ const g=(EXP_GROUPS[mid]||[]).find(x=>x.ex.includes(name)); return g?g.g:''; }
+function expSessionOf(mid,name){ const s=EXP_SPLIT[mid]; if(!s) return ''; const a=s.A.includes(name), b=s.B.includes(name); return a&&b?'A & B':a?'A':b?'B':(s.swap||[]).includes(name)?'Swap-in':''; }
+// Next session = whichever of A / B you logged longest ago (A if neither).
+function expNextSession(mid){
+  const s=EXP_SPLIT[mid]; if(!s) return 'A';
+  const last=names=>DB.history.reduce((m,h)=>names.some(n=>h.sets&&h.sets[n])&&h.date>m?h.date:m,'');
+  const a=last(s.A.filter(n=>!s.B.includes(n))), b=last(s.B.filter(n=>!s.A.includes(n)));   // shared moves don't tell them apart
+  return a && a>=b ? 'B' : 'A';
+}
+function expRotationCard(m){
+  const s=EXP_SPLIT[m.id]; if(!s) return null;
+  const next=expNextSession(m.id), picked=expPicked(), mn=m.name.toLowerCase();
+  const pair=EXP_PAIRS[m.id]; const big=(pair&&pair.day||[]).filter(id=>!EXP_SMALL.includes(id)).map(id=>expM(id).name.toLowerCase());
+  const c=el('div','exp-rot');
+  c.innerHTML=`<div class="rot-head"><b>Do one session, not all ${m.ex.length}</b>
+      <span>${s.why}. Alternate A and B each time you train ${mn} · 2–3 sets per exercise, 0–1 RIR.</span></div>
+    <div class="rot-grid">${['A','B'].map(k=>`
+      <div class="rot-col${k===next?' next':''}">
+        <span class="rot-tag">Session ${k}${k===next?' · next':''}</span>
+        <ol>${s[k].map(n=>`<li><b>${n}</b><em>${expGroupOf(m.id,n)}</em></li>`).join('')}</ol>
+        <button class="rot-add" data-k="${k}">${s[k].every(n=>picked.includes(n))?`${I.check} Added`:`${I.plus} Add session ${k}`}</button>
+      </div>`).join('')}</div>
+    ${(s.swap||[]).length?`<p class="rot-swap"><b>Swap-in${s.swap.length>1?'s':''}</b> ${s.swap.map(n=>`${n} <em>(${expGroupOf(m.id,n)})</em>`).join(' · ')} — use instead of the same-type move for variety or if equipment is busy.</p>`:''}
+    <p class="rot-note">${EXP_SMALL.includes(m.id)&&big.length?`Training ${big.join(' or ')} the same day? It already counts as about half your ${mn} work, so do 2 sets per exercise.`:`Next session is picked from your history — whichever you did longest ago.`}</p>`;
+  c.querySelectorAll('.rot-add').forEach(b=>b.onclick=()=>{ s[b.dataset.k].forEach(n=>{ if(!picked.includes(n)) picked.push(n); }); save(); renderTrain(); toast(`Session ${b.dataset.k} added to your custom workout`); });
+  return c;
+}
+/* Pairings for the selected muscle.
+   ss  = superset partner: the opposing muscle. Alternating agonist–antagonist sets keeps
+         reps and load at least as high in about half the time (Robbins et al. 2010;
+         Paz et al. 2017; Zhang et al. 2023 superset meta-analysis).
+   day = same-day partners: muscles that assist in the same movements (push or pull). Overlap
+         counts as volume: each compound set is about ½ a set for the assisting muscle
+         (Pelland et al. 2024 dose-response meta-analysis; pulldowns alone grew biceps about as
+         much as pulldowns + curls in Gentil et al. 2013). So train the bigger muscle first
+         (Simão et al. 2012; Nunes et al. 2021) and keep direct sets for the smaller one low.
+   combo = exercises that train the muscle and a partner together. */
+const EXP_SMALL=['biceps','triceps','forearms','calves','abs'];
+const EXP_PAIRS={
+  chest:     {ss:'back',      day:['triceps','shoulders'], combo:{triceps:['Parallel Bar Dips','Close-Grip Bench Press'], shoulders:['Incline Dumbbell Press']}},
+  back:      {ss:'chest',     day:['biceps','traps'],      combo:{biceps:['Close-Grip Palms-Up Pulldown','Pull-Up'], traps:['Conventional Deadlift','Seated Cable Row']}},
+  traps:     {ss:'chest',     day:['back','shoulders'],    combo:{back:['Conventional Deadlift'], shoulders:['Face Pull']}},
+  shoulders: {ss:'back',      day:['triceps','chest'],     combo:{triceps:['Seated Dumbbell Shoulder Press'], chest:['Incline Dumbbell Press']}},
+  biceps:    {ss:'triceps',   day:['back','forearms'],     combo:{back:['Close-Grip Palms-Up Pulldown','Pull-Up'], forearms:['Dumbbell Alternating Hammer Curl']}},
+  triceps:   {ss:'biceps',    day:['chest','shoulders'],   combo:{chest:['Close-Grip Bench Press','Parallel Bar Dips'], shoulders:['Seated Dumbbell Shoulder Press']}},
+  abs:       {ss:'lowerback', day:[],                      combo:{}},
+  forearms:  {ss:'triceps',   day:['biceps'],              combo:{biceps:['Dumbbell Alternating Hammer Curl','Reverse Barbell Curl']}},
+  adductors: {ss:'glutes',    day:['quads'],               combo:{quads:['Barbell Back Squat'], glutes:['Barbell Back Squat']}},
+  lowerback: {ss:'abs',       day:['hams','glutes'],       combo:{hams:['Romanian Deadlift'], glutes:['45° Back Extension']}},
+  quads:     {ss:'hams',      day:['glutes','adductors'],  combo:{glutes:['Bulgarian Split Squat','Barbell Back Squat'], adductors:['Barbell Back Squat']}},
+  hams:      {ss:'quads',     day:['glutes','lowerback'],  combo:{glutes:['Romanian Deadlift'], lowerback:['Romanian Deadlift']}},
+  glutes:    {ss:'quads',     day:['hams','adductors'],    combo:{hams:['Romanian Deadlift'], quads:['Bulgarian Split Squat','Barbell Back Squat','Walking Lunge'], adductors:['Barbell Back Squat']}},
+  calves:    {ss:'quads',     day:['hams'],                combo:{}},
+};
+const expM=id=>EXP_MUSCLES.find(m=>m.id===id);
+// partners this exercise also trains, for the selected muscle
+function expAlso(mid, name){
+  const p=EXP_PAIRS[mid]; if(!p) return [];
+  return Object.keys(p.combo).filter(k=>p.combo[k].includes(name));
+}
+let expPairOpen=null; // "muscle:partner" of the expanded pairing row
+function expFind(name){ for(const m of EXP_MUSCLES){ const x=m.ex.find(e=>e.n===name); if(x) return x; } return null; }
+function expPairsCard(mid){
+  const p=EXP_PAIRS[mid]; if(!p) return null;
+  const rows=[];
+  if(p.ss){ const m=expM(p.ss); rows.push({id:p.ss, kind:'Superset partner', ex:m.ex.slice(0,2).map(x=>x.n), combo:false,
+    hint:'Alternate one set of each, no rest between',
+    why:`Opposite muscle — alternate sets with no rest and keep your reps up in about half the time.`}); }
+  p.day.forEach(id=>{ const m=expM(id); const combos=(p.combo[id]||[]).slice(0,2);
+    const a=expM(mid).name.toLowerCase(), b=m.name.toLowerCase();
+    const sm=EXP_SMALL.includes(mid), sp=EXP_SMALL.includes(id);
+    let why;
+    if(sm && !sp) why=`Overlap: ${b} work already trains your ${a} (each set ≈ ½ a ${a} set). Do ${b} first, then just 2–4 direct ${a} sets — more adds fatigue, not growth.`;
+    else if(!sm && sp) why=`Overlap: your ${a} work already trains ${b} (each set ≈ ½ a ${b} set). Finish with 2–4 ${b} sets at most.`;
+    else why=`Overlap: these share the work, so count shared sets as ½ each and keep each muscle around 10–20 sets a week.`;
+    rows.push({id, kind:'Same-day partner · overlaps', ex:combos.length?combos:[m.ex[0].n], combo:combos.length>0,
+      hint: combos.length ? `Covers ${a} and ${b} together` : `Top ${b} pick`, why}); });
+  if(!rows.length) return null;
+  const c=el('div','exp-pairs');
+  c.appendChild(el('div','ep-head',`${I.bolt}<span>Pairs well with</span><em>Tap to see the exercises</em>`));
+  const picked=expPicked();
+  rows.forEach(r=>{
+    const key=mid+':'+r.id, open=expPairOpen===key;
+    const wrap=el('div','ep-item'+(open?' open':''));
+    const head=el('button','ep-row',`<span class="ep-kind">${r.kind}</span>
+      <span class="ep-main"><b>${expM(r.id).name}</b><em>${r.ex.length} exercise${r.ex.length>1?'s':''}${r.combo?' · covers both':''}</em></span>
+      <span class="ep-why">${r.why}</span><span class="ep-go">${I.chev}</span>`);
+    head.setAttribute('aria-expanded',open);
+    head.onclick=()=>{ expPairOpen = open ? null : key; renderTrain(); };
+    wrap.appendChild(head);
+    if(open){
+      const panel=el('div','ep-panel');
+      panel.appendChild(el('div','ep-hint',r.hint));
+      r.ex.forEach(n=>{
+        const x=expFind(n); if(!x) return;
+        const on=picked.includes(n);
+        const card=el('div','ep-ex');
+        card.innerHTML=`<div class="exp-top"><div><b>${x.n}</b><span>${x.r}</span>${r.combo?`<span class="exp-also">Covers both</span>`:''}</div>
+          <button class="exp-pick${on?' on':''}" aria-pressed="${on}" aria-label="${on?'Remove from':'Add to'} custom workout">${on?I.check:I.plus}</button></div>
+          <div class="exp-setup">${x.setup.map(s=>`<span>${s}</span>`).join('')}</div>
+          <div class="exp-load">${I.bolt}<span>${x.load}</span></div>`;
+        card.appendChild(videoBlock(x.n, expVid(x.n)));
+        card.querySelector('.exp-pick').onclick=()=>{ const i=picked.indexOf(n); if(i>-1) picked.splice(i,1); else picked.push(n); save(); renderTrain(); };
+        panel.appendChild(card);
+      });
+      const all=el('button','ep-all',`All ${expM(r.id).name} exercises ${I.chev}`);
+      all.onclick=()=>{ expPairOpen=null; expMuscle=r.id; const m=expM(r.id); if(!expInView(m.id,expView)) expView=m.view; renderTrain(); window.scrollTo(0,0); };
+      panel.appendChild(all);
+      wrap.appendChild(panel);
+    }
+    c.appendChild(wrap);
+  });
+  c.appendChild(el('p','ep-cite','Supersets: Robbins 2010; Paz 2017; Zhang 2023. Overlap as volume: Pelland 2024; Gentil 2013. Exercise order: Simão 2012; Nunes 2021.'));
+  return c;
+}
 function expPicked(){ if(!DB.custom) DB.custom={ex:[]}; return DB.custom.ex; }
 function expVid(name){ const id=VIDEOS[name]; return id?'https://www.youtube.com/watch?v='+id:null; }
 function expBuildCustom(){
@@ -183,21 +359,32 @@ function renderExplore(v){
   map.innerHTML=`<div class="seg exp-seg"><button data-v="f" aria-pressed="${expView==='f'}">Front</button><button data-v="b" aria-pressed="${expView==='b'}">Back</button></div>
     <div class="exp-fig">${expBodySVG(expView)}</div><div class="exp-sel"><span>Selected</span><b>${cur?cur.name:''}</b><em>${cur?cur.ex.length+' exercises':''}</em></div>`;
   map.querySelectorAll('.exp-seg button').forEach(b=>b.onclick=()=>{ expView=b.dataset.v; if(!expInView(expMuscle,expView)) expMuscle=EXP_MUSCLES.find(m=>m.view===expView).id; renderTrain(); });
-  map.querySelectorAll('.bm').forEach(r=>{ if(r.dataset.m===expMuscle) r.classList.add('on'); r.onclick=()=>{ expMuscle=r.dataset.m; renderTrain(); }; });
+  const pair=EXP_PAIRS[expMuscle]||{}; const partners=[pair.ss,...(pair.day||[])].filter(Boolean);
+  map.querySelectorAll('.bm').forEach(r=>{ if(r.dataset.m===expMuscle) r.classList.add('on'); else if(partners.includes(r.dataset.m)) r.classList.add('pair'); r.onclick=()=>{ expMuscle=r.dataset.m; renderTrain(); }; });
   v.appendChild(map);
   // accessible chip list (every muscle, both views)
   const chips=el('div','filter-row exp-chips');
-  EXP_MUSCLES.forEach(m=>{ const c=el('button','chip',m.name); c.setAttribute('aria-pressed',m.id===expMuscle); c.onclick=()=>{ expMuscle=m.id; if(!expInView(m.id,expView)) expView=m.view; renderTrain(); }; chips.appendChild(c); });
+  EXP_MUSCLES.forEach(m=>{ const c=el('button','chip'+(partners.includes(m.id)?' pair':''),m.name); c.setAttribute('aria-pressed',m.id===expMuscle); c.onclick=()=>{ expMuscle=m.id; if(!expInView(m.id,expView)) expView=m.view; renderTrain(); }; chips.appendChild(c); });
   v.appendChild(chips);
   requestAnimationFrame(()=>{ const a=chips.querySelector('[aria-pressed="true"]'); if(a) chips.scrollLeft=a.offsetLeft-20; });
 
   const m=EXP_MUSCLES.find(x=>x.id===expMuscle);
   v.appendChild(el('div','section-head',`<span class="eyebrow">${m.name} · best for growth</span>`));
+  const rc=expRotationCard(m); if(rc) v.appendChild(rc);
+  const pc=expPairsCard(m.id); if(pc) v.appendChild(pc);
   const picked=expPicked();
-  m.ex.forEach(x=>{
-    const c=el('div','exp-card');
+  const groups=(EXP_GROUPS[m.id]||[]).map(g=>({...g, ex:g.ex.filter(n=>m.ex.some(x=>x.n===n))}));
+  const rest=m.ex.filter(x=>!groups.some(g=>g.ex.includes(x.n))).map(x=>x.n);
+  if(rest.length) groups.push({g:'More', why:'', ex:rest});
+  groups.forEach(g=>{
+  if(!g.ex.length) return;
+  v.appendChild(el('div','exp-group',`<b>${g.g}</b>${g.why?`<span>${g.why}</span>`:''}`));
+  g.ex.map(n=>m.ex.find(x=>x.n===n)).forEach(x=>{
+    const also=expAlso(m.id, x.n);
+    const ses=expSessionOf(m.id, x.n);
+    const c=el('div','exp-card'+(also.length?' combo':''));
     const on=picked.includes(x.n);
-    c.innerHTML=`<div class="exp-top"><div><b>${x.n}</b><span>${x.r}</span></div>
+    c.innerHTML=`<div class="exp-top"><div><b>${x.n}</b><span>${x.r}</span>${ses?`<span class="exp-ses">${ses==='Swap-in'?ses:'Session '+ses}</span>`:''}${also.length?`<span class="exp-also">Also trains ${also.map(a=>expM(a).name).join(' & ')}</span>`:''}</div>
         <button class="exp-pick${on?' on':''}" aria-pressed="${on}" aria-label="${on?'Remove from':'Add to'} custom workout">${on?I.check:I.plus}</button></div>
       <div class="exp-setup">${x.setup.map(s=>`<span>${s}</span>`).join('')}</div>
       <div class="exp-load">${I.bolt}<span>${x.load}</span></div>
@@ -205,6 +392,7 @@ function renderExplore(v){
     c.appendChild(videoBlock(x.n, expVid(x.n)));
     c.querySelector('.exp-pick').onclick=()=>{ const i=picked.indexOf(x.n); if(i>-1) picked.splice(i,1); else picked.push(x.n); save(); renderTrain(); };
     v.appendChild(c);
+  });
   });
 
   const pr=el('details','exp-princ');

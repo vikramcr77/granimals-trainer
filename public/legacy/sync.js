@@ -244,7 +244,9 @@ document.addEventListener('visibilitychange',()=>{
   if(document.visibilityState==='hidden'&&st.dirty) push();
   else if(document.visibilityState==='visible'&&Date.now()-lastCheck>30000) reconcile();
 });
-window.GSync={ renderCards };
+// Send unsaved changes now (used before pull-to-refresh reloads the app).
+function flush(){ return me&&st.dirty ? push() : Promise.resolve(); }
+window.GSync={ renderCards, flush };
 try{ const m=sessionStorage.getItem('granimals_toast'); if(m){ sessionStorage.removeItem('granimals_toast'); setTimeout(()=>toast(escH(m)),300); } }catch(e){}
 api('/auth').then(r=>{ checked=true; if(r.user) signedIn(r.user); else rerender(); }).catch(()=>{ checked=true; });
 })();

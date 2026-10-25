@@ -8,6 +8,9 @@ export const metadata: Metadata = { title: "Granimals Trainer" }
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
+  // App-like: no pinch / double-tap zoom, and no auto-zoom when focusing inputs on iOS.
+  maximumScale: 1,
+  userScalable: false,
   viewportFit: "cover",
 }
 

@@ -1,6 +1,5 @@
 {
   "_about": "Maps each 'Exercise' label in the physio video CSVs to the exercise name(s) used in public/legacy/phases.js. Use a list when one video shows two exercises, null to leave a video uncounted. Rows starting with 'DUPLICATE' are skipped automatically.",
-
   "Gait / walking drill": "Gait / Walking Drill",
   "Walking practice (long strides)": "Long-Stride Walking",
   "Foam roller quad / outer-thigh (ITB) release": "Foam Roller Outer-Thigh (ITB) Release",
@@ -11,7 +10,10 @@
   "Single-leg balance, alternating legs": "Single-Leg Balance (Eyes Closed)",
   "Single-leg balance, eyes closed": "Single-Leg Balance (Eyes Closed)",
   "Single-leg balance beside rail": "Single-Leg Balance (Eyes Closed)",
-  "Prone hip rotation → quadruped rock-backs (bolster under knee)": ["Prone Hip Rotation", "Quadruped Rock-Back to Child's Pose"],
+  "Prone hip rotation → quadruped rock-backs (bolster under knee)": [
+    "Prone Hip Rotation",
+    "Quadruped Rock-Back to Child's Pose"
+  ],
   "Quadruped rock-backs → child's pose (knee-bend stretch, towel roll)": "Quadruped Rock-Back to Child's Pose",
   "Seated long-arc knee extension (towel at ankle)": "Seated Long-Arc Knee Extension",
   "Seated long-arc knee extension (cloth ankle weight)": "Seated Long-Arc Knee Extension",
@@ -20,7 +22,6 @@
   "Supine straight leg raise": "Straight Leg Raise",
   "Wall sit with ball squeeze between knees": "Wall Sit with Ball Squeeze",
   "Glute bridge": "Glute Bridge",
-
   "Alternating foot taps onto stool": "Alternating Foot Taps (Stool)",
   "Step-up / step-down on single step": "Step-Up / Step-Down (Low Step)",
   "Step-up / step-down on low step": "Step-Up / Step-Down (Low Step)",
@@ -31,18 +32,15 @@
   "Weighted hip hike on box (kettlebell on free foot)": "Weighted Hip Hike (Box)",
   "Calf raise on step edge": "Calf Raise on Step Edge",
   "Stair descent / step-down practice": "Stair Descent (Step Over Step)",
-
   "Banded terminal knee extension (TKE)": "Banded Terminal Knee Extension (TKE)",
   "Leg extension machine": "Leg Extension (90–45°)",
   "Heel-elevated squat (heels on plate)": "Heel-Elevated Squat",
   "Decline slant-board squat": "Heel-Elevated Squat",
   "Bulgarian split squat (rear foot on box)": "Bulgarian Split Squat",
   "Wall sit": "Wall Sit",
-
   "Stability-ball glute bridge": "Swiss Ball Glute Bridge",
   "Stability-ball bridge → hamstring curl": "Swiss Ball Hamstring Curl",
   "Copenhagen side plank (top leg on stool)": "Copenhagen Plank (Short Lever)",
-
   "Banded glute bridge (band above knees)": "Banded Glute Bridge",
   "Banded glute bridge (on bed)": "Banded Glute Bridge",
   "Feet-elevated glute bridge on box": "Feet-Elevated Glute Bridge (Box)",
@@ -52,9 +50,14 @@
   "Banded walks (mini-band at ankles)": "Banded Lateral Walk",
   "Banded quadruped donkey kick": "Banded Donkey Kick",
   "Banded donkey kick (quadruped hip extension)": "Banded Donkey Kick",
-  "Cable hip extension / abduction (ankle strap)": ["Cable Hip Extension", "Cable Hip Abduction"],
-  "Cable hip abduction / adduction (ankle strap)": ["Cable Hip Abduction", "Cable Hip Adduction"],
-
+  "Cable hip extension / abduction (ankle strap)": [
+    "Cable Hip Extension",
+    "Cable Hip Abduction"
+  ],
+  "Cable hip abduction / adduction (ankle strap)": [
+    "Cable Hip Abduction",
+    "Cable Hip Adduction"
+  ],
   "Goblet squat to chair (kettlebell)": "Goblet Squat to Chair",
   "Leg press (45° sled)": "Leg Press",
   "Bodyweight hip hinge (good morning)": "Bodyweight Hip Hinge (Good Morning)",
@@ -65,7 +68,6 @@
   "Reverse lunge (knee to floor), alternating": "Reverse Lunge",
   "Walking lunges": "Walking Lunge",
   "Lateral lunge": "Lateral Lunge",
-
   "Banded dead bug (band around feet)": "Banded Dead Bug",
   "Stability-ball plank (hands on ball)": "Swiss Ball Plank",
   "Forearm plank with alternating leg lift": "Forearm Plank with Leg Lift",
@@ -78,14 +80,12 @@
   "Windshield wipers (supine trunk rotation)": "Windshield Wipers",
   "Stability-ball leg raise (ball between lower legs, hips on floor)": "Swiss Ball Leg Raise",
   "Crunches": "Crunches",
-
   "Star excursion / Y-balance reaches (single-leg stance, hands on hips)": "Star Excursion Balance Reach",
   "Star excursion / Y-balance reaches (single-leg, multi-direction toe taps)": "Star Excursion Balance Reach",
   "Half-kneeling front-foot lift (hip flexor activation)": "Half-Kneeling Front-Foot Lift",
   "Seated knee raise with kettlebell on thigh (on box)": "Seated Knee Raise (Kettlebell)",
   "Standing banded hip extension (band anchored low)": "Standing Banded Hip Extension",
   "Standing hip abduction / leg swings": "Standing Leg Swings & Hip Abduction",
-
   "Foam roller hamstring/calf → seated knee hug": "Foam Roller Hamstring & Calf to Knee Hug",
   "Foam roller calf / hamstring release": "Foam Roller Hamstring & Calf to Knee Hug",
   "Ball release (hamstring/calf, seated) → ankle mobilisation": "Ball Release & Ankle Mobilisation",
@@ -94,8 +94,47 @@
   "Seated cross-legged kettlebell hold": "Seated Cross-Legged Kettlebell Hold",
   "Downward dog to plank flow": "Downward Dog to Plank Flow",
   "Inchworm / walkout to plank": "Inchworm Walkout",
-
   "Jumping jacks / low hops": "Jumping Jacks (Low Hops)",
   "Jump rope (skipping)": "Jump Rope (Skipping)",
-  "Light jogging (outdoor, night)": "Light Jogging"
+  "Light jogging (outdoor, night)": "Light Jogging",
+  "Stability-ball alternating single-leg raise (heels on ball, hips down)": "Swiss Ball Alternating Leg Raise",
+  "Bodyweight squat (holding pillar for support)": "Bodyweight Squat",
+  "Pole-assisted bodyweight squat": "Bodyweight Squat",
+  "Dumbbell sumo deadlift": "Sumo Squat",
+  "Bodyweight sumo squat → overhead reach on toes": "Sumo Squat",
+  "Wide-stance athletic squat": "Sumo Squat",
+  "Reverse lunge (kettlebell in each hand)": "Reverse Lunge",
+  "Reverse lunge → knee drive": "Reverse Lunge to Knee Drive",
+  "Banded standing hip flexion / knee drive (band at ankle, anchored behind)": "Banded Standing Knee Drive",
+  "Banded standing hip flexion / leg swing (band at ankle, anchored behind)": "Banded Standing Knee Drive",
+  "Bodyweight squat on balance pad": "Squat on Balance Pad",
+  "Lateral shuffle (agility, low athletic stance)": "Lateral Shuffle",
+  "Lateral shuffle (agility, side-to-side)": "Lateral Shuffle",
+  "Lateral shuffle / cutting drill (agility)": "Lateral Shuffle",
+  "Wall sit (ball behind back, med ball between knees)": "Wall Sit with Ball Squeeze",
+  "Stability-ball wall squat (ball behind back)": "Swiss Ball Wall Squat",
+  "Banded bodyweight squat (band above knees, anchored to side)": "Banded Squat (Side Pull)",
+  "Banded squat with TKE (band behind knees, anchored to rack)": "Banded Squat with TKE",
+  "Stability-ball bridge → hamstring curl (single-leg alternating)": "Single-Leg Swiss Ball Hamstring Curl",
+  "Stability-ball glute bridge (alternating single-leg)": "Swiss Ball Glute Bridge",
+  "Bulgarian split squat (rear foot on box, dumbbells)": "Bulgarian Split Squat",
+  "Bulgarian split squat (rear foot on bench, dumbbells)": "Bulgarian Split Squat",
+  "Single-leg box squat (goblet dumbbell)": "Single-Leg Box Squat",
+  "Single-leg box squat (goblet kettlebell)": "Single-Leg Box Squat",
+  "Bench hip thrust (incl. single-leg)": "Bench Hip Thrust",
+  "Single-leg bench hip thrust": "Single-Leg Bench Hip Thrust",
+  "Copenhagen side plank": "Copenhagen Plank (Short Lever)",
+  "Star excursion / Y-balance reaches": "Star Excursion Balance Reach",
+  "Star excursion / Y-balance reaches (backward/lateral)": "Star Excursion Balance Reach",
+  "Step-up / step-down": "Step-Up / Step-Down (Low Step)",
+  "Step-up / step-down (low step)": "Step-Up / Step-Down (Low Step)",
+  "Step-up / step-down → bodyweight squat": [
+    "Step-Up / Step-Down (Low Step)",
+    "Bodyweight Squat"
+  ],
+  "Countermovement squat jump (arm swing)": "Squat Jump (Soft Landing)",
+  "Single-leg RDL → knee drive": "Single-Leg RDL to Knee Drive",
+  "Single-leg RDL (hand on pillar) → knee raise balance": "Single-Leg RDL to Knee Drive",
+  "Drop landing off step (land in squat)": "Drop Landing (Off Step)",
+  "Side plank → thread-the-needle rotation": "Side Plank Thread-the-Needle"
 }

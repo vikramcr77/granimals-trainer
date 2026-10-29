@@ -136,5 +136,41 @@
   "Single-leg RDL → knee drive": "Single-Leg RDL to Knee Drive",
   "Single-leg RDL (hand on pillar) → knee raise balance": "Single-Leg RDL to Knee Drive",
   "Drop landing off step (land in squat)": "Drop Landing (Off Step)",
-  "Side plank → thread-the-needle rotation": "Side Plank Thread-the-Needle"
+  "Side plank → thread-the-needle rotation": "Side Plank Thread-the-Needle",
+  "Countermovement squat jump": "Squat Jump (Soft Landing)",
+  "Prisoner squat jump (hands behind head)": "Squat Jump (Soft Landing)",
+  "Side plank (feet elevated on bench), both sides": "Side Plank",
+  "Single-leg RDL": "Single-Leg RDL",
+  "Forward step-down taps from weight plate": "Forward Step-Down (Heel Tap)",
+  "Banded step-down (band around waist)": "Forward Step-Down (Heel Tap)",
+  "Step-up / step-down on weight plates": "Step-Up / Step-Down (Low Step)",
+  "Leg press": "Leg Press",
+  "Single-leg leg press": "Single-Leg Leg Press",
+  "Shuttle run / jog forward-back (agility)": "Shuttle Jog (Forward & Back)",
+  "Shuttle run (jog toward camera, walk back)": "Shuttle Jog (Forward & Back)",
+  "Deep squat walk (duck walk)": "Duck Walk",
+  "Prisoner sumo squat (hands behind head)": "Sumo Squat",
+  "Seated banded hip abduction": "Seated Banded Hip Abduction",
+  "Bear plank with alternating knee drive": "Bear Plank (Knee Drive)",
+  "Bear crawl / bear plank (knees hovering)": "Bear Plank (Knee Drive)",
+  "Cable standing hip abduction / extension (ankle strap)": [
+    "Cable Hip Abduction",
+    "Cable Hip Extension"
+  ],
+  "Cable standing hip extension / abduction (ankle strap)": [
+    "Cable Hip Extension",
+    "Cable Hip Abduction"
+  ],
+  "Reverse lunge (dumbbell)": "Reverse Lunge",
+  "Banded standing hip flexion (band under foot)": "Banded Standing Knee Drive",
+  "High-knee march": "High-Knee March",
+  "Goblet squat (dumbbell)": "Goblet Squat to Chair",
+  "Box jump → step-down": "Box Jump (Step Down)",
+  "Prone alternating hamstring curl": "Prone Hamstring Curl",
+  "Med-ball sit-up": "Med-Ball Sit-Up",
+  "Med-ball dead bug": "Med-Ball Dead Bug",
+  "Prone superman (arm / leg raise)": "Prone Superman",
+  "Lateral hops over BOSU": "Lateral Line Hops",
+  "Lateral shuffle (agility)": "Lateral Shuffle",
+  "Foam roller lateral thigh / glute release": "Foam Roller Outer-Thigh (ITB) Release"
 }
